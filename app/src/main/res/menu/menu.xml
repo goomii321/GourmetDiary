@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/homeFragment"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/diarysFragment"
+            android:title="@string/menu_diarys" />
+        <item
+            android:id="@+id/storesFragment"
+            android:title="@string/menu_stores" />
+
+        <item
+            android:id="@+id/profileFragment"
+            android:title="@string/menu_profile" />
+
+        <item
+            android:id="@+id/setting"
+            android:title="@string/setting" />
+    </group>
+    <group android:id="@+id/menu_second">
+        <item
+            android:id="@+id/loginFragment"
+            android:title="@string/login" />
+    </group>
+
+
+</menu>
