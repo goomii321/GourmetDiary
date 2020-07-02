@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">GourmetDiary</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- home page -->
+    <string name="good_morning">早安 :)</string>
+    <string name="good_evening">午安 ;)</string>
+    <string name="good_afternoon">晚安 Zzz</string>
+    <string name="greeting">我不是正在吃，\n <n>  \u00A0     </n>就是在去吃的路上</string>
+
+    <!-- menu item -->
+    <string name="menu_diarys">每週日記</string>
+    <string name="menu_stores">餐廳總覽</string>
+    <string name="menu_profile">個人資訊</string>
+    <string name="setting">設定</string>
+    <string name="login">登入</string>
+    <string name="menu_home">主頁面</string>
+    <string name="user_name">user name</string>
+
+
+</resources>

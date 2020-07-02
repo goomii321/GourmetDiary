@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.linda.gourmetdiary.home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" />
+    <action
+        android:id="@+id/navigate_to_home" app:destination="@+id/homeFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+    <fragment
+        android:id="@+id/diarysFragment"
+        android:name="com.linda.gourmetdiary.diarys.DiarysFragment"
+        android:label="diarys_fragment"
+        tools:layout="@layout/diarys_fragment" />
+    <action
+        android:id="@+id/navigate_to_diarys" app:destination="@+id/diarysFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+    <fragment
+        android:id="@+id/storesFragment"
+        android:name="com.linda.gourmetdiary.stores.StoresFragment"
+        android:label="stores_fragment"
+        tools:layout="@layout/stores_fragment" />
+    <action
+        android:id="@+id/navigate_to_stores" app:destination="@+id/storesFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.linda.gourmetdiary.profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <action
+        android:id="@+id/navigate_to_profile" app:destination="@+id/profileFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+</navigation>
