@@ -18,6 +18,10 @@
     <string name="login">登入</string>
     <string name="menu_home">主頁面</string>
     <string name="user_name">user name</string>
+    <string name="food_name">餐點名稱</string>
+    <string name="combo_name">套餐內容</string>
+    <string name="food_info">餐點資訊</string>
+    <string name="experience_title">用餐心得</string>
 
 
 </resources>

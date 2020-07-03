@@ -6,28 +6,53 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import app.appworks.school.stylish.ext.getVmFactory
 
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    private lateinit var viewModel: HomeViewModel
+    val viewModel by viewModels<HomeViewModel> { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+        var isOpen = false
+        val fabOpen = AnimationUtils.loadAnimation(context,R.anim.fab_open)
+        val fabClose = AnimationUtils.loadAnimation(context,R.anim.fab_close)
+        val fabRotate = AnimationUtils.loadAnimation(context,R.anim.rotate_clockwise)
 
+        val binding = HomeFragmentBinding.inflate(inflater,container,false)
+
+        binding.addFbtn.setOnClickListener {
+            if (isOpen){
+                binding.reminder.startAnimation(fabClose)
+                binding.addDefault.startAnimation(fabClose)
+                binding.addFbtn.startAnimation(fabRotate)
+
+                isOpen = false
+            } else {
+                binding.reminder.startAnimation(fabOpen)
+                binding.addDefault.startAnimation(fabOpen)
+                binding.addFbtn.startAnimation(fabRotate)
+
+                isOpen = true
+            }
+        }
+
+        binding.addDefault.setOnClickListener {
+            if (isOpen){
+                findNavController().navigate(R.id.navigate_to_add)
+            }
+        }
+
+
+        return binding.root
+    }
 }

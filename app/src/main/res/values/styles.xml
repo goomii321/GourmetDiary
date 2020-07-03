@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/black_sumi</item>
+        <item name="android:editTextColor">@color/black_sumi</item>
     </style>
 
     <style name="item_nav">
@@ -13,6 +16,21 @@
         <item name="fontFamily">@font/noto_sans</item>
     </style>
 
+    <style name="text_style">
+        <item name="android:textSize">16dp</item>
+        <item name="fontFamily">@font/noto_sans</item>
+        <item name="color">@color/black</item>
+    </style>
+
+    <style name="text_title_style">
+        <item name="android:textSize">24dp</item>
+        <item name="fontFamily">@font/noto_sans</item>
+        <item name="color">@color/black</item>
+    </style>
+
+    <style name="ProgressTheme" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/black</item>
+    </style>
 
 
 </resources>

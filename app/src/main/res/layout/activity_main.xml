@@ -33,14 +33,12 @@
 
                 <TextView
                     android:id="@+id/toolbar_title"
-                    android:fontFamily="@font/jf_openhuninn_"
                     android:textSize="24sp"
-                    android:textStyle="bold"
                     android:textColor="@color/white_normal"
-                    android:letterSpacing="0.15"
+                    android:text="@{viewModel.currentFragmentType.value}"
+                    android:letterSpacing="0.1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/menu_diarys"/>
+                    android:layout_height="wrap_content" />
 
             </androidx.appcompat.widget.Toolbar>
 

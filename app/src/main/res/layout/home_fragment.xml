@@ -69,6 +69,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:clickable="true"
+            app:fabSize="normal"
             android:src="@drawable/ic_add_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -77,12 +78,27 @@
             android:id="@+id/reminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/baseline_mode_comment_black_18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:fabSize="mini"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/add_fbtn"
+            app:layout_constraintEnd_toEndOf="@+id/add_fbtn"
+            app:layout_constraintStart_toStartOf="@+id/add_fbtn" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:src="@drawable/baseline_add_circle_outline_black_18dp"
+            app:fabSize="mini"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/reminder"
+            app:layout_constraintEnd_toEndOf="@+id/reminder"
+            app:layout_constraintStart_toStartOf="@+id/reminder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
