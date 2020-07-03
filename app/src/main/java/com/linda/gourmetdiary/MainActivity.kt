@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
@@ -12,12 +14,15 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import app.appworks.school.stylish.ext.getVmFactory
 import com.google.android.material.navigation.NavigationView
 import com.linda.gourmetdiary.databinding.ActivityMainBinding
 import com.linda.gourmetdiary.util.CurrentFragmentType
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    val viewModel by viewModels<MainViewModel> { getVmFactory() }
 
     private lateinit var binding : ActivityMainBinding
     private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
@@ -51,17 +56,24 @@ class MainActivity : AppCompatActivity() {
 
         binding= DataBindingUtil.setContentView(this,R.layout.activity_main)
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
         setupDrawer()
+        setupNavController()
     }
 
     private fun setupNavController() {
         findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener { navController: NavController, _: NavDestination, _: Bundle? ->
-//            viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
-//                R.id.homeFragment -> CurrentFragmentType.HOME
-//                else -> viewModel.currentFragmentType.value
-//            }
+            viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
+                R.id.homeFragment -> CurrentFragmentType.HOME
+                R.id.diarysFragment -> CurrentFragmentType.DIARY
+                R.id.storesFragment -> CurrentFragmentType.STORES
+                R.id.profileFragment -> CurrentFragmentType.PROFILE
+                R.id.addDiaryFragment -> CurrentFragmentType.ADD
+                else -> viewModel.currentFragmentType.value
+            }
         }
     }
 
@@ -69,6 +81,10 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.myNavHostFragment)
         setSupportActionBar(toolbar)
 
+        //hiding action bar's system title
+        supportActionBar?.title = null
+
+        //setting actionbar and drawer's open event
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         NavigationUI.setupWithNavController(binding.drawerNavView, navController)
 
@@ -87,9 +103,7 @@ class MainActivity : AppCompatActivity() {
             syncState()
         }
 
-//        bindingNavHeader.viewModel = viewModel
-
-        // Observe current drawer toggle to set the navigation icon and behavior
+//         Observe current drawer toggle to set the navigation icon and behavior
 //        viewModel.currentDrawerToggleType.observe(this, Observer { type ->
 //
 //            actionBarDrawerToggle?.isDrawerIndicatorEnabled = type.indicatorEnabled
