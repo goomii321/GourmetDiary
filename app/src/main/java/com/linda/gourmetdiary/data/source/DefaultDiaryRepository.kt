@@ -1,8 +1,7 @@
 package com.linda.gourmetdiary.data.source
 
-import androidx.lifecycle.LiveData
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.linda.gourmetdiary.data.Result
+import com.linda.gourmetdiary.data.Users
 
 /**
  * Created by Wayne Chen in Jul. 2019.
@@ -10,9 +9,9 @@ import kotlinx.coroutines.Dispatchers
  * Concrete implementation to load Stylish sources.
  */
 class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
-                             private val diaryLocalDataSource: DiaryDataSource,
-                             private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+                             private val localDataSource: DiaryDataSource
 ) : DiaryRepository {
-
-
+//    override suspend fun getUsers(): Result<List<Users>> {
+//        return diaryRemoteDataSource.getUsers()
+//    }
 }

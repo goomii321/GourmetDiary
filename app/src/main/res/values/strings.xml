@@ -18,10 +18,18 @@
     <string name="login">登入</string>
     <string name="menu_home">主頁面</string>
     <string name="user_name">user name</string>
+
+    <!--    add diary-->
     <string name="food_name">餐點名稱</string>
     <string name="combo_name">套餐內容</string>
     <string name="food_info">餐點資訊</string>
     <string name="experience_title">用餐心得</string>
+    <string name="confirm">確認</string>
+    <string name="store_info">店家資訊</string>
+    <string name="store_name">店家名稱</string>
+    <string name="store_phone">連絡電話</string>
+    <string name="store_location">地址</string>
+    <string name="ng_msg">NG</string>
 
 
 </resources>
