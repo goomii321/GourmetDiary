@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import app.appworks.school.stylish.ext.getVmFactory
 
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.databinding.StoresFragmentBinding
 
 class StoresFragment : Fragment() {
@@ -21,6 +22,10 @@ class StoresFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = StoresFragmentBinding.inflate(inflater,container,false)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         return binding.root
     }
 

@@ -21,34 +21,36 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
     private const val PATH_USERS = "Users"
     private const val PATH_STORESS = "Stores"
+    private const val PATH_DIARYS = "diarys"
     private const val KEY_CREATED_TIME = "createdTime"
 
-//    override suspend fun getUsers(): Result<List<Users>> = suspendCoroutine { continuation ->
-//        FirebaseFirestore.getInstance()
-//            .collection(PATH_USERS)
+    override suspend fun getUsersDiarys(): Result<List<Users>> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
 //            .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
-//            .get()
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    val list = mutableListOf<Users>()
-//                    for (document in task.result!!) {
-//                        Logger.d(document.id + " => " + document.data)
-//
-//                        val article = document.toObject(Users::class.java)
-//                        list.add(article)
-//                    }
-//                    continuation.resume(Result.Success(list))
-//                } else {
-//                    task.exception?.let {
-//
-//                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-//                        continuation.resume(Result.Error(it))
-//                        return@addOnCompleteListener
-//                    }
-//                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
-//                }
-//            }
-//    }
+            .document("G1P80SW55MbkixdY69cx")
+            .collection(PATH_DIARYS)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Users>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id +  "=>"  + document.data)
 
+                        val article = document.toObject(Users::class.java)
+                        list.add(article)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+
+                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                }
+            }
+    }
 
 }

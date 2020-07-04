@@ -16,34 +16,33 @@
         android:layout_height="match_parent"
         tools:context=".adding.AddDiaryFragment">
 
-        <ImageView
-            android:id="@+id/adding_main_images"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/user_photo_illustration"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/divider1"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="8dp"
-            android:alpha="0.12"
-            android:background="@color/black_sumi"
-            app:layout_constraintTop_toBottomOf="@+id/adding_main_images" />
-
-
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/confirm_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider1">
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/adding_main_images"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_photo_illustration"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0.12"
+                android:background="@color/black_sumi"
+                app:layout_constraintTop_toBottomOf="@+id/adding_main_images" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

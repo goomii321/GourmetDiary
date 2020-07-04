@@ -11,7 +11,7 @@ import com.linda.gourmetdiary.data.Users
 class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
                              private val localDataSource: DiaryDataSource
 ) : DiaryRepository {
-//    override suspend fun getUsers(): Result<List<Users>> {
-//        return diaryRemoteDataSource.getUsers()
-//    }
+    override suspend fun getUsersDiarys(): Result<List<Users>> {
+        return diaryRemoteDataSource.getUsersDiarys()
+    }
 }
