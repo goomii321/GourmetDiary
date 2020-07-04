@@ -30,6 +30,9 @@ class HomeFragment : Fragment() {
 
         val binding = HomeFragmentBinding.inflate(inflater,container,false)
 
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         binding.addFbtn.setOnClickListener {
             if (isOpen){
                 binding.reminder.startAnimation(fabClose)

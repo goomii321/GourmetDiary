@@ -12,7 +12,7 @@ import com.linda.gourmetdiary.data.Users
  */
 interface DiaryRepository {
 
-//    suspend fun getUsers(): Result<List<Users>>
+    suspend fun getUsersDiarys(): Result<List<Users>>
 
 
 }

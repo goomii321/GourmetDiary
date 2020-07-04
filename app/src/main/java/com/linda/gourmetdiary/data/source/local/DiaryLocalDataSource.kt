@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
  * Concrete implementation of a Stylish source as a db.
  */
 class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
-//    override suspend fun getUsers(): Result<List<Users>> {
-//        TODO("Not yet implemented")
-//    }
+    override suspend fun getUsersDiarys(): Result<List<Users>> {
+        TODO("Not yet implemented")
+    }
 }

@@ -23,6 +23,9 @@ class DiarysFragment : Fragment() {
     ): View? {
         val binding = DiarysFragmentBinding.inflate(inflater,container,false)
 
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         return binding.root
     }
 
