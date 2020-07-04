@@ -1,6 +1,8 @@
 package com.linda.gourmetdiary.data.source
 
 import androidx.lifecycle.LiveData
+import com.linda.gourmetdiary.data.Result
+import com.linda.gourmetdiary.data.Users
 
 /**
  * Created by Wayne Chen in Jul. 2019.
@@ -9,6 +11,5 @@ import androidx.lifecycle.LiveData
  */
 interface DiaryDataSource {
 
-
-
+//    suspend fun getUsers(): Result<List<Users>>
 }

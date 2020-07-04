@@ -1,6 +1,8 @@
 package com.linda.gourmetdiary.data.source
 
 import androidx.lifecycle.LiveData
+import com.linda.gourmetdiary.data.Result
+import com.linda.gourmetdiary.data.Users
 
 
 /**
@@ -9,6 +11,8 @@ import androidx.lifecycle.LiveData
  * Interface to the Stylish layers.
  */
 interface DiaryRepository {
+
+//    suspend fun getUsers(): Result<List<Users>>
 
 
 }
