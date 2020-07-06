@@ -1,7 +1,9 @@
 package com.linda.gourmetdiary.data.source.remote
 
 import android.icu.util.Calendar
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.linda.gourmetdiary.DiaryApplication
@@ -26,7 +28,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val PATH_DIARYS = "diarys"
     private const val KEY_CREATED_TIME = "createdTime"
 
-    override suspend fun getUsersDiarys(): Result<List<Users>> = suspendCoroutine { continuation ->
+    override suspend fun getUsersDiarys(): Result<List<Diary>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
 //            .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
@@ -35,12 +37,12 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val list = mutableListOf<Users>()
+                    val list = mutableListOf<Diary>()
                     for (document in task.result!!) {
                         Logger.d(document.id +  "=>"  + document.data)
 
-                        val article = document.toObject(Users::class.java)
-                        list.add(article)
+                        val diary = document.toObject(Diary::class.java)
+                        list.add(diary)
                     }
                     continuation.resume(Result.Success(list))
                 } else {
@@ -55,13 +57,14 @@ object DiaryRemoteDataSource : DiaryDataSource {
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postDiary(diarys: Diary): Result<Boolean> = suspendCoroutine { continuation ->
         val diary = FirebaseFirestore.getInstance().collection(PATH_USERS).document("G1P80SW55MbkixdY69cx")
             .collection(PATH_DIARYS)
         val document = diary.document()
 
         diarys.diaryId = document.id
-        diarys?.createdTime = Calendar.getInstance().timeInMillis.toString()
+        diarys.createdTime = Calendar.getInstance().timeInMillis
 
         document
             .set(diarys)
