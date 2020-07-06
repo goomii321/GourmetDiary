@@ -22,13 +22,15 @@ data class Profile(
 @Parcelize
 data class Diarys(
     var diaryId: String? = "",
-    var mainImage: String? = "",
-    var images: String? = "",
+    var mainImage: String? = "www123",
+    var images: String? = "www223",
+    var createdTime: String? = "",
     var type: String? = "",
     val store: Store? = null,
     val food: Food? = null
-
 ) : Parcelable
+//"https://i.imgur.com/eTuCPxM.jpg"
+//https://i.imgur.com/ApuihUx.jpg
 
 @Parcelize
 data class Store(
@@ -49,10 +51,10 @@ data class Food(
     var foodName: String? = "",
     var foodCombo: String? = "",
     var foodContent: String? = "",
-    var foodRate: Long? = 0,
+    var foodRate: Int? = 0,
     var healthyScore: Long? = 0,
     var nextTimeRemind: String? = "",
-    var price: Long? = 0,
+    var price: String? = "",
     var tag: String? = ""
 ) : Parcelable
 

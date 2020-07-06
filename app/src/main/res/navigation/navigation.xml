@@ -40,7 +40,13 @@
     <fragment
         android:id="@+id/addDiaryFragment"
         android:name="com.linda.gourmetdiary.adding.AddDiaryFragment"
-        android:label="AddDiaryFragment" />
+        android:label="AddDiaryFragment" >
+        <argument
+            android:name="users"
+            app:argType="com.linda.gourmetdiary.data.Users"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <action
         android:id="@+id/navigate_to_add" app:destination="@id/addDiaryFragment"
         app:popUpTo="@id/homeFragment" app:popUpToInclusive="false"/>

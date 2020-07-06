@@ -17,4 +17,8 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     override suspend fun getUsersDiarys(): Result<List<Users>> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun postDiary(users: Users): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 }

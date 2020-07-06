@@ -12,4 +12,6 @@ import com.linda.gourmetdiary.data.Users
 interface DiaryDataSource {
 
     suspend fun getUsersDiarys(): Result<List<Users>>
+
+    suspend fun postDiary(users:Users): Result<Boolean>
 }
