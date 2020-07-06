@@ -1,7 +1,6 @@
 package com.linda.gourmetdiary.adding
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,14 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import app.appworks.school.stylish.ext.getVmFactory
-import com.linda.gourmetdiary.data.Food
+import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
+import com.linda.gourmetdiary.util.Logger
 
 
 class AddDiaryFragment : Fragment() {
 
-    val viewModel by viewModels<AddDiaryViewModel> { getVmFactory(AddDiaryFragmentArgs.fromBundle(requireArguments()).users) }
+    val viewModel by viewModels<AddDiaryViewModel> { getVmFactory(AddDiaryFragmentArgs.fromBundle(requireArguments()).users?.diarys) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +40,7 @@ class AddDiaryFragment : Fragment() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 Toast.makeText(context, "Score is $ratingScore .",Toast.LENGTH_SHORT).show()
-//                viewModel.user.value?.diarys?.food?.foodRate = ratingScore
+                viewModel.user.value?.diarys?.food?.foodRate = ratingScore
             }
         })
 
@@ -56,7 +55,16 @@ class AddDiaryFragment : Fragment() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 Toast.makeText(context, "Score is $healthyScore .",Toast.LENGTH_SHORT).show()
+                viewModel.user.value?.diarys?.food?.healthyScore = healthyScore
             }
+        })
+
+        viewModel.status.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context,"${it}",Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.user.observe(viewLifecycleOwner, Observer {
+            Logger.d("user.oberve ${it}")
         })
 
         return binding.root

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="diarys"
-            type="com.linda.gourmetdiary.data.Diarys" />
+            type="com.linda.gourmetdiary.data.Diary" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import app.appworks.school.publisher.network.LoadApiStatus
+import com.linda.gourmetdiary.network.LoadApiStatus
 import com.google.firebase.firestore.FirebaseFirestore
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R

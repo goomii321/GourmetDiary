@@ -1,6 +1,5 @@
 package com.linda.gourmetdiary.home
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,10 +8,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import app.appworks.school.stylish.ext.getVmFactory
 
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.HomeFragmentBinding
+import com.linda.gourmetdiary.ext.getVmFactory
 
 class HomeFragment : Fragment() {
 

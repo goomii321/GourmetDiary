@@ -5,7 +5,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import app.appworks.school.publisher.network.LoadApiStatus
+import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.data.Users
 
 /**

@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Users(
-    var diarys: Diarys? = null,
+    var diarys: Diary? = null,
     var profile: Profile? = null
 
 ) : Parcelable
@@ -20,14 +20,14 @@ data class Profile(
 ) : Parcelable
 
 @Parcelize
-data class Diarys(
+data class Diary(
     var diaryId: String? = "",
-    var mainImage: String? = "www123",
-    var images: String? = "www223",
+    var mainImage: String? = "https://i.imgur.com/eTuCPxM.jpg",
+    var images: String? = "https://i.imgur.com/ApuihUx.jpg",
     var createdTime: String? = "",
     var type: String? = "",
     val store: Store? = null,
-    val food: Food? = null
+    var food: Food? = null
 ) : Parcelable
 //"https://i.imgur.com/eTuCPxM.jpg"
 //https://i.imgur.com/ApuihUx.jpg
@@ -52,7 +52,7 @@ data class Food(
     var foodCombo: String? = "",
     var foodContent: String? = "",
     var foodRate: Int? = 0,
-    var healthyScore: Long? = 0,
+    var healthyScore: Int? = 0,
     var nextTimeRemind: String? = "",
     var price: String? = "",
     var tag: String? = ""

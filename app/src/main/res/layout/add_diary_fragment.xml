@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.adding.AddDiaryViewModel" />
+        <import type="android.view.View" />
+        <import type="com.linda.gourmetdiary.network.LoadApiStatus"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,6 +59,7 @@
                     android:onClick="@{() -> viewModel.setFoodVisible()}"
                     android:text="@string/food_info"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/arrow1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider1" />
@@ -234,6 +234,7 @@
                     android:onClick="@{() -> viewModel.setStoreVisible()}"
                     android:text="@string/store_info"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/arrow2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/add_healthy" />
@@ -280,7 +281,7 @@
                         android:gravity="start"
                         android:hint="@string/store_phone"
                         android:text="@={viewModel.user.diarys.store.storePhone}"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -357,11 +358,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryDark"
-            android:onClick="@{() -> viewModel.addData(viewModel.user)}"
-            android:text="@string/confirm"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.addData(viewModel.user.diarys)}"
+            android:text='@{viewModel.status != LoadApiStatus.LOADING ? "Post" : ""}'
+            android:clickable="@{viewModel.status == LoadApiStatus.LOADING ? false : true}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
