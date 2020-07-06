@@ -14,4 +14,8 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
     override suspend fun getUsersDiarys(): Result<List<Users>> {
         return diaryRemoteDataSource.getUsersDiarys()
     }
+
+    override suspend fun postDiary(users: Users): Result<Boolean> {
+        return diaryRemoteDataSource.postDiary(users)
+    }
 }

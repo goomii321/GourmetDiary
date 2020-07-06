@@ -5,15 +5,18 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.adding.AddDiaryViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         tools:context=".adding.AddDiaryFragment">
 
         <ScrollView
@@ -24,29 +27,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/adding_main_images"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/user_photo_illustration"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/divider1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:alpha="0.12"
-                android:background="@color/black_sumi"
-                app:layout_constraintTop_toBottomOf="@+id/adding_main_images" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/adding_main_images"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/user_photo_illustration"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:alpha="0.12"
+                    android:background="@color/black_sumi"
+                    app:layout_constraintTop_toBottomOf="@+id/adding_main_images" />
 
                 <TextView
                     android:id="@+id/food_info"
@@ -54,18 +57,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
+                    android:onClick="@{() -> viewModel.setFoodVisible()}"
                     android:text="@string/food_info"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/arrow1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
                 <ImageView
                     android:id="@+id/arrow1"
                     android:layout_width="32dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
+                    android:onClick="@{() -> viewModel.setFoodVisible()}"
                     android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/food_info"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -76,11 +79,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:textColorHint="@color/black_sumi"
-                    android:visibility="gone"
+                    android:textColorHint="@color/aonibi"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/food_info"
                     tools:visibility="visible">
@@ -90,7 +91,32 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/food_name"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:text="@={viewModel.user.diarys.food.foodName}"
+                        android:textSize="16dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/price"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColorHint="@color/aonibi"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/combo_title"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/price_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|start"
+                        android:hint="@string/add_price"
+                        android:inputType="number"
+                        android:text="@={viewModel.user.diarys.food.price}"
+                        android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -98,10 +124,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:visibility="gone"
+                    android:textColorHint="@color/aonibi"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/food_title"
                     tools:visibility="visible">
@@ -113,14 +138,88 @@
                         android:gravity="top|start"
                         android:hint="@string/combo_name"
                         android:inputType="textMultiLine"
-                        android:lines="3" />
+                        android:lines="3"
+                        android:text="@={viewModel.user.diarys.food.foodCombo}"
+                        android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/eating_time"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/eating_time"
+                    android:textSize="18sp"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toStartOf="@+id/right_arrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/price" />
+
+                <ImageView
+                    android:id="@+id/right_arrow"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/eating_time" />
+
+                <TextView
+                    android:id="@+id/rating"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/add_rating"
+                    android:textSize="18sp"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/eating_time" />
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/add_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:max="10"
+                    android:min="0"
+                    android:progress="0"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rating" />
+
+                <TextView
+                    android:id="@+id/healthy"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/add_healthy"
+                    android:textSize="18sp"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_rating" />
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/add_healthy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:max="10"
+                    android:min="0"
+                    android:progress="0"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/healthy" />
 
                 <ImageView
                     android:id="@+id/arrow2"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:onClick="@{() -> viewModel.setStoreVisible()}"
                     android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/store_info"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -131,23 +230,22 @@
                     style="@style/text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:onClick="@{() -> viewModel.setStoreVisible()}"
                     android:text="@string/store_info"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/arrow2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/combo_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/add_healthy" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/store_name"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:visibility="gone"
+                    android:textColorHint="@color/aonibi"
+                    android:visibility="@{viewModel.storeStatus == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/store_info"
                     tools:visibility="visible">
@@ -158,7 +256,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:hint="@string/store_name"
-                        android:inputType="text" />
+                        android:text="@={viewModel.user.diarys.store.storeName}"
+                        android:inputType="text"
+                        android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -166,10 +266,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:visibility="gone"
+                    android:textColorHint="@color/aonibi"
+                    android:visibility="@{viewModel.storeStatus == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/store_name"
                     tools:visibility="visible">
@@ -180,7 +279,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:hint="@string/store_phone"
-                        android:inputType="text" />
+                        android:text="@={viewModel.user.diarys.store.storePhone}"
+                        android:inputType="text"
+                        android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -188,40 +289,65 @@
                     style="@style/text_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:visibility="gone"
                     android:text="@string/store_location"
                     android:textSize="18sp"
+                    android:visibility="@{viewModel.storeStatus == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/store_phone"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/contet_title"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:textColorHint="@color/aonibi"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/store_location">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/contet_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|start"
+                        android:hint="@string/experience_title"
+                        android:inputType="textMultiLine"
+                        android:lines="3"
+                        android:text="@={viewModel.user.diarys.food.foodContent}"
+                        android:textSize="16dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/next_time_remoder"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="24dp"
+                    android:textColorHint="@color/aonibi"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_location">
+                    app:layout_constraintTop_toBottomOf="@id/contet_title">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/next_time_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top|start"
-                        android:hint="@string/experience_title"
+                        android:hint="@string/next_time_text"
                         android:inputType="textMultiLine"
-                        android:lines="3" />
+                        android:lines="3"
+                        android:text="@={viewModel.user.diarys.food.nextTimeRemind}"
+                        android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -229,10 +355,9 @@
             android:id="@+id/confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryDark"
+            android:onClick="@{() -> viewModel.addData(viewModel.user)}"
             android:text="@string/confirm"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

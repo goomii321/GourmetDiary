@@ -14,5 +14,6 @@ interface DiaryRepository {
 
     suspend fun getUsersDiarys(): Result<List<Users>>
 
+    suspend fun postDiary(users:Users): Result<Boolean>
 
 }

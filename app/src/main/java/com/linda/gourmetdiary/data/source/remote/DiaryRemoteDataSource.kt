@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary.data.source.remote
 
+import android.icu.util.Calendar
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -53,4 +54,30 @@ object DiaryRemoteDataSource : DiaryDataSource {
             }
     }
 
+    override suspend fun postDiary(users: Users): Result<Boolean> = suspendCoroutine { continuation ->
+        val diarys = FirebaseFirestore.getInstance().collection(PATH_USERS).document("G1P80SW55MbkixdY69cx")
+            .collection(PATH_DIARYS)
+        val document = diarys.document()
+
+        users.diarys?.diaryId = document.id
+        users.diarys?.createdTime = Calendar.getInstance().timeInMillis.toString()
+
+        document
+            .set(users)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Logger.i("Publish: $diarys")
+
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
+
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                }
+            }
+    }
 }
