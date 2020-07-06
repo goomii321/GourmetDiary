@@ -1,8 +1,8 @@
-package app.appworks.school.stylish.ext
+package com.linda.gourmetdiary.ext
 
 import androidx.fragment.app.Fragment
 import com.linda.gourmetdiary.DiaryApplication
-import com.linda.gourmetdiary.data.Diarys
+import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.factory.DiarysViewModelFactory
 import com.linda.gourmetdiary.factory.ViewModelFactory
@@ -18,7 +18,7 @@ fun Fragment.getVmFactory(): ViewModelFactory {
 }
 
 
-fun Fragment.getVmFactory(users: Users?): DiarysViewModelFactory {
+fun Fragment.getVmFactory(diarys: Diary?): DiarysViewModelFactory {
     val repository = (requireContext().applicationContext as DiaryApplication).diaryRepository
-    return DiarysViewModelFactory(repository, users)
+    return DiarysViewModelFactory(repository, diarys)
 }

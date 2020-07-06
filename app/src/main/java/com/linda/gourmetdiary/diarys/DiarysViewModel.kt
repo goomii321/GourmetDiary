@@ -3,7 +3,7 @@ package com.linda.gourmetdiary.diarys
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import app.appworks.school.publisher.network.LoadApiStatus
+import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Result

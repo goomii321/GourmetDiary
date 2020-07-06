@@ -1,4 +1,4 @@
-package app.appworks.school.publisher.network
+package com.linda.gourmetdiary.network
 
 /**
  * Created by Wayne Chen on 2020-01-15.

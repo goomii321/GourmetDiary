@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.data.source.DiaryDataSource
@@ -54,16 +55,16 @@ object DiaryRemoteDataSource : DiaryDataSource {
             }
     }
 
-    override suspend fun postDiary(users: Users): Result<Boolean> = suspendCoroutine { continuation ->
-        val diarys = FirebaseFirestore.getInstance().collection(PATH_USERS).document("G1P80SW55MbkixdY69cx")
+    override suspend fun postDiary(diarys: Diary): Result<Boolean> = suspendCoroutine { continuation ->
+        val diary = FirebaseFirestore.getInstance().collection(PATH_USERS).document("G1P80SW55MbkixdY69cx")
             .collection(PATH_DIARYS)
-        val document = diarys.document()
+        val document = diary.document()
 
-        users.diarys?.diaryId = document.id
-        users.diarys?.createdTime = Calendar.getInstance().timeInMillis.toString()
+        diarys.diaryId = document.id
+        diarys?.createdTime = Calendar.getInstance().timeInMillis.toString()
 
         document
-            .set(users)
+            .set(diarys)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Logger.i("Publish: $diarys")

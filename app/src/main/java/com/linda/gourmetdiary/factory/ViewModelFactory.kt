@@ -3,7 +3,6 @@ package com.linda.gourmetdiary.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.linda.gourmetdiary.MainViewModel
-import com.linda.gourmetdiary.adding.AddDiaryViewModel
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.diarys.DiarysViewModel
 import com.linda.gourmetdiary.home.HomeViewModel

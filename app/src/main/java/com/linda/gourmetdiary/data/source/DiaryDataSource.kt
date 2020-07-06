@@ -1,6 +1,7 @@
 package com.linda.gourmetdiary.data.source
 
 import androidx.lifecycle.LiveData
+import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.Users
 
@@ -13,5 +14,5 @@ interface DiaryDataSource {
 
     suspend fun getUsersDiarys(): Result<List<Users>>
 
-    suspend fun postDiary(users:Users): Result<Boolean>
+    suspend fun postDiary(diarys:Diary): Result<Boolean>
 }
