@@ -33,6 +33,7 @@ class ViewModelFactory constructor(
                 isAssignableFrom(StoresViewModel::class.java) ->
                     StoresViewModel(diaryRepository)
 
+
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.linda.gourmetdiary.ext.getVmFactory
 
 import com.linda.gourmetdiary.databinding.DiarysFragmentBinding
+import com.linda.gourmetdiary.util.Logger
 
 class DiarysFragment : Fragment() {
 
@@ -22,6 +24,16 @@ class DiarysFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        binding.recyclerDiary.adapter = DiarysAdapter(DiarysAdapter.OnClickListener{
+            Logger.d("click, it = $it")
+        })
+
+        viewModel.diary.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Logger.i("observe diary list = $it")
+            }
+        })
 
         return binding.root
     }

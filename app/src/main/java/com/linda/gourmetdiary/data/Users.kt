@@ -22,15 +22,15 @@ data class Profile(
 @Parcelize
 data class Diary(
     var diaryId: String? = "",
-    var mainImage: String? = "https://i.imgur.com/eTuCPxM.jpg",
-    var images: String? = "https://i.imgur.com/ApuihUx.jpg",
-    var createdTime: String? = "",
+    var mainImage: String? = "",
+    var images: List<String>? = listOf(),
+    var createdTime: Long? = 0,
     var type: String? = "",
     val store: Store? = null,
     var food: Food? = null
-) : Parcelable
-//"https://i.imgur.com/eTuCPxM.jpg"
-//https://i.imgur.com/ApuihUx.jpg
+) : Parcelable {
+
+}
 
 @Parcelize
 data class Store(

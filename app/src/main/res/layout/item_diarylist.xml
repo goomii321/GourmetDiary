@@ -10,34 +10,47 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
-            android:paddingStart="16dp"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
+            app:cardBackgroundColor="@color/white_normal"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:timeToDisplayFormat="@{diarys.createdTime}"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/main_image"
+                    app:layout_constraintTop_toTopOf="@+id/main_image"/>
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:id="@+id/main_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/user_photo_illustration"
+                    android:layout_marginBottom="8dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:imageUrl="@{diarys.mainImage}"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

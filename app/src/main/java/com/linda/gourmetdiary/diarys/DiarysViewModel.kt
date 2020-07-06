@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.data.source.DiaryRepository
+import com.linda.gourmetdiary.util.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,9 +26,9 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    private var _users = MutableLiveData<List<Users>>()
-    val users: LiveData<List<Users>>
-        get() = _users
+    private var _diary = MutableLiveData<List<Diary>>()
+    val diary: LiveData<List<Diary>>
+        get() = _diary
 
     private val _refreshStatus = MutableLiveData<Boolean>()
     val refreshStatus: LiveData<Boolean>
@@ -47,7 +49,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             val result = repository.getUsersDiarys()
 
-            _users.value = when (result) {
+            _diary.value = when (result) {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
