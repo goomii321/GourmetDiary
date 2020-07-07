@@ -13,11 +13,20 @@ class MainViewModel(): ViewModel() {
 
     val currentFragmentType = MutableLiveData<CurrentFragmentType>()
 
-//    val currentDrawerToggleType: LiveData<DrawerToggleType> = Transformations.map(currentFragmentType) {
-//        when (it) {
-//
-//            else -> DrawerToggleType.NORMAL
-//        }
-//    }
+    private val _refresh = MutableLiveData<Boolean>()
+    val refresh: LiveData<Boolean>
+        get() = _refresh
+
+    fun refresh() {
+        if (!DiaryApplication.instance.isLiveDataDesign()) {
+            _refresh.value = true
+        }
+    }
+
+    fun onRefreshed() {
+        if (!DiaryApplication.instance.isLiveDataDesign()) {
+            _refresh.value = null
+        }
+    }
 
 }

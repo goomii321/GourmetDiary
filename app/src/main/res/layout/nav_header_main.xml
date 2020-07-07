@@ -44,7 +44,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/noto_sans"
-            android:textColor="@color/white_normal"
             android:text="@string/user_name"
             android:textSize="24sp"
             android:textStyle="bold"

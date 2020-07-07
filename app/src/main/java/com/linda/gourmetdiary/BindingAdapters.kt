@@ -12,11 +12,13 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.database.DatabaseReference
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.network.LoadApiStatus
-import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.diarys.DiarysAdapter
+import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
+import com.linda.gourmetdiary.network.LoadApiStatus
 import java.util.*
+
 
 @BindingAdapter("diary")
 fun bindRecyclerView(recyclerView: RecyclerView, diary: List<Diary>?) {
@@ -37,9 +39,22 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.common_google_signin_btn_icon_dark_normal)
-                    .error(R.drawable.common_google_signin_btn_icon_dark_normal))
+                    .placeholder(R.drawable.blacktea_2024946)
+                    .error(R.drawable.blacktea_2024946))
             .into(imgView)
+    }
+}
+
+@BindingAdapter("images")
+fun bindRecyclerViewWithImages(recyclerView: RecyclerView, images: List<String>?) {
+    images?.let {
+        recyclerView.adapter?.apply {
+            when (this) {
+                is DiaryGalleryAdapter -> {
+                    submitImages(it)
+                }
+            }
+        }
     }
 }
 
@@ -51,7 +66,7 @@ fun bindDisplayFormatTime(textView: TextView, time: Long?) {
 
 @RequiresApi(Build.VERSION_CODES.N)
 fun Long.toDisplayFormat(): String {
-    return SimpleDateFormat("yyyy.MM.dd hh:mm", Locale.TAIWAN).format(this)
+    return SimpleDateFormat("yyyy.MM.dd hh:mm").format(this)
 }
 
 

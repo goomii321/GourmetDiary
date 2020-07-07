@@ -2,6 +2,7 @@ package com.linda.gourmetdiary.data.source.local
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.Users
@@ -20,6 +21,10 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     }
 
     override suspend fun postDiary(diarys: Diary): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLiveDiary(): MutableLiveData<List<Diary>> {
         TODO("Not yet implemented")
     }
 }

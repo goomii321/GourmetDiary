@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.home.HomeViewModel" />
@@ -28,8 +29,10 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
             android:alpha="0.4"
-            android:background="@color/shironezumi"
+            android:background="@drawable/corner_shape"
             app:layout_constraintBottom_toBottomOf="@+id/title_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +47,7 @@
             android:fontFamily="@font/jf_openhuninn_"
             android:text="@string/good_morning"
             android:textColor="@color/hiwada"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -59,10 +62,34 @@
             android:paddingBottom="16dp"
             android:text="@string/greeting"
             android:textColor="@color/hiwada"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.4"
+            android:background="@drawable/corner_shape"
+            app:layout_constraintBottom_toBottomOf="@+id/home_reminder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/home_reminder"
+            style="@style/text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:gravity="center"
+            android:text="本週已吃過4次王品囉!!"
+            app:layout_constraintTop_toTopOf="@+id/view2"
+            app:layout_constraintStart_toStartOf="@+id/view2"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fbtn"
@@ -71,8 +98,8 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:clickable="true"
-            app:fabSize="normal"
             android:src="@drawable/ic_add_black_24dp"
+            app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -83,8 +110,8 @@
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/baseline_mode_comment_black_18dp"
-            app:fabSize="mini"
             android:visibility="invisible"
+            app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@+id/add_fbtn"
             app:layout_constraintEnd_toEndOf="@+id/add_fbtn"
             app:layout_constraintStart_toStartOf="@+id/add_fbtn" />
@@ -96,8 +123,8 @@
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/baseline_add_circle_outline_black_18dp"
-            app:fabSize="mini"
             android:visibility="invisible"
+            app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@+id/reminder"
             app:layout_constraintEnd_toEndOf="@+id/reminder"
             app:layout_constraintStart_toStartOf="@+id/reminder" />

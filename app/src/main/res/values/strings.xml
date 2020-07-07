@@ -8,7 +8,7 @@
     <string name="good_morning">早安 :)</string>
     <string name="good_evening">午安 ;)</string>
     <string name="good_afternoon">晚安 Zzz</string>
-    <string name="greeting">我不是正在吃，\n <n>  \u00A0     </n>就是在去吃的路上</string>
+    <string name="greeting">我不是正在吃，就是在去吃的路上</string>
 
     <!-- menu item -->
     <string name="menu_diarys">每週日記</string>
@@ -35,6 +35,12 @@
     <string name="add_healthy">健康度</string>
     <string name="add_price">價格</string>
     <string name="next_time_text">下次想嘗試...</string>
+    <string name="memo_title">備忘錄</string>
+    <string name="store_branch">分店</string>
+    <string name="store_min_order">最低消費</string>
+    <string name="store_booking">是否可訂位</string>
+    <string name="store_time">營業時段</string>
+    <string name="store_web">網站/粉專</string>
 
 
 </resources>
