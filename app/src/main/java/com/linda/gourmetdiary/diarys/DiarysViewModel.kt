@@ -26,6 +26,8 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
+    var liveDiary = MutableLiveData<List<Diary>>()
+
     private var _diary = MutableLiveData<List<Diary>>()
     val diary: LiveData<List<Diary>>
         get() = _diary
@@ -34,11 +36,19 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
+    private val _navigateToDetail = MutableLiveData<Diary>()
+    val navigateToDetail: LiveData<Diary>
+        get() = _navigateToDetail
+
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
-        getUsersResult()
+        if (DiaryApplication.instance.isLiveDataDesign()) {
+            getLiveDiaryResult()
+        } else {
+            getUsersResult()
+        }
     }
 
     private fun getUsersResult() {
@@ -73,5 +83,30 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
             }
             _refreshStatus.value = false
         }
+    }
+    fun refresh() {
+
+        if (DiaryApplication.instance.isLiveDataDesign()) {
+            _status.value = LoadApiStatus.DONE
+            _refreshStatus.value = false
+
+        } else {
+            if (status.value != LoadApiStatus.LOADING) {
+                getUsersResult()
+            }
+        }
+    }
+    fun getLiveDiaryResult() {
+        liveDiary = repository.getLiveDiary()
+        _status.value = LoadApiStatus.DONE
+        _refreshStatus.value = false
+    }
+
+    fun navigateToDetail(diary: Diary) {
+        _navigateToDetail.value = diary
+    }
+
+    fun onDetailNavigated() {
+        _navigateToDetail.value = null
     }
 }

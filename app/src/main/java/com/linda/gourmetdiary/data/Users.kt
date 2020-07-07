@@ -23,7 +23,7 @@ data class Profile(
 data class Diary(
     var diaryId: String? = "",
     var mainImage: String? = "",
-    var images: List<String>? = listOf(),
+    var images: List<String>? = listOf("https://cdn.pixabay.com/photo/2013/07/13/09/37/taco-155812_960_720.png"),
     var createdTime: Long? = 0,
     var type: String? = "",
     val store: Store? = null,
@@ -39,10 +39,10 @@ data class Store(
     var storePhone: String? ="",
     var storeBooking: Boolean? = null,
     var storeBranch: String? = "",
-    var storeHtml: String? = "",
-    var storeLocation: String? = "",
-    var storeMinOrder: String? = "",
-    var storeOpenTime: String? = ""
+    var storeHtml: String? = "www",
+    var storeLocation: String? = "e34",
+    var storeMinOrder: String? = "300",
+    var storeOpenTime: String? = "7:00"
 ) : Parcelable
 
 @Parcelize
