@@ -14,9 +14,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.DatabaseReference
 import com.linda.gourmetdiary.data.Diary
+import com.linda.gourmetdiary.data.Store
+import com.linda.gourmetdiary.data.Stores
 import com.linda.gourmetdiary.diarys.DiarysAdapter
 import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
 import com.linda.gourmetdiary.network.LoadApiStatus
+import com.linda.gourmetdiary.stores.StoresAdapter
 import java.util.*
 
 
@@ -31,6 +34,17 @@ fun bindRecyclerView(recyclerView: RecyclerView, diary: List<Diary>?) {
     }
 }
 
+@BindingAdapter("store")
+fun bindStoreRecyclerView(recyclerView: RecyclerView, stores: List<Stores>?) {
+    stores?.let {
+        recyclerView.adapter?.apply {
+            when (this) {
+                is StoresAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
@@ -39,8 +53,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.blacktea_2024946)
-                    .error(R.drawable.blacktea_2024946))
+                    .placeholder(R.drawable.placeholder_cake)
+                    .error(R.drawable.placeholder_cake))
             .into(imgView)
     }
 }

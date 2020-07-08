@@ -13,6 +13,7 @@ data class Stores(
     var storeHtml: String? = "",
     var storeLocation: String? = "",
     var storeMinOrder: String? = "",
-    var storeOpenTime: String? = ""
+    var storeOpenTime: String? = "",
+    var storeMainImage: String? = ""
 ) : Parcelable
 

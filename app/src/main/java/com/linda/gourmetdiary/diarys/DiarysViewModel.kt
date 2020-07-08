@@ -8,9 +8,7 @@ import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
-import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.data.source.DiaryRepository
-import com.linda.gourmetdiary.util.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

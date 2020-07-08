@@ -166,7 +166,7 @@
                     app:layout_constraintTop_toTopOf="@id/content"/>
 
                 <TextView
-                    android:id="@+id/reminde_title"
+                    android:id="@+id/remind_title"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -176,6 +176,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/food_content_text" />
 
+                <TextView
+                    android:id="@+id/remind_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.food.nextTimeRemind}"
+                    app:layout_constraintStart_toEndOf="@+id/remind_title"
+                    app:layout_constraintTop_toTopOf="@id/remind_title"/>
                 <View
                     android:id="@+id/divider_store"
                     android:layout_width="match_parent"
@@ -184,7 +193,7 @@
                     android:layout_marginTop="16dp"
                     android:alpha="0.8"
                     android:background="@color/sunezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/reminde_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/remind_text" />
 
                 <TextView
                     android:id="@+id/store_title"
@@ -196,6 +205,16 @@
                     android:text="@string/store_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider_store" />
+
+                <TextView
+                    android:id="@+id/store_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.store.storeName}"
+                    app:layout_constraintStart_toEndOf="@+id/store_title"
+                    app:layout_constraintTop_toTopOf="@id/store_title"/>
 
                 <TextView
                     android:id="@+id/store_branch"
@@ -240,6 +259,16 @@
                     android:text="@string/store_phone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/store_booking" />
+
+                <TextView
+                    android:id="@+id/phone_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.store.storePhone}"
+                    app:layout_constraintStart_toEndOf="@+id/store_phone"
+                    app:layout_constraintTop_toTopOf="@id/store_phone"/>
 
                 <TextView
                     android:id="@+id/store_time"

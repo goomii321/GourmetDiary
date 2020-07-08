@@ -15,7 +15,7 @@ class DiarysAdapter(private val onClickListener: OnClickListener): ListAdapter<D
         fun onClick(diary: Diary) = clickListener(diary)
     }
 
-    class ArticleViewHolder(private var binding: ItemDiarylistBinding):
+    class DiaryViewHolder(private var binding: ItemDiarylistBinding):
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(diary: Diary, onClickListener: OnClickListener) {
@@ -39,7 +39,7 @@ class DiarysAdapter(private val onClickListener: OnClickListener): ListAdapter<D
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_ARTICLE -> ArticleViewHolder(ItemDiarylistBinding.inflate(
+            ITEM_VIEW_TYPE_ARTICLE -> DiaryViewHolder(ItemDiarylistBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false))
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
@@ -48,7 +48,7 @@ class DiarysAdapter(private val onClickListener: OnClickListener): ListAdapter<D
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder) {
-            is ArticleViewHolder -> {
+            is DiaryViewHolder -> {
                 holder.bind((getItem(position) as Diary),onClickListener)
             }
         }
