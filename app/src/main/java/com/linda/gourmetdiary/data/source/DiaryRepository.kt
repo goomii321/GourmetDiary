@@ -23,4 +23,8 @@ interface DiaryRepository {
 
     suspend fun getStore(): Result<List<Stores>>
 
+    fun getLiveStore(): MutableLiveData<List<Stores>>
+
+    suspend fun queryDiaryCount(): Result<Int>
+
 }

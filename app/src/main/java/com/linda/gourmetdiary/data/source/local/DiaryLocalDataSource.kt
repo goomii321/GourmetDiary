@@ -32,4 +32,12 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     override suspend fun getStore(): Result<List<Stores>> {
         TODO("Not yet implemented")
     }
+
+    override fun getLiveStore(): MutableLiveData<List<Stores>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryDiaryCount(): Result<Int> {
+        TODO("Not yet implemented")
+    }
 }

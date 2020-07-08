@@ -3,8 +3,10 @@ package com.linda.gourmetdiary.ext
 import androidx.fragment.app.Fragment
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.data.Diary
+import com.linda.gourmetdiary.data.Stores
 import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.factory.DiarysViewModelFactory
+import com.linda.gourmetdiary.factory.StoresViewModelFactory
 import com.linda.gourmetdiary.factory.ViewModelFactory
 
 /**
@@ -17,8 +19,12 @@ fun Fragment.getVmFactory(): ViewModelFactory {
     return ViewModelFactory(repository)
 }
 
-
 fun Fragment.getVmFactory(diarys: Diary?): DiarysViewModelFactory {
     val repository = (requireContext().applicationContext as DiaryApplication).diaryRepository
     return DiarysViewModelFactory(repository, diarys)
+}
+
+fun Fragment.getVmFactory(stores: Stores?): StoresViewModelFactory {
+    val repository = (requireContext().applicationContext as DiaryApplication).diaryRepository
+    return StoresViewModelFactory(repository, stores)
 }

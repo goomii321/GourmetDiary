@@ -7,7 +7,9 @@
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.stores.StoresViewModel" />
-
+        <variable
+            name="isLiveDataDesign"
+            type="Boolean"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +33,7 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="2"
-                app:store="@{viewModel.store}"/>
+                app:store="@{isLiveDataDesign ? viewModel.liveStore : viewModel.store}"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

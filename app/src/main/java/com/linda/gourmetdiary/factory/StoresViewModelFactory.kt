@@ -2,25 +2,21 @@ package com.linda.gourmetdiary.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.linda.gourmetdiary.adding.AddDiaryViewModel
-import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Users
+import com.linda.gourmetdiary.data.Stores
 import com.linda.gourmetdiary.data.source.DiaryRepository
-import com.linda.gourmetdiary.diarys.detail.DiaryDetailViewModel
+import com.linda.gourmetdiary.stores.detail.StoreDetailViewModel
 
 @Suppress("UNCHECKED_CAST")
-class DiarysViewModelFactory constructor(
+class StoresViewModelFactory constructor(
     private val diaryRepository: DiaryRepository,
-    private val diarys: Diary?
+    private val stores: Stores?
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(AddDiaryViewModel::class.java) ->
-                    AddDiaryViewModel(diaryRepository,diarys)
-                isAssignableFrom(DiaryDetailViewModel::class.java) ->
-                    DiaryDetailViewModel(diaryRepository,diarys)
+                isAssignableFrom(StoreDetailViewModel::class.java) ->
+                    StoreDetailViewModel(diaryRepository,stores)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

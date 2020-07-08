@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.MainViewModel
+import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.ext.getVmFactory
 
 import com.linda.gourmetdiary.databinding.StoresFragmentBinding
@@ -25,11 +28,35 @@ class StoresFragment : Fragment() {
         val binding = StoresFragmentBinding.inflate(inflater,container,false)
 
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.isLiveDataDesign = DiaryApplication.instance.isLiveDataDesign()
         binding.viewModel = viewModel
 
         binding.storeListRecycler.adapter = StoresAdapter(StoresAdapter.OnClickListener{
-            Logger.d("click item , it = $it")
-//            viewModel.navigateToDetail(it)
+            viewModel.navigateToDetail(it)
+        })
+
+        binding.layoutSwipeRefreshStore.setOnRefreshListener {
+            viewModel.refresh()
+        }
+
+        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.layoutSwipeRefreshStore.isRefreshing = it
+            }
+        })
+
+        viewModel.liveStore.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.viewModel = viewModel
+            }
+        })
+
+        viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Logger.d("navigate $it")
+                findNavController().navigate(NavigationDirections.navigateToStoreDetail(it))
+                viewModel.onDetailNavigated()
+            }
         })
 
         ViewModelProvider(requireActivity()).get(MainViewModel::class.java).apply {

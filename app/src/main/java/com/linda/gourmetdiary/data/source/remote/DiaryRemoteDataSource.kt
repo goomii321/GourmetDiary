@@ -91,8 +91,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             diarys.createdTime = Calendar.getInstance().timeInMillis
 
             diarys.store?.let {
-                stores
-                    .set(it)
+                stores.set(it)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Logger.i("stores: ${diarys.store}")
@@ -106,23 +105,23 @@ object DiaryRemoteDataSource : DiaryDataSource {
                             continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
                         }
                     }
-                document
-                    .set(diarys)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Logger.i("diary: $diarys")
-                            continuation.resume(Result.Success(true))
-                        } else {
-                            task.exception?.let {
-
-                                Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                                continuation.resume(Result.Error(it))
-                                return@addOnCompleteListener
-                            }
-                            continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
-                        }
-                    }
             }
+            document.set(diarys)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Logger.i("diary: $diarys")
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                    }
+                }
+
         }
 
     override fun getLiveDiary(): MutableLiveData<List<Diary>> {
@@ -169,6 +168,59 @@ object DiaryRemoteDataSource : DiaryDataSource {
                         list.add(store)
                     }
                     continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+
+                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                }
+            }
+    }
+
+    override fun getLiveStore(): MutableLiveData<List<Stores>> {
+        val liveData = MutableLiveData<List<Stores>>()
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_STORESS)
+//            .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, exception ->
+
+                Logger.i("addSnapshotListener detect")
+
+                exception?.let {
+                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                }
+
+                val list = mutableListOf<Stores>()
+                for (document in snapshot!!) {
+                    Logger.d(document.id + " => " + document.data)
+
+                    val liveDiary = document.toObject(Stores::class.java)
+                    list.add(liveDiary)
+                }
+
+                liveData.value = list
+            }
+        return liveData
+    }
+
+    override suspend fun queryDiaryCount(): Result<Int> = suspendCoroutine { continuation ->
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
+            .document("G1P80SW55MbkixdY69cx")
+            .collection(PATH_DIARYS)
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    var count = 0
+                    if (task.result?.count() != 0) {
+                        count = task.result?.size()!!
+                        Logger.d("success $count, ${task.result}")
+                    }
+                    continuation.resume(Result.Success(count))
                 } else {
                     task.exception?.let {
 
