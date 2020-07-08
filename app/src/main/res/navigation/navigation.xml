@@ -64,4 +64,16 @@
     <action
         android:id="@+id/navigate_to_diary_detail" app:destination="@+id/diaryDetailFragment"
         app:popUpTo="@id/diarysFragment" app:popUpToInclusive="false"/>
+    <fragment
+        android:id="@+id/storeDetailFragment"
+        android:name="com.linda.gourmetdiary.stores.detail.StoreDetailFragment"
+        android:label="StoreDetailFragment" >
+        <argument
+            android:name="store"
+            app:argType="com.linda.gourmetdiary.data.Stores"
+            app:nullable="true" />
+    </fragment>
+    <action
+        android:id="@+id/navigate_to_store_detail" app:destination="@+id/storeDetailFragment"
+        app:popUpTo="@id/storesFragment" app:popUpToInclusive="false"/>
 </navigation>

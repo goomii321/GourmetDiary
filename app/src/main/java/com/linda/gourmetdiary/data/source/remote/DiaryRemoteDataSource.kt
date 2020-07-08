@@ -9,9 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
-import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Result
-import com.linda.gourmetdiary.data.Users
+import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryDataSource
 import com.linda.gourmetdiary.util.Logger
 import kotlin.coroutines.resume
@@ -31,24 +29,24 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
     override suspend fun getUsersDiarys(): Result<List<Diary>> = suspendCoroutine { continuation ->
 
-        FirebaseFirestore.getInstance()
-            .collection(PATH_USERS)
-            .document("G1P80SW55MbkixdY69cx")
-            .collection(PATH_DIARYS)
-            .whereGreaterThanOrEqualTo("createdTime", 1594018156710)
-            .whereLessThanOrEqualTo("createdTime", 1594018584070)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (document in task.result!!) {
-                        Logger.i("timestamp: " + document.data)
-                    }
-                } else {
-                    task.exception?.let {
-                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                    }
-                }
-            }
+//        FirebaseFirestore.getInstance()
+//            .collection(PATH_USERS)
+//            .document("G1P80SW55MbkixdY69cx")
+//            .collection(PATH_DIARYS)
+//            .whereGreaterThanOrEqualTo("createdTime", 1594018156710)
+//            .whereLessThanOrEqualTo("createdTime", 1594018584070)
+//            .get()
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    for (document in task.result!!) {
+//                        Logger.i("timestamp: " + document.data)
+//                    }
+//                } else {
+//                    task.exception?.let {
+//                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
+//                    }
+//                }
+//            }
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
@@ -79,6 +77,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postDiary(diarys: Diary): Result<Boolean> =
         suspendCoroutine { continuation ->
             val diary = FirebaseFirestore.getInstance().collection(PATH_USERS)
@@ -153,5 +152,32 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 liveData.value = list
             }
         return liveData
+    }
+
+    override suspend fun getStore(): Result<List<Stores>> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(PATH_STORESS)
+//            .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Stores>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + "=>" + document.data)
+
+                        val store = document.toObject(Stores::class.java)
+                        list.add(store)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+
+                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                }
+            }
     }
 }

@@ -31,7 +31,6 @@ class DiarysFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.recyclerDiary.adapter = DiarysAdapter(DiarysAdapter.OnClickListener{
-            Logger.d("clice item , it = $it")
             viewModel.navigateToDetail(it)
         })
 

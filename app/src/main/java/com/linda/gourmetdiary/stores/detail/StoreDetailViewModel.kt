@@ -2,6 +2,6 @@ package com.linda.gourmetdiary.stores.detail
 
 import androidx.lifecycle.ViewModel
 
-class StoreViewModel : ViewModel() {
+class StoreDetailViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }
