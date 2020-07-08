@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.linda.gourmetdiary.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,9 +15,11 @@
         tools:context=".profile.ProfileFragment">
 
         <TextView
+            android:id="@+id/text_profile"
+            style="@style/text_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="profile"
+            android:text="@{viewModel.convertLongToString(viewModel.count)}"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

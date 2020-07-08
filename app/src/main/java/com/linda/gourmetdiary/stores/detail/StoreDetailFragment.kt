@@ -14,13 +14,17 @@ import com.linda.gourmetdiary.databinding.StoresFragmentBinding
 
 class StoreDetailFragment : Fragment() {
 
-    val viewModel by viewModels<StoreDetailViewModel> { getVmFactory() }
+    val viewModel by viewModels<StoreDetailViewModel> { getVmFactory(StoreDetailFragmentArgs.fromBundle(requireArguments()).store) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = DetailStoreFragmentBinding.inflate(inflater,container,false)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         return binding.root
     }
 

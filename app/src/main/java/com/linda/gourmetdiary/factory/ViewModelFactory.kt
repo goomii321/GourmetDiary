@@ -6,13 +6,9 @@ import com.linda.gourmetdiary.MainViewModel
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.diarys.DiarysViewModel
 import com.linda.gourmetdiary.home.HomeViewModel
+import com.linda.gourmetdiary.profile.ProfileViewModel
 import com.linda.gourmetdiary.stores.StoresViewModel
 
-/**
- * Created by Wayne Chen in Jul. 2019.
- *
- * Factory for all ViewModels.
- */
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
     private val diaryRepository: DiaryRepository
@@ -32,6 +28,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(StoresViewModel::class.java) ->
                     StoresViewModel(diaryRepository)
+
+                isAssignableFrom(ProfileViewModel::class.java) ->
+                    ProfileViewModel(diaryRepository)
 
 
                 else ->

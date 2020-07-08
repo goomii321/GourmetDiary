@@ -19,6 +19,10 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = ProfileFragmentBinding.inflate(inflater,container,false)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         return binding.root
     }
 }
