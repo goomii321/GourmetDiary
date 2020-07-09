@@ -12,13 +12,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/diary_detail_gallery"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/black_sumi">
+
         <ImageView
             android:id="@+id/image_gallery"
             android:layout_width="wrap_content"
-            android:layout_height="300dp"
-            app:layout_constraintDimensionRatio="1.9:1"
+            android:layout_height="@dimen/height_detail_gallery"
             app:imageUrl="@{image}"
+            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"

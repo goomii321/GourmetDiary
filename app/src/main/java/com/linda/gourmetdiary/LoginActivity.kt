@@ -3,10 +3,14 @@ package com.linda.gourmetdiary
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import app.appworks.school.stylish.ext.getVmFactory
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -22,6 +26,7 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.linda.gourmetdiary.data.LogIn
 import kotlinx.android.synthetic.main.activity_login.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -29,6 +34,9 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
+
+    val viewModel by viewModels<MainViewModel> { getVmFactory() }
+
     var auth : FirebaseAuth? = null
     var googleSignInClient : GoogleSignInClient? = null
     var GOOGLE_LOGIN_CODE = 9001
@@ -42,11 +50,9 @@ class LoginActivity : AppCompatActivity() {
 //            signinAndSignup()
 //        }
         google_sign_in_button.setOnClickListener {
-            //First step
             googleLogin()
         }
         facebook_login_button.setOnClickListener {
-            //First step
             facebookLogin()
         }
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -62,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         moveMainPage(auth?.currentUser)
     }
+
     fun printHashKey() {
         try {
             val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
@@ -78,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
     fun googleLogin(){
         var signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent,GOOGLE_LOGIN_CODE)
@@ -103,16 +111,19 @@ class LoginActivity : AppCompatActivity() {
 
             })
     }
+
     fun handleFacebookAccessToken(token : AccessToken?){
         var credential = FacebookAuthProvider.getCredential(token?.token!!)
-        auth?.signInWithCredential(credential)
-            ?.addOnCompleteListener {
-                    task ->
-                if(task.isSuccessful){
 
-                    //Third step
-                    //Login
+        auth?.signInWithCredential(credential)
+            ?.addOnCompleteListener { task ->
+
+                if(task.isSuccessful){
                     moveMainPage(task.result?.user)
+                    Log.i("fb","success result = ${task.result?.user?.displayName}," +
+                            "${task.result?.user?.email},${task.result?.user?.photoUrl}")
+                    viewModel.logInData.value?.userName = task.result?.user?.displayName
+                    viewModel.logInData.value?.userPhoto = task.result?.user?.photoUrl.toString()
                 }else{
                     //Show the error message
                     Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
@@ -123,17 +134,24 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager?.onActivityResult(requestCode,resultCode,data)
+
         if(requestCode == GOOGLE_LOGIN_CODE){
+
             var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+
             if (result != null) {
                 if(result.isSuccess){
                     var account = result.signInAccount
-                    //Second step
+                    Log.i("google","result = ${account?.displayName},${account?.id}," +
+                            "${account?.email}, ${account?.idToken},${account?.photoUrl}")
+                    viewModel.logInData.value?.userName = account?.displayName
+                    viewModel.logInData.value?.userPhoto = account?.photoUrl.toString()
                     firebaseAuthWithGoogle(account)
                 }
             }
         }
     }
+
     fun firebaseAuthWithGoogle(account : GoogleSignInAccount?){
         var credential = GoogleAuthProvider.getCredential(account?.idToken,null)
         auth?.signInWithCredential(credential)

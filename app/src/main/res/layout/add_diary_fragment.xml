@@ -143,27 +143,39 @@
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <ImageView
+                    android:id="@+id/right_arrow"
+                    android:layout_width="24dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/baseline_keyboard_arrow_right_black_18dp"
+                    android:visibility="@{viewModel.foodStatus == false || viewModel.saveMinute != null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/eating_time"
+                    app:layout_constraintBottom_toBottomOf="@+id/eating_time"/>
+
+                <TextView
+                    android:id="@+id/time_show"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="@+id/eating_time"
+                    app:layout_constraintEnd_toEndOf="@+id/right_arrow"
+                    app:layout_constraintTop_toTopOf="@+id/eating_time"
+                    app:layout_constraintBottom_toBottomOf="@+id/eating_time"/>
+
                 <TextView
                     android:id="@+id/eating_time"
                     style="@style/text_style"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/eating_time"
                     android:textSize="18sp"
                     android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintEnd_toStartOf="@+id/right_arrow"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/price" />
-
-                <ImageView
-                    android:id="@+id/right_arrow"
-                    android:layout_width="32dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/eating_time" />
 
                 <TextView
                     android:id="@+id/rating"

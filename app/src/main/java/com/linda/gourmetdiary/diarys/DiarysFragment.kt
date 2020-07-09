@@ -15,6 +15,8 @@ import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.DiarysFragmentBinding
 import com.linda.gourmetdiary.util.Logger
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DiarysFragment : Fragment() {
 
@@ -24,6 +26,10 @@ class DiarysFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val calender = Calendar.getInstance(Locale.TAIWAN)
+        var date = calender.time
+        var nowTime = SimpleDateFormat("yyyy.MM.dd hh:mm").format(date)
+
         val binding = DiarysFragmentBinding.inflate(inflater,container,false)
 
         binding.lifecycleOwner = viewLifecycleOwner
