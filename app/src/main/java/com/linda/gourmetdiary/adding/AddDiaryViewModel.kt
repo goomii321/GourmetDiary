@@ -19,6 +19,18 @@ import java.util.*
 class AddDiaryViewModel(private val repository: DiaryRepository,
                         private val diarys: Diary?) : ViewModel() {
 
+    var year = 0
+    var month = 0
+    var day = 0
+    var hour = 0
+    var minute = 0
+
+    var saveYear = MutableLiveData<Int>()
+    var saveMonth = MutableLiveData<Int>()
+    var saveDay = MutableLiveData<Int>()
+    var saveHour = MutableLiveData<Int>()
+    var saveMinute = MutableLiveData<Int>()
+
     private val _user = MutableLiveData<Users>().apply {
         value = Users(
             diarys = Diary(food = Food(), store = Store())

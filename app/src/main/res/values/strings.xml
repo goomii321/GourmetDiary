@@ -15,7 +15,7 @@
     <string name="menu_stores">餐廳總覽</string>
     <string name="menu_profile">個人資訊</string>
     <string name="setting">設定</string>
-    <string name="login">登入</string>
+    <string name="log_out">登出</string>
     <string name="menu_home">主頁面</string>
     <string name="user_name">user name</string>
 
@@ -30,7 +30,7 @@
     <string name="store_phone">連絡電話</string>
     <string name="store_location">地址</string>
     <string name="ng_msg">NG</string>
-    <string name="eating_time">用餐時段</string>
+    <string name="eating_time">用餐時間</string>
     <string name="add_rating">評價分數</string>
     <string name="add_healthy">健康度</string>
     <string name="add_price">價格</string>
@@ -42,10 +42,13 @@
     <string name="store_time">營業時段</string>
     <string name="store_web">網站/粉專</string>
 
-    <string name="signin_facebook">臉書</string>
-    <string name="signin_google">估狗</string>
+    <string name="signin_facebook">Facebook 帳戶登入</string>
+    <string name="signin_google">Google 帳戶登入</string>
 
     <string name="facebook_application_id">307121663756980</string>
     <string name="facebook_app_id">307121663756980</string>
+    <string name="log_out_question">請問確定要登出嗎?</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
 
 </resources>

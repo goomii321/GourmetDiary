@@ -32,7 +32,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_detail_gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:images="@{viewModel.diary.images}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

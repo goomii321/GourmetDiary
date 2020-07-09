@@ -2,10 +2,12 @@ package com.linda.gourmetdiary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -16,6 +18,8 @@ import com.google.android.material.navigation.NavigationView
 import com.linda.gourmetdiary.databinding.ActivityMainBinding
 import com.linda.gourmetdiary.util.CurrentFragmentType
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,19 +47,31 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_profile)
                 return@OnNavigationItemSelectedListener  true
             }
+            R.id.logOutDialog -> {
+                findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_log_Out)
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val calender = Calendar.getInstance(Locale.TAIWAN)
+        var date = calender.time
+        var nowTime = SimpleDateFormat("yyyy.MM.dd hh:mm").format(date)
+        Log.i("date","1 = $date, 2 = $calender , 3 = $nowTime")
 
         binding= DataBindingUtil.setContentView(this,R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        viewModel.logInData.observe(this, Observer {
+            Log.i("linda","log in data is ${it.userPhoto}, ${it.userName}")
+        })
 
         setupDrawer()
         setupNavController()

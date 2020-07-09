@@ -26,6 +26,7 @@ class HomeFragment : Fragment() {
         val fabOpen = AnimationUtils.loadAnimation(context,R.anim.fab_open)
         val fabClose = AnimationUtils.loadAnimation(context,R.anim.fab_close)
         val fabRotate = AnimationUtils.loadAnimation(context,R.anim.rotate_clockwise)
+        val unfabRotate = AnimationUtils.loadAnimation(context,R.anim.rotate_anticlockwise)
 
         val binding = HomeFragmentBinding.inflate(inflater,container,false)
 
@@ -42,7 +43,7 @@ class HomeFragment : Fragment() {
             } else {
                 binding.reminder.startAnimation(fabOpen)
                 binding.addDefault.startAnimation(fabOpen)
-                binding.addFbtn.startAnimation(fabRotate)
+                binding.addFbtn.startAnimation(unfabRotate)
 
                 isOpen = true
             }

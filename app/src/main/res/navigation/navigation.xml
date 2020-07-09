@@ -76,4 +76,11 @@
     <action
         android:id="@+id/navigate_to_store_detail" app:destination="@+id/storeDetailFragment"
         app:popUpTo="@id/storesFragment" app:popUpToInclusive="false"/>
+    <dialog
+        android:id="@+id/logOutDialog"
+        android:name="com.linda.gourmetdiary.usermanager.LogOutDialog"
+        android:label="LogOutDialog" />
+    <action
+        android:id="@+id/navigate_to_log_Out" app:destination="@+id/logOutDialog"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
 </navigation>

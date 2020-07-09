@@ -93,23 +93,25 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fbtn"
+            android:theme="@style/button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:clickable="true"
-            android:src="@drawable/ic_add_black_24dp"
+            android:src="@drawable/ic_restaurant_menu_white_24dp"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/reminder"
+            android:theme="@style/button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:src="@drawable/baseline_mode_comment_black_18dp"
+            android:src="@drawable/ic_insert_drive_file_white_24dp"
             android:visibility="invisible"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@+id/add_fbtn"
@@ -118,11 +120,12 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_default"
+            android:theme="@style/button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:src="@drawable/baseline_add_circle_outline_black_18dp"
+            android:src="@drawable/ic_add_white_24dp"
             android:visibility="invisible"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@+id/reminder"

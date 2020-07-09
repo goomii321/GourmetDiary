@@ -25,8 +25,8 @@
     </group>
     <group android:id="@+id/menu_second">
         <item
-            android:id="@+id/loginFragment"
-            android:title="@string/login" />
+            android:id="@+id/logOutDialog"
+            android:title="@string/log_out" />
     </group>
 
 
