@@ -39,6 +39,10 @@ class AddDiaryViewModel(private val repository: DiaryRepository,
     val user: LiveData<Users>
         get() = _user
 
+    val images = MutableLiveData<MutableList<String>>().apply {
+        value = mutableListOf()
+    }
+
     private val _status = MutableLiveData<LoadApiStatus>()
     val status: LiveData<LoadApiStatus>
         get() = _status

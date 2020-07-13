@@ -51,6 +51,8 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         )
     }
 
+    lateinit var binding: AddDiaryFragmentBinding
+
     companion object {
         private val REQUEST_CODE = 100
         private val PERMISSION_CODE = 1001
@@ -63,14 +65,15 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = AddDiaryFragmentBinding.inflate(inflater, container, false)
+        binding = AddDiaryFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.addDiaryRecycler.adapter = AddDiaryAdapter()
 
         var ratingScore = viewModel.foodRating.value
         var healthyScore = viewModel.healthyScore.value
 
-        binding.addingMainImages.setOnClickListener {
+        binding.testImage.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
@@ -131,6 +134,14 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             viewModel.user.value?.diarys?.eatingTime = test
         })
 
+        //set images
+        viewModel.images.observe(viewLifecycleOwner, Observer {
+            Log.i("images","images = $it")
+            it?.let {
+                (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitList(it)
+                (binding.addDiaryRecycler.adapter as AddDiaryAdapter).notifyDataSetChanged()
+            }
+        })
 
         viewModel.status.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
@@ -191,7 +202,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
             saveUri = data?.data
-            test_image.setImageURI(data?.data)
+//            test_image.setImageURI(data?.data)
             uploadImage()
         }
     }
@@ -214,15 +225,25 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     private fun uploadImage() {
+        var firstPhoto = true
         val filename = UUID.randomUUID().toString()
         val image = MutableLiveData<String>()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
         ref.putFile(saveUri!!)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
-                    Logger.d("$it")
+                    Logger.d("downloadUrl $it")
                     image.value = it.toString()
-                    viewModel.user.value?.diarys?.mainImage = image.value
+                    if (firstPhoto) {
+                        viewModel.user.value?.diarys?.mainImage = image.value
+                        firstPhoto = false
+                    } else {
+                        viewModel.user.value?.diarys?.images = listOf(listOf(image.value).toString())
+                    }
+                    Logger.d("viewModel mainImage = ${viewModel.user.value?.diarys?.mainImage}; images = ${ viewModel.user.value?.diarys?.images}")
+
+                    viewModel.images.value?.add(it.toString())
+                    viewModel.images.value = viewModel.images.value
                 }
             }
     }

@@ -32,22 +32,24 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/add_diary_recycler"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:orientation="horizontal"
                     android:layout_marginTop="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toStartOf="@+id/test_image"/>
 
                 <ImageView
                     android:id="@+id/test_image"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="100dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:background="@drawable/corner_image_border"
+                    android:layout_marginHorizontal="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/divider1"
-                    app:layout_constraintEnd_toEndOf="@+id/add_diary_recycler"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -56,10 +58,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/adding_image"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/add_diary_recycler" />
+                    app:layout_constraintBottom_toBottomOf="@+id/test_image"
+                    app:layout_constraintEnd_toEndOf="@+id/test_image"
+                    app:layout_constraintStart_toStartOf="@+id/test_image" />
 
                 <View
                     android:id="@+id/divider1"
