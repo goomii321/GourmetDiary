@@ -145,6 +145,27 @@
                     app:layout_constraintTop_toBottomOf="@id/food_combo_text" />
 
                 <TextView
+                    android:id="@+id/eating_time"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/eating_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/price" />
+
+                <TextView
+                    android:id="@+id/eating_time_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:timeToDisplayFormat="@{viewModel.diary.eatingTime}"
+                    app:layout_constraintStart_toEndOf="@+id/eating_time"
+                    app:layout_constraintTop_toTopOf="@id/eating_time"/>
+
+                <TextView
                     android:id="@+id/content"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
@@ -153,7 +174,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/experience_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/price" />
+                    app:layout_constraintTop_toBottomOf="@id/eating_time" />
 
                 <TextView
                     android:id="@+id/food_content_text"

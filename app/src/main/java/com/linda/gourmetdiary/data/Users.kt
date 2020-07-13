@@ -27,7 +27,8 @@ data class Diary(
     var createdTime: Long? = 0,
     var type: String? = "",
     val store: Store? = null,
-    var food: Food? = null
+    var food: Food? = null,
+    var eatingTime: Long? = 0
 ) : Parcelable {
 
 }

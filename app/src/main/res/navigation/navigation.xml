@@ -78,7 +78,7 @@
         app:popUpTo="@id/storesFragment" app:popUpToInclusive="false"/>
     <dialog
         android:id="@+id/logOutDialog"
-        android:name="com.linda.gourmetdiary.usermanager.LogOutDialog"
+        android:name="com.linda.gourmetdiary.signout.LogOutDialog"
         android:label="LogOutDialog" />
     <action
         android:id="@+id/navigate_to_log_Out" app:destination="@+id/logOutDialog"

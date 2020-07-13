@@ -14,16 +14,16 @@ import com.linda.gourmetdiary.data.Users
 class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
                              private val localDataSource: DiaryDataSource
 ) : DiaryRepository {
-    override suspend fun getUsersDiarys(): Result<List<Diary>> {
-        return diaryRemoteDataSource.getUsersDiarys()
+    override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> {
+        return diaryRemoteDataSource.getUsersDiarys(startTime, endTime)
     }
 
     override suspend fun postDiary(diarys: Diary): Result<Boolean> {
         return diaryRemoteDataSource.postDiary(diarys)
     }
 
-    override fun getLiveDiary(): MutableLiveData<List<Diary>> {
-        return diaryRemoteDataSource.getLiveDiary()
+    override fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>> {
+        return diaryRemoteDataSource.getLiveDiary(startTime,endTime)
     }
 
     override suspend fun getStore(): Result<List<Stores>> {
