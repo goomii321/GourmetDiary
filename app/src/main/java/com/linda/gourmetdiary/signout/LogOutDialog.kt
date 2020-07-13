@@ -1,19 +1,16 @@
-package com.linda.gourmetdiary.usermanager
+package com.linda.gourmetdiary.signout
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.linda.gourmetdiary.LoginActivity
 import com.linda.gourmetdiary.MainActivity
-import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.LogOutDialogBinding
 import com.linda.gourmetdiary.ext.getVmFactory
 

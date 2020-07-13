@@ -1,10 +1,12 @@
 package com.linda.gourmetdiary.diarys
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,21 +16,16 @@ import com.linda.gourmetdiary.MainViewModel
 import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.DiarysFragmentBinding
-import com.linda.gourmetdiary.util.Logger
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DiarysFragment : Fragment() {
 
     val viewModel by viewModels<DiarysViewModel> { getVmFactory() }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val calender = Calendar.getInstance(Locale.TAIWAN)
-        var date = calender.time
-        var nowTime = SimpleDateFormat("yyyy.MM.dd hh:mm").format(date)
 
         val binding = DiarysFragmentBinding.inflate(inflater,container,false)
 
@@ -36,13 +33,14 @@ class DiarysFragment : Fragment() {
         binding.isLiveDataDesign = DiaryApplication.instance.isLiveDataDesign()
         binding.viewModel = viewModel
 
-        binding.recyclerDiary.adapter = DiarysAdapter(DiarysAdapter.OnClickListener{
-            viewModel.navigateToDetail(it)
+        binding.recyclerDiary.adapter = DiarysAdapter(viewModel)
+
+        viewModel.diary.observe(viewLifecycleOwner, Observer {
+            viewModel.assignData(it)
         })
 
         viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Logger.d("navigate $it")
                 findNavController().navigate(NavigationDirections.navigateToDiaryDetail(it))
                 viewModel.onDetailNavigated()
             }

@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.DatabaseReference
 import com.linda.gourmetdiary.data.Diary
+import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.data.Stores
+import com.linda.gourmetdiary.diarys.DailyItemAdapter
 import com.linda.gourmetdiary.diarys.DiarysAdapter
 import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
 import com.linda.gourmetdiary.network.LoadApiStatus
@@ -28,7 +30,7 @@ fun bindRecyclerView(recyclerView: RecyclerView, diary: List<Diary>?) {
     diary?.let {
         recyclerView.adapter?.apply {
             when (this) {
-                is DiarysAdapter -> submitList(it)
+                is DailyItemAdapter -> submitList(it)
             }
         }
     }
@@ -40,6 +42,17 @@ fun bindStoreRecyclerView(recyclerView: RecyclerView, stores: List<Stores>?) {
         recyclerView.adapter?.apply {
             when (this) {
                 is StoresAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
+@BindingAdapter("diarys4Days")
+fun bindDiarys4DaysRecyclerView(recyclerView: RecyclerView, stores: List<Diarys4Day>?) {
+    stores?.let {
+        recyclerView.adapter?.apply {
+            when (this) {
+                is DiarysAdapter -> submitList(it)
             }
         }
     }
@@ -80,7 +93,18 @@ fun bindDisplayFormatTime(textView: TextView, time: Long?) {
 
 @RequiresApi(Build.VERSION_CODES.N)
 fun Long.toDisplayFormat(): String {
-    return SimpleDateFormat("yyyy.MM.dd hh:mm").format(this)
+    return SimpleDateFormat("yyyy.MM.dd HH:mm").format(this)
+}
+
+@RequiresApi(Build.VERSION_CODES.N)
+@BindingAdapter("dateToDisplayFormat")
+fun bindDisplayFormatDate(textView: TextView, time: Long?) {
+    textView.text = time?.toDisplayDateFormat()
+}
+
+@RequiresApi(Build.VERSION_CODES.N)
+fun Long.toDisplayDateFormat(): String {
+    return SimpleDateFormat("yyyy.MM.dd").format(this)
 }
 
 

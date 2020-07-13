@@ -5,7 +5,10 @@
     <data>
         <variable
             name="diarys"
-            type="com.linda.gourmetdiary.data.Diary" />
+            type="com.linda.gourmetdiary.data.Diarys4Day" />
+        <variable
+            name="viewModel"
+            type="com.linda.gourmetdiary.diarys.DiarysViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,40 +33,52 @@
                 android:layout_height="match_parent"
                 app:cardBackgroundColor="@color/white_normal">
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/recycler_diary"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent">-->
-<!--                </androidx.recyclerview.widget.RecyclerView>-->
-
                 <TextView
+                    android:id="@+id/date_text"
+                    style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:timeToDisplayFormat="@{diarys.createdTime}"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintStart_toEndOf="@+id/main_image"
-                    app:layout_constraintTop_toTopOf="@+id/main_image"/>
-
-                <ImageView
-                    android:id="@+id/main_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginStart="16dp"
+                    app:dateToDisplayFormat="@{diarys.dayTitle}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:imageUrl="@{diarys.mainImage}"
-                    />
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
+                    app:diary="@{diarys.diarys}"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/date_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                </androidx.recyclerview.widget.RecyclerView>
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:timeToDisplayFormat="@{diarys.createdTime}"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/main_image"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/main_image"/>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/main_image"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:adjustViewBounds="true"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:imageUrl="@{diarys.mainImage}" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

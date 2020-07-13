@@ -18,59 +18,53 @@ import com.google.android.material.navigation.NavigationView
 import com.linda.gourmetdiary.databinding.ActivityMainBinding
 import com.linda.gourmetdiary.util.CurrentFragmentType
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private val onNavigationItemSelectedListener = NavigationView.OnNavigationItemSelectedListener { menuItem ->
-        when(menuItem.itemId){
-            R.id.homeFragment -> {
-                findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_home)
-                return@OnNavigationItemSelectedListener true
+    private val onNavigationItemSelectedListener =
+        NavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.homeFragment -> {
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_home)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.diarysFragment -> {
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_diarys)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.storesFragment -> {
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_stores)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.profileFragment -> {
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_profile)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.logOutDialog -> {
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_log_Out)
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            R.id.diarysFragment -> {
-                findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_diarys)
-                return@OnNavigationItemSelectedListener  true
-            }
-            R.id.storesFragment -> {
-                findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_stores)
-                return@OnNavigationItemSelectedListener  true
-            }
-            R.id.profileFragment -> {
-                findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_profile)
-                return@OnNavigationItemSelectedListener  true
-            }
-            R.id.logOutDialog -> {
-                findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_log_Out)
-                return@OnNavigationItemSelectedListener true
-            }
+            false
         }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val calender = Calendar.getInstance(Locale.TAIWAN)
-        var date = calender.time
-        var nowTime = SimpleDateFormat("yyyy.MM.dd hh:mm").format(date)
-        Log.i("date","1 = $date, 2 = $calender , 3 = $nowTime")
-
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         viewModel.logInData.observe(this, Observer {
-            Log.i("linda","log in data is ${it.userPhoto}, ${it.userName}")
+            Log.i("linda", "log in data is ${it.userPhoto}, ${it.userName}")
         })
 
         setupDrawer()
@@ -107,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             binding.toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
-        ){
+        ) {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
             }

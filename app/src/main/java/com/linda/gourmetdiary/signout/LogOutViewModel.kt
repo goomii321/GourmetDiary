@@ -1,4 +1,4 @@
-package com.linda.gourmetdiary.usermanager
+package com.linda.gourmetdiary.signout
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

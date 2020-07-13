@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:diary="@{isLiveDataDesign ? viewModel.liveDiary : viewModel.diary}">
+                app:diarys4Days="@{viewModel.diarys4Days}">
 
             </androidx.recyclerview.widget.RecyclerView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

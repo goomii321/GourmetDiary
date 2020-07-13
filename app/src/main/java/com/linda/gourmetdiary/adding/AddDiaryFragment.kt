@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +15,9 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.linda.gourmetdiary.DiaryApplication
-import com.linda.gourmetdiary.MainActivity
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
+import com.linda.gourmetdiary.util.TimeConverters
 import com.linda.gourmetdiary.util.Logger
 import java.util.*
 
@@ -81,8 +81,12 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
 
         viewModel.saveMinute.observe(viewLifecycleOwner, Observer {
-            binding.timeShow.text = "${viewModel.saveYear.value} / ${viewModel.saveMonth.value} / ${viewModel.saveDay.value}" +
-                    " , ${viewModel.saveHour.value} : ${viewModel.saveMinute.value}."
+            var nowTime = "${viewModel.saveYear.value}/${viewModel.saveMonth.value}/${viewModel.saveDay.value} " +
+                    "${viewModel.saveHour.value}:${viewModel.saveMinute.value}"
+            binding.timeShow.text = nowTime
+            var test = TimeConverters.timeToTimestamp(nowTime, Locale.TAIWAN)
+            Log.i("eatingTimeCheck","time is = $test ")
+            viewModel.user.value?.diarys?.eatingTime = test
         })
 
 
@@ -99,7 +103,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.saveDay.value = dayOfMonth
-        viewModel.saveMonth.value = month
+        viewModel.saveMonth.value = month + 1
         viewModel.saveYear.value = year
 
         getDateTimeCalendar()

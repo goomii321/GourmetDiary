@@ -15,11 +15,11 @@ import com.linda.gourmetdiary.data.Users
  */
 interface DiaryRepository {
 
-    suspend fun getUsersDiarys(): Result<List<Diary>>
+    suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>>
 
     suspend fun postDiary(diarys: Diary): Result<Boolean>
 
-    fun getLiveDiary(): MutableLiveData<List<Diary>>
+    fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>>
 
     suspend fun getStore(): Result<List<Stores>>
 
