@@ -57,6 +57,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository,
 
     val foodRating = MutableLiveData<Int>()
     val healthyScore = MutableLiveData<Int>()
+    val imageValue = MutableLiveData<String>()
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)

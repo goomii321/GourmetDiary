@@ -1,10 +1,17 @@
 package com.linda.gourmetdiary.adding
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,15 +21,22 @@ import android.widget.DatePicker
 import android.widget.SeekBar
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.PermissionChecker.checkPermission
+import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.storage.FirebaseStorage
+import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.TimeConverters
 import com.linda.gourmetdiary.util.Logger
+import kotlinx.android.synthetic.main.add_diary_fragment.*
 import java.util.*
 
 
@@ -38,9 +52,11 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     companion object {
-        private val IMAGE_PICK_CODE = 1000
+        private val REQUEST_CODE = 100
         private val PERMISSION_CODE = 1001
     }
+
+    var saveUri : Uri? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -53,6 +69,21 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         var ratingScore = viewModel.foodRating.value
         var healthyScore = viewModel.healthyScore.value
+
+        binding.addingMainImages.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                    val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permission, PERMISSION_CODE)
+                } else {
+                    openGallery()
+                }
+            } else {
+                openGallery()
+            }
+        }
 
         //--- Slide bar ---
         binding.addRating.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -85,6 +116,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
         })
 
+        //choose date and time
         binding.eatingTime.setOnClickListener {
             getDate()
         }
@@ -107,10 +139,6 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     findNavController().navigate(R.id.navigate_to_home)
                 }, 1000)
             }
-        })
-
-        viewModel.user.observe(viewLifecycleOwner, Observer {
-            Logger.d("user.oberve ${it}")
         })
 
         return binding.root
@@ -150,5 +178,52 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 viewModel.day
             ).show()
         }
+    }
+
+    private fun openGallery(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+            saveUri = data?.data
+            test_image.setImageURI(data?.data)
+            uploadImage()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openGallery()
+                } else {
+                    Toast.makeText(context, "無權限操作", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun uploadImage() {
+        val filename = UUID.randomUUID().toString()
+        val image = MutableLiveData<String>()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        ref.putFile(saveUri!!)
+            .addOnSuccessListener {
+                ref.downloadUrl.addOnSuccessListener {
+                    Logger.d("$it")
+                    image.value = it.toString()
+                    viewModel.user.value?.diarys?.mainImage = image.value
+                }
+            }
     }
 }
