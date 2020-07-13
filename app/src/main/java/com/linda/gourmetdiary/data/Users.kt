@@ -38,7 +38,7 @@ data class Store(
     var storeId: String? = "",
     var storeName: String? = "",
     var storePhone: String? ="",
-    var storeBooking: Boolean? = null,
+    var storeBooking: Boolean? = false ,
     var storeBranch: String? = "無",
     var storeHtml: String? = "www",
     var storeLocation: String? = "e34",

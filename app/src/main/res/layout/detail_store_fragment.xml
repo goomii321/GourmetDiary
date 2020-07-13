@@ -46,7 +46,18 @@
             android:layout_marginTop="8dp"
             android:text="@string/store_min_order"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/store_title" />
+            app:layout_constraintTop_toBottomOf="@id/store_time" />
+
+        <TextView
+            android:id="@+id/min_order_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.store.storeMinOrder}"
+            app:layout_constraintBottom_toBottomOf="@+id/store_min_order"
+            app:layout_constraintStart_toEndOf="@+id/store_min_order"
+            app:layout_constraintTop_toTopOf="@id/store_min_order"/>
 
         <TextView
             android:id="@+id/store_booking"
@@ -60,6 +71,16 @@
             app:layout_constraintTop_toBottomOf="@id/store_min_order" />
 
         <TextView
+            android:id="@+id/booking_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/store_booking"
+            app:layout_constraintStart_toEndOf="@+id/store_booking"
+            app:layout_constraintTop_toTopOf="@id/store_booking"/>
+
+        <TextView
             android:id="@+id/store_phone"
             style="@style/text_style"
             android:layout_width="wrap_content"
@@ -68,7 +89,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/store_phone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/store_booking" />
+            app:layout_constraintTop_toBottomOf="@id/store_title" />
 
         <TextView
             android:id="@+id/phone_text"
@@ -77,6 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@{viewModel.store.storePhone}"
+            app:layout_constraintBottom_toBottomOf="@+id/store_phone"
             app:layout_constraintStart_toEndOf="@+id/store_phone"
             app:layout_constraintTop_toTopOf="@id/store_phone"/>
 
@@ -89,7 +111,18 @@
             android:layout_marginTop="8dp"
             android:text="@string/store_time"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/store_phone" />
+            app:layout_constraintTop_toBottomOf="@id/store_location" />
+
+        <TextView
+            android:id="@+id/time_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.store.storeOpenTime}"
+            app:layout_constraintBottom_toBottomOf="@+id/store_time"
+            app:layout_constraintStart_toEndOf="@+id/store_time"
+            app:layout_constraintTop_toTopOf="@id/store_time"/>
 
         <TextView
             android:id="@+id/store_location"
@@ -100,7 +133,18 @@
             android:layout_marginTop="8dp"
             android:text="@string/store_location"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/store_time" />
+            app:layout_constraintTop_toBottomOf="@id/store_phone" />
+
+        <TextView
+            android:id="@+id/location_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.store.storeLocation}"
+            app:layout_constraintStart_toEndOf="@id/store_location"
+            app:layout_constraintTop_toTopOf="@id/store_location"
+            app:layout_constraintBottom_toBottomOf="@+id/store_location"/>
 
         <TextView
             android:id="@+id/store_web"
@@ -111,7 +155,38 @@
             android:layout_marginTop="8dp"
             android:text="@string/store_web"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/store_location" />
+            app:layout_constraintTop_toBottomOf="@id/store_booking" />
+
+        <TextView
+            android:id="@+id/web_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.store.storeHtml}"
+            app:layout_constraintStart_toEndOf="@id/store_web"
+            app:layout_constraintTop_toTopOf="@id/store_web"
+            app:layout_constraintBottom_toBottomOf="@+id/store_web"/>
+
+        <View
+            android:id="@+id/divider_store"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.8"
+            android:background="@color/sunezumi"
+            app:layout_constraintTop_toBottomOf="@+id/web_text" />
+
+        <TextView
+            android:id="@+id/all_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_store"
+            tools:text="累積總消費"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

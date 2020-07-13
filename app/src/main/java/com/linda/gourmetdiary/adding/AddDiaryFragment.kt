@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,8 +16,11 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
+import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.TimeConverters
 import com.linda.gourmetdiary.util.Logger
 import java.util.*
@@ -31,6 +35,11 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 requireArguments()
             ).users?.diarys
         )
+    }
+
+    companion object {
+        private val IMAGE_PICK_CODE = 1000
+        private val PERMISSION_CODE = 1001
     }
 
     @SuppressLint("SetTextI18n")
@@ -81,17 +90,23 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
 
         viewModel.saveMinute.observe(viewLifecycleOwner, Observer {
-            var nowTime = "${viewModel.saveYear.value}/${viewModel.saveMonth.value}/${viewModel.saveDay.value} " +
-                    "${viewModel.saveHour.value}:${viewModel.saveMinute.value}"
+            var nowTime =
+                "${viewModel.saveYear.value}/${viewModel.saveMonth.value}/${viewModel.saveDay.value} " +
+                        "${viewModel.saveHour.value}:${viewModel.saveMinute.value}"
             binding.timeShow.text = nowTime
             var test = TimeConverters.timeToTimestamp(nowTime, Locale.TAIWAN)
-            Log.i("eatingTimeCheck","time is = $test ")
+            Log.i("eatingTimeCheck", "time is = $test ")
             viewModel.user.value?.diarys?.eatingTime = test
         })
 
 
         viewModel.status.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
+            if (it == LoadApiStatus.DONE) {
+                Handler().postDelayed({
+                    findNavController().navigate(R.id.navigate_to_home)
+                }, 1000)
+            }
         })
 
         viewModel.user.observe(viewLifecycleOwner, Observer {
@@ -126,6 +141,14 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     private fun getDate() {
         getDateTimeCalendar()
-        activity?.let { DatePickerDialog(it, this, viewModel.year, viewModel.month, viewModel.day).show() }
+        activity?.let {
+            DatePickerDialog(
+                it,
+                this,
+                viewModel.year,
+                viewModel.month,
+                viewModel.day
+            ).show()
+        }
     }
 }

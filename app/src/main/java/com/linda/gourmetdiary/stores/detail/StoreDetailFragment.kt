@@ -25,6 +25,12 @@ class StoreDetailFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        when (viewModel.store?.value?.storeBooking){
+            true -> binding.bookingText.text = "可訂位"
+            false -> binding.bookingText.text = "不可訂位"
+            else -> binding.bookingText.text = "無資料"
+        }
+
         return binding.root
     }
 
