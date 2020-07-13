@@ -3,10 +3,8 @@ package com.linda.gourmetdiary
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
 import android.util.Base64
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -26,21 +24,22 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.linda.gourmetdiary.data.LogIn
+import com.linda.gourmetdiary.data.Profile
 import kotlinx.android.synthetic.main.activity_login.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
+import com.linda.gourmetdiary.util.UserManager
 
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
 
-    var auth : FirebaseAuth? = null
-    var googleSignInClient : GoogleSignInClient? = null
+    var auth: FirebaseAuth? = null
+    var googleSignInClient: GoogleSignInClient? = null
     var GOOGLE_LOGIN_CODE = 9001
-    var callbackManager : CallbackManager? = null
+    var callbackManager: CallbackManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
             .requestIdToken("693996800991-6cup7r536d3h29256avpebd9m8j9gcb8.apps.googleusercontent.com")
             .requestEmail()
             .build()
-        googleSignInClient = GoogleSignIn.getClient(this,gso)
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
         //printHashKey()
         callbackManager = CallbackManager.Factory.create()
     }
@@ -86,13 +85,14 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun googleLogin(){
+    fun googleLogin() {
         var signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent,GOOGLE_LOGIN_CODE)
+        startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
     }
-    fun facebookLogin(){
+
+    fun facebookLogin() {
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
+            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
 
         LoginManager.getInstance()
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -112,61 +112,66 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 
-    fun handleFacebookAccessToken(token : AccessToken?){
+    fun handleFacebookAccessToken(token: AccessToken?) {
         var credential = FacebookAuthProvider.getCredential(token?.token!!)
 
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener { task ->
 
-                if(task.isSuccessful){
+                if (task.isSuccessful) {
                     moveMainPage(task.result?.user)
-                    Log.i("fb","success result = ${task.result?.user?.displayName}," +
-                            "${task.result?.user?.email},${task.result?.user?.photoUrl}")
-                    viewModel.logInData.value?.userName = task.result?.user?.displayName
-                    viewModel.logInData.value?.userPhoto = task.result?.user?.photoUrl.toString()
-                }else{
+                    Log.i(
+                        "fb", "success result = ${task.result?.user?.displayName}," +
+                                "${task.result?.user?.email},${task.result?.user?.photoUrl}"
+                    )
+
+                } else {
                     //Show the error message
-                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
                 }
             }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        callbackManager?.onActivityResult(requestCode,resultCode,data)
+        callbackManager?.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == GOOGLE_LOGIN_CODE){
+        if (requestCode == GOOGLE_LOGIN_CODE) {
 
             var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
 
             if (result != null) {
-                if(result.isSuccess){
+                if (result.isSuccess) {
                     var account = result.signInAccount
-                    Log.i("google","result = ${account?.displayName},${account?.id}," +
-                            "${account?.email}, ${account?.idToken},${account?.photoUrl}")
-                    viewModel.logInData.value?.userName = account?.displayName
-                    viewModel.logInData.value?.userPhoto = account?.photoUrl.toString()
+                    var user = Profile(
+                        userPhoto = account?.photoUrl.toString(),
+                        userName = account?.displayName,
+                        userEmail = account?.email
+                    )
+                    UserManager.userData = user
+
+                    Log.i("UserManager","UserManager = ${UserManager.userData.userName}; $user")
                     firebaseAuthWithGoogle(account)
                 }
             }
         }
     }
 
-    fun firebaseAuthWithGoogle(account : GoogleSignInAccount?){
-        var credential = GoogleAuthProvider.getCredential(account?.idToken,null)
+    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth?.signInWithCredential(credential)
-            ?.addOnCompleteListener {
-                    task ->
-                if(task.isSuccessful){
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     //Login
                     moveMainPage(task.result?.user)
-                }else{
+                } else {
                     //Show the error message
-                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
                 }
             }
     }
-//    fun signinAndSignup(){
+
+    //    fun signinAndSignup(){
 //        auth?.createUserWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
 //            ?.addOnCompleteListener {
 //                    task ->
@@ -195,9 +200,9 @@ class LoginActivity : AppCompatActivity() {
 //                }
 //            }
 //    }
-    fun moveMainPage(user: FirebaseUser?){
-        if(user != null){
-            startActivity(Intent(this,MainActivity::class.java))
+    fun moveMainPage(user: FirebaseUser?) {
+        if (user != null) {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }

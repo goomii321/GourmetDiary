@@ -39,7 +39,7 @@ data class Store(
     var storeName: String? = "",
     var storePhone: String? ="",
     var storeBooking: Boolean? = null,
-    var storeBranch: String? = "",
+    var storeBranch: String? = "無",
     var storeHtml: String? = "www",
     var storeLocation: String? = "e34",
     var storeMinOrder: String? = "300",

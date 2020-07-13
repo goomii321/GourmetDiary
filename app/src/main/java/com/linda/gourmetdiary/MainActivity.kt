@@ -1,23 +1,28 @@
 package com.linda.gourmetdiary
 
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import app.appworks.school.stylish.ext.getVmFactory
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.linda.gourmetdiary.databinding.ActivityMainBinding
 import com.linda.gourmetdiary.util.CurrentFragmentType
+import com.linda.gourmetdiary.util.UserManager
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,9 +68,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        viewModel.logInData.observe(this, Observer {
-            Log.i("linda", "log in data is ${it.userPhoto}, ${it.userName}")
-        })
+        val navigationView = findViewById<View>(R.id.drawerNavView) as NavigationView
+        val headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main)
+        var ivHeaderPhoto: ImageView = headerLayout.findViewById(R.id.user_image)
+        var userName: TextView = headerLayout.findViewById(R.id.user_name)
+
+        userName.text = UserManager.userData.userName
+        Glide.with(navigationView).load(UserManager.userData.userPhoto).into(ivHeaderPhoto)
 
         setupDrawer()
         setupNavController()
@@ -110,24 +119,5 @@ class MainActivity : AppCompatActivity() {
             syncState()
         }
 
-//         Observe current drawer toggle to set the navigation icon and behavior
-//        viewModel.currentDrawerToggleType.observe(this, Observer { type ->
-//
-//            actionBarDrawerToggle?.isDrawerIndicatorEnabled = type.indicatorEnabled
-//            supportActionBar?.setDisplayHomeAsUpEnabled(!type.indicatorEnabled)
-//            binding.toolbar.setNavigationIcon(
-//                when (type) {
-//                    DrawerToggleType.BACK -> R.drawable.toolbar_back
-//                    else -> R.drawable.toolbar_menu
-//                }
-//            )
-//            actionBarDrawerToggle?.setToolbarNavigationClickListener {
-//                when (type) {
-//                    DrawerToggleType.BACK -> onBackPressed()
-//                    else -> {
-//                    }
-//                }
-//            }
-//        })
     }
 }
