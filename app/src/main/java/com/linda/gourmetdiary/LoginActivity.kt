@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.linda.gourmetdiary.data.Profile
+import com.linda.gourmetdiary.data.Users
 import kotlinx.android.synthetic.main.activity_login.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -121,8 +122,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     moveMainPage(task.result?.user)
                     Log.i(
-                        "fb", "success result = ${task.result?.user?.displayName}," +
-                                "${task.result?.user?.email},${task.result?.user?.photoUrl}"
+                        "fb", "success result = ${task.result?.user}"
                     )
 
                 } else {
@@ -143,14 +143,15 @@ class LoginActivity : AppCompatActivity() {
             if (result != null) {
                 if (result.isSuccess) {
                     var account = result.signInAccount
-                    var user = Profile(
+                    var user = Users(
+                        userId = account?.id,
                         userPhoto = account?.photoUrl.toString(),
                         userName = account?.displayName,
                         userEmail = account?.email
                     )
                     UserManager.userData = user
-
-                    Log.i("UserManager","UserManager = ${UserManager.userData.userName}; $user")
+                    viewModel.getProfile(user)
+                    Log.i("UserManager","UserManager = ${UserManager.userData}")
                     firebaseAuthWithGoogle(account)
                 }
             }
@@ -163,7 +164,16 @@ class LoginActivity : AppCompatActivity() {
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     //Login
+                    var user = Users(
+                        userId = account?.id,
+                        userPhoto = account?.photoUrl.toString(),
+                        userName = account?.displayName,
+                        userEmail = account?.email
+                    )
+                    UserManager.userData = user
+                    viewModel.getProfile(user)
                     moveMainPage(task.result?.user)
+                    Log.i("firebaseAuthWithGoogle","firebaseAuthWithGoogle = ${UserManager.userData}")
                 } else {
                     //Show the error message
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()

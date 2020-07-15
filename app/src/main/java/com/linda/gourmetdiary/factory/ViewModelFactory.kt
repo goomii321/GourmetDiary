@@ -19,7 +19,7 @@ class ViewModelFactory constructor(
         with(modelClass) {
             when {
                 isAssignableFrom(MainViewModel::class.java) ->
-                    MainViewModel()
+                    MainViewModel(diaryRepository)
 
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel()

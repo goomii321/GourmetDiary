@@ -15,7 +15,7 @@ import com.linda.gourmetdiary.data.Users
  */
 interface DiaryRepository {
 
-    suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>>
+    suspend fun getUsersDiarys(userId: String,startTime:Long , endTime: Long): Result<List<Diary>>
 
     suspend fun postDiary(diarys: Diary): Result<Boolean>
 
@@ -26,5 +26,7 @@ interface DiaryRepository {
     fun getLiveStore(): MutableLiveData<List<Stores>>
 
     suspend fun queryDiaryCount(): Result<Int>
+
+    suspend fun pushProfile(user: Users): Result<Boolean>
 
 }

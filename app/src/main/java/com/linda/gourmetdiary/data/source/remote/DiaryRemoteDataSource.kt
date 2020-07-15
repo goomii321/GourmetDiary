@@ -11,6 +11,7 @@ import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryDataSource
 import com.linda.gourmetdiary.util.Logger
+import com.linda.gourmetdiary.util.UserManager
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -25,11 +26,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val KEY_EATING_TIME = "eatingTime"
 
     //week offset: 6,604,740,000
-    override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
+    override suspend fun getUsersDiarys(userId: String,startTime:Long , endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
-            .document("G1P80SW55MbkixdY69cx")
+            .document(userId)
             .collection(PATH_DIARYS)
             .whereGreaterThanOrEqualTo(KEY_EATING_TIME,startTime)
             .whereLessThanOrEqualTo(KEY_EATING_TIME,endTime)
@@ -209,6 +210,30 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 }
             }
     }
+
+    override suspend fun pushProfile(user: Users): Result<Boolean>  =
+        suspendCoroutine { continuation ->
+            val userdata = FirebaseFirestore.getInstance().collection(PATH_USERS)
+            var document = userdata.document("asd")
+
+            document.set(user)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Logger.i("user: $user")
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                    }
+                }
+
+        }
+
 }
 
 //        FirebaseFirestore.getInstance()

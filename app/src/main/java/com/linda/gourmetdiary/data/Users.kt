@@ -6,8 +6,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Users(
     var diarys: Diary? = null,
-    var profile: Profile? = null
-
+    var userId: String? = "",
+    var userName: String? = "",
+    var userPhoto: String? = "",
+    var userEmail: String? = ""
 ) : Parcelable
 
 @Parcelize
