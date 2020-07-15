@@ -11,6 +11,9 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.FitCenter
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.DatabaseReference
 import com.linda.gourmetdiary.data.Diary
@@ -64,6 +67,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         val imgUri = it.toUri().buildUpon().build()
         Glide.with(imgView.context)
             .load(imgUri)
+            .transform(MultiTransformation(FitCenter(), RoundedCorners(10)))
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.user_photo_illustration)
