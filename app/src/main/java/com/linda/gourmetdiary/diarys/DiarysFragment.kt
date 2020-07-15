@@ -2,6 +2,7 @@ package com.linda.gourmetdiary.diarys
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.MainViewModel
 import com.linda.gourmetdiary.NavigationDirections
+import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.DiarysFragmentBinding
 
@@ -36,7 +38,10 @@ class DiarysFragment : Fragment() {
         binding.recyclerDiary.adapter = DiarysAdapter(viewModel)
 
         viewModel.diary.observe(viewLifecycleOwner, Observer {
-            viewModel.assignData(it)
+            it?.let {
+                viewModel.assignData(it)
+                viewModel.onDataAssigned()
+            }
         })
 
         viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
@@ -73,5 +78,4 @@ class DiarysFragment : Fragment() {
 
         return binding.root
     }
-
 }

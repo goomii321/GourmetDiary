@@ -136,9 +136,9 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
         _navigateToDetail.value = null
     }
 
-    fun assignData(diary: List<Diary>) {
+    fun assignData(diarys: List<Diary>) {
 
-        _diary.value?.forEach { diary ->
+        diarys.forEach { diary ->
             diary.eatingTime?.let {
                 var converte = TimeConverters.timestampToDate(it, Locale.TAIWAN)
                 var condition = TimeConverters.dateToTimestamp(converte, Locale.TAIWAN)
@@ -162,5 +162,9 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun onDataAssigned() {
+        _diary.value = null
     }
 }
