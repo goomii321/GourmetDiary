@@ -2,6 +2,8 @@ package com.linda.gourmetdiary.diarys.detail
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,12 +20,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.databinding.DetailDiaryFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
+import kotlinx.android.synthetic.main.detail_diary_fragment.*
 
 
 class DiaryDetailFragment : Fragment() {
@@ -64,14 +68,19 @@ class DiaryDetailFragment : Fragment() {
         }
 
         binding.locationText.setOnLongClickListener {
-            Toast.makeText(context,"長按", Toast.LENGTH_SHORT).show()
+            getClipboard(location_text.text.toString())
+            Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
 
         return binding.root
     }
 
-
+    fun getClipboard(text: CharSequence){
+        var clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        var clip = ClipData.newPlainText("location", text)
+        clipboard.setPrimaryClip(clip)
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
