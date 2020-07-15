@@ -394,7 +394,7 @@
                         android:gravity="start"
                         android:hint="@string/store_min_order"
                         android:inputType="number"
-                        android:text="@={viewModel.user.diarys.store.storePhone}"
+                        android:text="@={viewModel.user.diarys.store.storeMinOrder}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
