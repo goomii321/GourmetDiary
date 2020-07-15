@@ -13,8 +13,7 @@
         android:id="@+id/diary_detail_gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="8dp"
-        android:background="@color/black_sumi">
+        android:paddingHorizontal="8dp">
 
         <ImageView
             android:id="@+id/image_gallery"
