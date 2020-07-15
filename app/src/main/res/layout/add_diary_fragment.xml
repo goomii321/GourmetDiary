@@ -416,7 +416,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:hint="@string/store_time"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:text="@={viewModel.user.diarys.store.storeOpenTime}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>

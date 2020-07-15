@@ -37,13 +37,13 @@ data class Diary(
 data class Store(
     var storeId: String? = "",
     var storeName: String? = "",
-    var storePhone: String? ="",
+    var storePhone: String? ="無",
     var storeBooking: Boolean? = false ,
     var storeBranch: String? = "無",
-    var storeHtml: String? = "www",
-    var storeLocation: String? = "e34",
-    var storeMinOrder: String? = "300",
-    var storeOpenTime: String? = "7:00"
+    var storeHtml: String? = "無",
+    var storeLocation: String? = "無",
+    var storeMinOrder: String? = "無",
+    var storeOpenTime: String? = "無"
 ) : Parcelable
 
 @Parcelize

@@ -63,6 +63,11 @@ class DiaryDetailFragment : Fragment() {
             }
         }
 
+        binding.locationText.setOnLongClickListener {
+            Toast.makeText(context,"長按", Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
+        }
+
         return binding.root
     }
 

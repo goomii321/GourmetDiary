@@ -145,6 +145,16 @@
                     app:layout_constraintTop_toBottomOf="@id/food_combo_text" />
 
                 <TextView
+                    android:id="@+id/price_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.food.price}"
+                    app:layout_constraintStart_toEndOf="@+id/price"
+                    app:layout_constraintTop_toTopOf="@id/price"/>
+
+                <TextView
                     android:id="@+id/eating_time"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
@@ -249,6 +259,16 @@
                     app:layout_constraintTop_toBottomOf="@id/store_title" />
 
                 <TextView
+                    android:id="@+id/branch_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.store.storeBranch}"
+                    app:layout_constraintStart_toEndOf="@+id/store_branch"
+                    app:layout_constraintTop_toTopOf="@id/store_branch"/>
+
+                <TextView
                     android:id="@+id/store_phone"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
@@ -270,39 +290,6 @@
                     app:layout_constraintTop_toTopOf="@id/store_phone"/>
 
                 <TextView
-                    android:id="@+id/store_min_order"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_min_order"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_time" />
-
-                <TextView
-                    android:id="@+id/store_booking"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_booking"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_min_order" />
-
-                <TextView
-                    android:id="@+id/store_time"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_time"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_location" />
-
-                <TextView
                     android:id="@+id/store_location"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
@@ -316,12 +303,77 @@
                 <TextView
                     android:id="@+id/location_text"
                     style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:lines="2"
+                    android:singleLine="false"
+                    android:text="@{viewModel.diary.store.storeLocation}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/store_location"
+                    app:layout_constraintTop_toTopOf="@id/store_location"/>
+
+                <TextView
+                    android:id="@+id/store_min_order"
+                    style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="@{viewModel.diary.store.storeLocation}"
-                    app:layout_constraintStart_toEndOf="@+id/store_location"
-                    app:layout_constraintTop_toTopOf="@id/store_location"/>
+                    android:layout_marginTop="8dp"
+                    android:text="@string/store_min_order"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/store_time" />
+
+                <TextView
+                    android:id="@+id/min_order_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.store.storeMinOrder}"
+                    app:layout_constraintStart_toEndOf="@+id/store_min_order"
+                    app:layout_constraintTop_toTopOf="@id/store_min_order"/>
+
+                <TextView
+                    android:id="@+id/store_booking"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/store_booking"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/store_min_order" />
+
+                <TextView
+                    android:id="@+id/booking_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toEndOf="@+id/store_booking"
+                    app:layout_constraintTop_toTopOf="@id/store_booking"/>
+
+                <TextView
+                    android:id="@+id/store_time"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/store_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/location_text" />
+
+                <TextView
+                    android:id="@+id/open_time_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.store.storeOpenTime}"
+                    app:layout_constraintStart_toEndOf="@+id/store_time"
+                    app:layout_constraintTop_toTopOf="@id/store_time"/>
 
                 <TextView
                     android:id="@+id/store_web"
@@ -334,6 +386,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/store_booking"
                     app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/web_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{viewModel.diary.store.storeHtml}"
+                    app:layout_constraintStart_toEndOf="@+id/store_web"
+                    app:layout_constraintTop_toTopOf="@id/store_web"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
