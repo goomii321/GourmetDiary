@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Diarys4Day
-import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.databinding.ItemDiaryOnedayBinding
 import com.linda.gourmetdiary.databinding.ItemDiarylistBinding

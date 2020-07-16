@@ -3,10 +3,7 @@ package com.linda.gourmetdiary.data.source.local
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Result
-import com.linda.gourmetdiary.data.Stores
-import com.linda.gourmetdiary.data.Users
+import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +14,7 @@ import kotlinx.coroutines.withContext
  * Concrete implementation of a Stylish source as a db.
  */
 class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
-    override suspend fun getUsersDiarys(userId: String,startTime:Long , endTime: Long): Result<List<Diary>> {
+    override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> {
         TODO("Not yet implemented")
     }
 
@@ -41,7 +38,7 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun pushProfile(user: Users): Result<Boolean> {
+    override suspend fun pushProfile(user: User): Result<Boolean> {
         TODO("Not yet implemented")
     }
 }

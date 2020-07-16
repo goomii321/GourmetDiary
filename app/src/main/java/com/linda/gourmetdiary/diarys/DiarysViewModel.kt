@@ -57,7 +57,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 //        if (DiaryApplication.instance.isLiveDataDesign()) {
 //            getLiveDiaryResult(getTodayStartTime(), getTodayEndTime())
 //        } else {
-            getUsersResult("G1P80SW55MbkixdY69cx",getTodayStartTime(), getTodayEndTime())
+            getUsersResult(getTodayStartTime(), getTodayEndTime())
         Log.i("checkTime","start time = ${TimeConverters.timeStampToTime(getTodayStartTime(),
             Locale.TAIWAN)}; end time = ${TimeConverters.timeStampToTime(getTodayEndTime(),Locale.TAIWAN)}")
 //        assignData(diary.value!!)
@@ -80,13 +80,13 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
         _refreshStatus.value = false
     }
 
-    private fun getUsersResult(userId: String,startTime: Long, endTime: Long) {
+    private fun getUsersResult(startTime: Long, endTime: Long) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getUsersDiarys(userId,startTime, endTime)
+            val result = repository.getUsersDiarys(startTime, endTime)
 
             _diary.value = when (result) {
                 is Result.Success -> {
@@ -123,7 +123,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
         } else {
             if (status.value != LoadApiStatus.LOADING) {
-                startTime?.let { endTime.value?.let { it1 -> getUsersResult("G1P80SW55MbkixdY69cx",it, it1) } }
+                startTime?.let { endTime.value?.let { it1 -> getUsersResult(it, it1) } }
             }
         }
     }

@@ -1,17 +1,20 @@
 package com.linda.gourmetdiary.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.HomeFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
+import com.linda.gourmetdiary.util.UserManager
 
 class HomeFragment : Fragment() {
 
@@ -51,7 +54,12 @@ class HomeFragment : Fragment() {
 
         binding.addDefault.setOnClickListener {
             if (isOpen){
-                findNavController().navigate(R.id.navigate_to_add)
+                Log.i("addDefault","addDefault UserManager= ${UserManager.userData}; ${UserManager.userId};${UserManager.isLoggedIn}")
+                if (viewModel.isLoggedIn){
+                    findNavController().navigate(R.id.navigate_to_add)
+                } else {
+                    Toast.makeText(context,"請重新登入",Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

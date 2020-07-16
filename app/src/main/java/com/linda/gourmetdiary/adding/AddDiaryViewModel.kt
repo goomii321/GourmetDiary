@@ -16,8 +16,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 
-class AddDiaryViewModel(private val repository: DiaryRepository,
-                        private val diarys: Diary?) : ViewModel() {
+class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     var year = 0
     var month = 0
@@ -31,12 +30,10 @@ class AddDiaryViewModel(private val repository: DiaryRepository,
     var saveHour = MutableLiveData<Int>()
     var saveMinute = MutableLiveData<Int>()
 
-    private val _user = MutableLiveData<Users>().apply {
-        value = Users(
-            diarys = Diary(food = Food(), store = Store())
-        )
+    private val _user = MutableLiveData<Diary>().apply {
+        value = Diary( food = Food(), store = Store())
     }
-    val user: LiveData<Users>
+    val user: LiveData<Diary>
         get() = _user
 
     val images = MutableLiveData<MutableList<String>>().apply {

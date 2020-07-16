@@ -8,10 +8,10 @@ import com.linda.gourmetdiary.network.LoadApiStatus
 import com.google.firebase.firestore.FirebaseFirestore
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
-import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.util.Logger
+import com.linda.gourmetdiary.util.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,6 +21,9 @@ class HomeViewModel : ViewModel() {
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    val isLoggedIn
+        get() = UserManager.isLoggedIn
 
     init {
 

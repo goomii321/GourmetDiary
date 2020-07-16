@@ -6,11 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Diarys4Day
-import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.databinding.ItemDiaryOnedayBinding
-import com.linda.gourmetdiary.databinding.ItemDiarylistBinding
-import com.linda.gourmetdiary.generated.callback.OnClickListener
 
 class DailyItemAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<Diary, RecyclerView.ViewHolder>(DiffCallback) {

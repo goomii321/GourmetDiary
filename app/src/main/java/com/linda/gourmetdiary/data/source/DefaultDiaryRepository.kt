@@ -1,10 +1,7 @@
 package com.linda.gourmetdiary.data.source
 
 import androidx.lifecycle.MutableLiveData
-import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Result
-import com.linda.gourmetdiary.data.Stores
-import com.linda.gourmetdiary.data.Users
+import com.linda.gourmetdiary.data.*
 
 /**
  * Created by Wayne Chen in Jul. 2019.
@@ -14,8 +11,8 @@ import com.linda.gourmetdiary.data.Users
 class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
                              private val localDataSource: DiaryDataSource
 ) : DiaryRepository {
-    override suspend fun getUsersDiarys(userId: String,startTime:Long , endTime: Long): Result<List<Diary>> {
-        return diaryRemoteDataSource.getUsersDiarys(userId,startTime, endTime)
+    override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> {
+        return diaryRemoteDataSource.getUsersDiarys(startTime, endTime)
     }
 
     override suspend fun postDiary(diarys: Diary): Result<Boolean> {
@@ -38,7 +35,7 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
         return diaryRemoteDataSource.queryDiaryCount()
     }
 
-    override suspend fun pushProfile(user: Users): Result<Boolean> {
+    override suspend fun pushProfile(user: User): Result<Boolean> {
         return diaryRemoteDataSource.pushProfile(user)
     }
 }

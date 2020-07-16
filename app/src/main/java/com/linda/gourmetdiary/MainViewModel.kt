@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Food
-import com.linda.gourmetdiary.data.Store
-import com.linda.gourmetdiary.data.Users
+import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.CurrentFragmentType
@@ -15,7 +12,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import com.linda.gourmetdiary.data.Result
 
 class MainViewModel(private val repository: DiaryRepository): ViewModel() {
 
@@ -33,12 +29,10 @@ class MainViewModel(private val repository: DiaryRepository): ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    private val _user = MutableLiveData<Users>().apply {
-        value = Users(
-            diarys = Diary(food = Food(), store = Store())
-        )
+    private val _user = MutableLiveData<User>().apply {
+        value = User()
     }
-    val user: LiveData<Users>
+    val user: LiveData<User>
         get() = _user
 
     private var viewModelJob = Job()
@@ -56,7 +50,7 @@ class MainViewModel(private val repository: DiaryRepository): ViewModel() {
         }
     }
 
-    fun getProfile(user: Users) {
+    fun getProfile(user: User) {
         _user.value = _user.value
         coroutineScope.launch {
 

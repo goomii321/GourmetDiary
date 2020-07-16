@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.linda.gourmetdiary.adding.AddDiaryViewModel
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.diarys.detail.DiaryDetailViewModel
 
@@ -17,8 +16,8 @@ class DiarysViewModelFactory constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(AddDiaryViewModel::class.java) ->
-                    AddDiaryViewModel(diaryRepository,diarys)
+//                isAssignableFrom(AddDiaryViewModel::class.java) ->
+//                    AddDiaryViewModel(diaryRepository,diarys)
                 isAssignableFrom(DiaryDetailViewModel::class.java) ->
                     DiaryDetailViewModel(diaryRepository,diarys)
 

@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/food_name"
                         android:inputType="text"
-                        android:text="@={viewModel.user.diarys.food.foodName}"
+                        android:text="@={viewModel.user.food.foodName}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,7 +129,7 @@
                         android:gravity="top|start"
                         android:hint="@string/add_price"
                         android:inputType="number"
-                        android:text="@={viewModel.user.diarys.food.price}"
+                        android:text="@={viewModel.user.food.price}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,7 +153,7 @@
                         android:hint="@string/combo_name"
                         android:inputType="textMultiLine"
                         android:lines="3"
-                        android:text="@={viewModel.user.diarys.food.foodCombo}"
+                        android:text="@={viewModel.user.food.foodCombo}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -295,7 +295,7 @@
                         android:gravity="start"
                         android:hint="@string/store_name"
                         android:inputType="text"
-                        android:text="@={viewModel.user.diarys.store.storeName}"
+                        android:text="@={viewModel.user.store.storeName}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -318,7 +318,7 @@
                         android:gravity="start"
                         android:hint="@string/store_branch"
                         android:inputType="text"
-                        android:text="@={viewModel.user.diarys.store.storeBranch}"
+                        android:text="@={viewModel.user.store.storeBranch}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -341,7 +341,7 @@
                         android:gravity="start"
                         android:hint="@string/store_phone"
                         android:inputType="number"
-                        android:text="@={viewModel.user.diarys.store.storePhone}"
+                        android:text="@={viewModel.user.store.storePhone}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -394,7 +394,7 @@
                         android:gravity="start"
                         android:hint="@string/store_min_order"
                         android:inputType="number"
-                        android:text="@={viewModel.user.diarys.store.storeMinOrder}"
+                        android:text="@={viewModel.user.store.storeMinOrder}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -417,7 +417,7 @@
                         android:gravity="start"
                         android:hint="@string/store_time"
                         android:inputType="text"
-                        android:text="@={viewModel.user.diarys.store.storeOpenTime}"
+                        android:text="@={viewModel.user.store.storeOpenTime}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -441,7 +441,7 @@
                         android:hint="@string/experience_title"
                         android:inputType="textMultiLine"
                         android:lines="3"
-                        android:text="@={viewModel.user.diarys.food.foodContent}"
+                        android:text="@={viewModel.user.food.foodContent}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -466,7 +466,7 @@
                         android:hint="@string/next_time_text"
                         android:inputType="textMultiLine"
                         android:lines="3"
-                        android:text="@={viewModel.user.diarys.food.nextTimeRemind}"
+                        android:text="@={viewModel.user.food.nextTimeRemind}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -482,7 +482,7 @@
             android:background="@color/colorPrimaryDark"
             android:clickable="@{viewModel.status == LoadApiStatus.LOADING ? false : true}"
             android:gravity="center"
-            android:onClick="@{() -> viewModel.addData(viewModel.user.diarys)}"
+            android:onClick="@{() -> viewModel.addData(viewModel.user)}"
             android:text='@{viewModel.status != LoadApiStatus.LOADING ? "Post" : "LOADING"}'
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -47,13 +47,7 @@ import java.util.*
 class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
 
-    val viewModel by viewModels<AddDiaryViewModel> {
-        getVmFactory(
-            AddDiaryFragmentArgs.fromBundle(
-                requireArguments()
-            ).users?.diarys
-        )
-    }
+    val viewModel by viewModels<AddDiaryViewModel> { getVmFactory() }
 
     lateinit var binding: AddDiaryFragmentBinding
 
@@ -104,7 +98,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 Toast.makeText(context, "Score is $ratingScore .", Toast.LENGTH_SHORT).show()
-                viewModel.user.value?.diarys?.food?.foodRate = ratingScore
+                viewModel.user.value?.food?.foodRate = ratingScore
             }
         })
 
@@ -119,7 +113,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 Toast.makeText(context, "Score is $healthyScore .", Toast.LENGTH_SHORT).show()
-                viewModel.user.value?.diarys?.food?.healthyScore = healthyScore
+                viewModel.user.value?.food?.healthyScore = healthyScore
             }
         })
 
@@ -135,7 +129,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             binding.timeShow.text = nowTime
             var test = TimeConverters.timeToTimestamp(nowTime, Locale.TAIWAN)
             Log.i("eatingTimeCheck", "time is = $test ")
-            viewModel.user.value?.diarys?.eatingTime = test
+            viewModel.user.value?.eatingTime = test
         })
 
         //set images
@@ -168,7 +162,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener{
             override fun onPlaceSelected(place: Place) {
                 Log.d("autocompleteFragment","$place")
-                viewModel.user.value?.diarys?.store?.storeLocation = place.address
+                viewModel.user.value?.store?.storeLocation = place.address
             }
 
             override fun onError(status: Status) {
@@ -188,15 +182,15 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         val btnCheckedListener = CompoundButton.OnCheckedChangeListener{buttonView, isChecked ->
             when(buttonView.id){
                 R.id.checkBox1 -> {
-                    viewModel.user.value?.diarys?.store?.storeBooking = true
+                    viewModel.user.value?.store?.storeBooking = true
                     checkBox2.isChecked = false
                 }
                 R.id.checkBox2 ->{
-                    viewModel.user.value?.diarys?.store?.storeBooking = false
+                    viewModel.user.value?.store?.storeBooking = false
                     checkBox1.isChecked = false
                 }
             }
-            Log.i("CompoundButton","check ${viewModel.user.value?.diarys?.store?.storeBooking}")
+            Log.i("CompoundButton","check ${viewModel.user.value?.store?.storeBooking}")
         }
         binding.checkBox1.setOnCheckedChangeListener(btnCheckedListener)
         binding.checkBox2.setOnCheckedChangeListener(btnCheckedListener)
@@ -285,18 +279,18 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     Logger.d("downloadUrl $it")
                     image.value = it.toString()
                     if (firstPhoto) {
-                        viewModel.user.value?.diarys?.mainImage = image.value
-                        viewModel.user.value?.diarys?.images = listOf(listOf(image.value).toString())
+                        viewModel.user.value?.mainImage = image.value
+                        viewModel.user.value?.images = listOf(listOf(image.value).toString())
                         firstPhoto = false
                     } else {
-                        viewModel.user.value?.diarys?.images =
+                        viewModel.user.value?.images =
                             listOf(listOf(image.value).toString())
                     }
-                    Logger.d("viewModel mainImage = ${viewModel.user.value?.diarys?.mainImage}; images = ${viewModel.user.value?.diarys?.images}")
+                    Logger.d("viewModel mainImage = ${viewModel.user.value?.mainImage}; images = ${viewModel.user.value?.images}")
 
                     viewModel.images.value?.add(it.toString())
                     viewModel.images.value = viewModel.images.value
-                    viewModel.user.value?.diarys?.images = viewModel.images.value
+                    viewModel.user.value?.images = viewModel.images.value
                 }
             }
     }

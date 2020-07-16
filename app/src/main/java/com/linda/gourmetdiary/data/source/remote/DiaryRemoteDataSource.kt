@@ -15,8 +15,6 @@ import com.linda.gourmetdiary.util.UserManager
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-
-
 object DiaryRemoteDataSource : DiaryDataSource {
 
     private const val PATH_USERS = "Users"
@@ -24,13 +22,14 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val PATH_DIARYS = "diarys"
     private const val KEY_CREATED_TIME = "createdTime"
     private const val KEY_EATING_TIME = "eatingTime"
+    private const val KEY_STORE_NAME = "storeName"
 
     //week offset: 6,604,740,000
-    override suspend fun getUsersDiarys(userId: String,startTime:Long , endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
+    override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
-            .document(userId)
+            .document(UserManager.userId ?: "")
             .collection(PATH_DIARYS)
             .whereGreaterThanOrEqualTo(KEY_EATING_TIME,startTime)
             .whereLessThanOrEqualTo(KEY_EATING_TIME,endTime)
@@ -57,17 +56,18 @@ object DiaryRemoteDataSource : DiaryDataSource {
     override suspend fun postDiary(diarys: Diary): Result<Boolean> =
         suspendCoroutine { continuation ->
             val diary = FirebaseFirestore.getInstance().collection(PATH_USERS)
-                .document("G1P80SW55MbkixdY69cx")
+                .document(UserManager.userId ?: "")
                 .collection(PATH_DIARYS)
             val stores = FirebaseFirestore.getInstance().collection(PATH_STORESS)
-                .document()
+
             val document = diary.document()
 
             diarys.diaryId = document.id
             diarys.createdTime = Calendar.getInstance().timeInMillis
 
             diarys.store?.let {
-                stores.set(it)
+
+                stores.whereEqualTo(KEY_STORE_NAME,it.storeName).get()
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Logger.i("stores: ${diarys.store}")
@@ -105,7 +105,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
-            .document("G1P80SW55MbkixdY69cx")
+            .document(UserManager.userId ?: "")
             .collection(PATH_DIARYS)
             .whereGreaterThanOrEqualTo(KEY_EATING_TIME,startTime)
             .whereLessThanOrEqualTo(KEY_EATING_TIME,endTime)
@@ -189,7 +189,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
-            .document("G1P80SW55MbkixdY69cx")
+            .document(UserManager.userId ?: "")
             .collection(PATH_DIARYS)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -211,26 +211,35 @@ object DiaryRemoteDataSource : DiaryDataSource {
             }
     }
 
-    override suspend fun pushProfile(user: Users): Result<Boolean>  =
+    override suspend fun pushProfile(user: User): Result<Boolean>  =
         suspendCoroutine { continuation ->
             val userdata = FirebaseFirestore.getInstance().collection(PATH_USERS)
-            var document = userdata.document("asd")
+            var document = userdata.document("${UserManager.userData.userId}")
 
-            document.set(user)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Logger.i("user: $user")
-                        continuation.resume(Result.Success(true))
+            userdata.whereEqualTo("userId",UserManager.userData.userId)
+                .get().addOnSuccessListener { task ->
+                    if (task.isEmpty){
+                        Logger.i("task = $task")
+                        document.set(user)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Logger.i("user: $user")
+                                    continuation.resume(Result.Success(true))
+                                } else {
+                                    task.exception?.let {
+
+                                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                                        continuation.resume(Result.Error(it))
+                                        return@addOnCompleteListener
+                                    }
+                                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                                }
+                            }
                     } else {
-                        task.exception?.let {
-
-                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                            continuation.resume(Result.Error(it))
-                            return@addOnCompleteListener
-                        }
-                        continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                        document.update("userId",UserManager.userData.userId)
                     }
                 }
+
 
         }
 

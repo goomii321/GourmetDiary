@@ -306,7 +306,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:lines="2"
+                    android:maxLines="2"
                     android:singleLine="false"
                     android:text="@{viewModel.diary.store.storeLocation}"
                     app:layout_constraintEnd_toEndOf="parent"

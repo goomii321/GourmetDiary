@@ -1,11 +1,12 @@
 package com.linda.gourmetdiary.data
 
 import android.os.Parcelable
+import com.google.firebase.firestore.Exclude
+import com.google.firebase.firestore.IgnoreExtraProperties
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Users(
-    var diarys: Diary? = null,
+data class User(
     var userId: String? = "",
     var userName: String? = "",
     var userPhoto: String? = "",
@@ -14,7 +15,6 @@ data class Users(
 
 @Parcelize
 data class Profile(
-    var token: String? = "",
     var userId: String? = "",
     var userName: String? = "",
     var userPhoto: String? = "",

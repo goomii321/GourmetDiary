@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.linda.gourmetdiary.data.Profile
-import com.linda.gourmetdiary.data.Users
+import com.linda.gourmetdiary.data.User
 import kotlinx.android.synthetic.main.activity_login.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -124,6 +124,17 @@ class LoginActivity : AppCompatActivity() {
                     Log.i(
                         "fb", "success result = ${task.result?.user}"
                     )
+                    var user = User(
+                        userId = task.result?.user?.uid,
+                        userPhoto = task.result?.user?.photoUrl.toString(),
+                        userName = task.result?.user?.displayName,
+                        userEmail = task.result?.user?.email
+                    )
+                    UserManager.userId = user.userId
+                    UserManager.userData = user
+                    viewModel.getProfile(user)
+                    moveMainPage(task.result?.user)
+                    Log.i("firebaseAuthWithGoogle","firebaseAuthWithGoogle = ${UserManager.userData}")
 
                 } else {
                     //Show the error message
@@ -143,12 +154,13 @@ class LoginActivity : AppCompatActivity() {
             if (result != null) {
                 if (result.isSuccess) {
                     var account = result.signInAccount
-                    var user = Users(
+                    var user = User(
                         userId = account?.id,
                         userPhoto = account?.photoUrl.toString(),
                         userName = account?.displayName,
                         userEmail = account?.email
                     )
+                    UserManager.userId = user.userId
                     UserManager.userData = user
                     viewModel.getProfile(user)
                     Log.i("UserManager","UserManager = ${UserManager.userData}")
@@ -164,13 +176,14 @@ class LoginActivity : AppCompatActivity() {
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     //Login
-                    var user = Users(
+                    var user = User(
                         userId = account?.id,
                         userPhoto = account?.photoUrl.toString(),
                         userName = account?.displayName,
                         userEmail = account?.email
                     )
-                    UserManager.userData = user
+                    UserManager.userId = user.userId
+                    UserManager.userData= user
                     viewModel.getProfile(user)
                     moveMainPage(task.result?.user)
                     Log.i("firebaseAuthWithGoogle","firebaseAuthWithGoogle = ${UserManager.userData}")

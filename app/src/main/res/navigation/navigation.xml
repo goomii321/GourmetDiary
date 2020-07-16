@@ -45,7 +45,7 @@
         android:label="AddDiaryFragment" >
         <argument
             android:name="users"
-            app:argType="com.linda.gourmetdiary.data.Users"
+            app:argType="com.linda.gourmetdiary.data.User"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>

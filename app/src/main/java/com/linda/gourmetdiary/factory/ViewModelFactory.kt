@@ -3,6 +3,7 @@ package com.linda.gourmetdiary.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.linda.gourmetdiary.MainViewModel
+import com.linda.gourmetdiary.adding.AddDiaryViewModel
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.diarys.DiarysViewModel
 import com.linda.gourmetdiary.home.HomeViewModel
@@ -34,6 +35,8 @@ class ViewModelFactory constructor(
                     ProfileViewModel(diaryRepository)
                 isAssignableFrom(LogOutViewModel::class.java) ->
                     LogOutViewModel()
+                isAssignableFrom(AddDiaryViewModel::class.java) ->
+                    AddDiaryViewModel(diaryRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

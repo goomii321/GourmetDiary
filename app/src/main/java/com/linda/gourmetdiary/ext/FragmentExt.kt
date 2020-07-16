@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Stores
-import com.linda.gourmetdiary.data.Users
 import com.linda.gourmetdiary.factory.DiarysViewModelFactory
 import com.linda.gourmetdiary.factory.StoresViewModelFactory
 import com.linda.gourmetdiary.factory.ViewModelFactory
