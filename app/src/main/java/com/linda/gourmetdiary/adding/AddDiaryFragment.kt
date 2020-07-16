@@ -19,16 +19,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
-import android.widget.SeekBar
-import android.widget.TimePicker
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.common.api.internal.BackgroundDetector.initialize
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.storage.FirebaseStorage
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
@@ -37,6 +40,7 @@ import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.TimeConverters
+import kotlinx.android.synthetic.main.add_diary_fragment.*
 import java.util.*
 
 
@@ -54,13 +58,11 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     lateinit var binding: AddDiaryFragmentBinding
 
     companion object {
-        private val PERMISSION_REQUEST = 10
         private val REQUEST_CODE = 100
         private val PERMISSION_CODE = 1001
     }
 
     var saveUri: Uri? = null
-    private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -145,6 +147,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
         })
 
+        //navigate to home after post
         viewModel.status.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
             if (it == LoadApiStatus.DONE) {
@@ -154,18 +157,50 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
         })
 
-        //connect google map
-        binding.storeLocation.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkPermission(permissions)) {
-                    getLocation()
-                } else {
-                    requestPermissions(permissions, PERMISSION_REQUEST)
-                }
-            } else {
-                getLocation()
-            }
+        // set Address search
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), getString(R.string.google_maps_key))
         }
+        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.store_location) as AutocompleteSupportFragment
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS))
+        autocompleteFragment.setHint("點擊搜尋並取得地址")
+        autocompleteFragment.view?.findViewById<EditText>(R.id.places_autocomplete_search_input)?.textSize = 16.0f
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener{
+            override fun onPlaceSelected(place: Place) {
+                Log.d("autocompleteFragment","$place")
+                viewModel.user.value?.diarys?.store?.storeLocation = place.address
+            }
+
+            override fun onError(status: Status) {
+                Log.d("autocompleteFragment", " status = ${status.statusMessage}")
+            }
+        })
+
+        viewModel.storeStatus.observe(viewLifecycleOwner, Observer {
+            if (it){
+                autocompleteFragment.view?.visibility = View.VISIBLE
+            } else {
+                autocompleteFragment.view?.visibility = View.GONE
+            }
+        })
+
+        //set checkbox
+        val btnCheckedListener = CompoundButton.OnCheckedChangeListener{buttonView, isChecked ->
+            when(buttonView.id){
+                R.id.checkBox1 -> {
+                    viewModel.user.value?.diarys?.store?.storeBooking = true
+                    checkBox2.isChecked = false
+                }
+                R.id.checkBox2 ->{
+                    viewModel.user.value?.diarys?.store?.storeBooking = false
+                    checkBox1.isChecked = false
+                }
+            }
+            Log.i("CompoundButton","check ${viewModel.user.value?.diarys?.store?.storeBooking}")
+        }
+        binding.checkBox1.setOnCheckedChangeListener(btnCheckedListener)
+        binding.checkBox2.setOnCheckedChangeListener(btnCheckedListener)
+
 
         return binding.root
     }
@@ -236,20 +271,6 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     Toast.makeText(context, "無權限操作", Toast.LENGTH_SHORT).show()
                 }
             }
-            PERMISSION_REQUEST -> {
-                var allSuccess = true
-                for (i in permissions.indices) {
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        allSuccess = false
-                        val requestAgain = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && shouldShowRequestPermissionRationale(permissions[i])
-                        if (requestAgain) {
-                            Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(context, "Go to settings and enable the permission", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -265,8 +286,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     image.value = it.toString()
                     if (firstPhoto) {
                         viewModel.user.value?.diarys?.mainImage = image.value
-                        viewModel.user.value?.diarys?.images =
-                            listOf(listOf(image.value).toString())
+                        viewModel.user.value?.diarys?.images = listOf(listOf(image.value).toString())
                         firstPhoto = false
                     } else {
                         viewModel.user.value?.diarys?.images =
@@ -276,67 +296,9 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
                     viewModel.images.value?.add(it.toString())
                     viewModel.images.value = viewModel.images.value
+                    viewModel.user.value?.diarys?.images = viewModel.images.value
                 }
             }
     }
 
-    private fun checkPermission(permissionArray: Array<String>): Boolean {
-        var allSuccess = true
-        for (i in permissionArray.indices) {
-            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,permissionArray[i]) == PackageManager.PERMISSION_DENIED)
-                allSuccess = false
-        }
-        return allSuccess
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun getLocation(){
-        var locationGps: Location? = null
-        var locationNetwork: Location? = null
-        // Create a Uri from an intent string. Use the result to create an Intent."google.streetview:cbll=46.414382,10.013988"
-        val gmmIntentUri = Uri.parse("geo:0,0?")
-        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-        // Make the Intent explicit by setting the Google Maps package
-
-        var locationManager: LocationManager = activity?.getSystemService(LOCATION_SERVICE) as LocationManager
-        var hasGps :Boolean = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        var hasNetwork: Boolean = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        mapIntent.setPackage("com.google.android.apps.maps")
-
-        if (hasGps && hasNetwork) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0F,
-                object : LocationListener {
-                    override fun onLocationChanged(location: Location?) {
-                        if (location != null) {
-                            locationGps = location
-                            Log.d(
-                                "locationGps",
-                                "locationGps = ${locationGps?.latitude} ; ${locationGps?.longitude}"
-                            )
-                        }
-                    }
-
-                    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-                    }
-
-                    override fun onProviderEnabled(provider: String?) {
-
-                    }
-
-                    override fun onProviderDisabled(provider: String?) {
-
-                    }
-
-                })
-
-            val localGpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            if (localGpsLocation != null){
-                locationGps = localGpsLocation
-            }
-            startActivity(mapIntent)
-        } else {
-            Toast.makeText(context, "未開啟定位或網路功能", Toast.LENGTH_LONG).show()
-        }
-    }
 }
