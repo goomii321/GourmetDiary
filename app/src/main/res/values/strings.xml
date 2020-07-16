@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GourmetDiary</string>
-    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">@string/API_KEY</string>
+<!--    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">@string/API_KEY</string>-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -54,5 +54,8 @@
     <string name="adding_image">新增照片</string>
     <string name="booking_ok">可以</string>
     <string name="booking_no">不可以</string>
+    <string name="all_cost">累積總消費</string>
+    <string name="visiting_count">來訪總次數</string>
+    <string name="food_history">點過的餐點</string>
 
 </resources>

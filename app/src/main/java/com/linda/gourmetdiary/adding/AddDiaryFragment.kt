@@ -153,7 +153,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         // set Address search
         if (!Places.isInitialized()) {
-            Places.initialize(requireContext(), getString(R.string.google_maps_key))
+            Places.initialize(requireContext(), getString(R.string.GoogleMapKey))
         }
         val autocompleteFragment = childFragmentManager.findFragmentById(R.id.store_location) as AutocompleteSupportFragment
         autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS))

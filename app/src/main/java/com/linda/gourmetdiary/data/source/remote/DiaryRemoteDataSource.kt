@@ -73,8 +73,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
                             stores.document().set(it)
                                 .addOnCompleteListener {task ->
                                 if (task.isSuccessful) {
-                                    Logger.i("store task : $task")
-                                    continuation.resume(Result.Success(true))
+                                    Logger.i("store task : ${task.result}")
+//                                    continuation.resume(Result.Success(true))
                                 } else {
                                     task.exception?.let {
                                         Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
