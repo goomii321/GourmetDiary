@@ -42,7 +42,6 @@ android {
         }
         debug {
             buildConfigField("Boolean", "LOGGER_VISIABLE", "true")
-            resValue ("string", "API_KEY", GoogleMapKey)
         }
     }
     kotlinOptions {

@@ -23,6 +23,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val KEY_CREATED_TIME = "createdTime"
     private const val KEY_EATING_TIME = "eatingTime"
     private const val KEY_STORE_NAME = "storeName"
+    private const val KEY_STORE_BRANCH = "storeBranch"
 
     //week offset: 6,604,740,000
     override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
@@ -66,19 +67,26 @@ object DiaryRemoteDataSource : DiaryDataSource {
             diarys.createdTime = Calendar.getInstance().timeInMillis
 
             diarys.store?.let {
-
-                stores.whereEqualTo(KEY_STORE_NAME,it.storeName).get()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Logger.i("stores: ${diarys.store}")
+                stores.whereEqualTo(KEY_STORE_NAME,it.storeName).whereEqualTo(KEY_STORE_BRANCH,it.storeBranch).get()
+                    .addOnSuccessListener { task ->
+                        if (task.isEmpty) {
+                            stores.document().set(it)
+                                .addOnCompleteListener {task ->
+                                if (task.isSuccessful) {
+                                    Logger.i("store task : $task")
+                                    continuation.resume(Result.Success(true))
+                                } else {
+                                    task.exception?.let {
+                                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                                        continuation.resume(Result.Error(it))
+                                        return@addOnCompleteListener
+                                    }
+                                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                                }
+                            }
 
                         } else {
-                            task.exception?.let {
-                                Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                                continuation.resume(Result.Error(it))
-                                return@addOnCompleteListener
-                            }
-                            continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                            document.update(KEY_STORE_NAME,it.storeName)
                         }
                     }
             }
