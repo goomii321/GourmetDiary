@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.data.Stores
-import com.linda.gourmetdiary.databinding.ItemDiarylistBinding
 import com.linda.gourmetdiary.databinding.ItemStoresListBinding
 
 class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<Stores, RecyclerView.ViewHolder>(DiffCallback) {

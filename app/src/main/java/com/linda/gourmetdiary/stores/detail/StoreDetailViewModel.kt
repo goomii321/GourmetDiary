@@ -39,6 +39,10 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     val history: LiveData<List<Diary>>
         get() = _history
 
+    private val _navigateToDiary = MutableLiveData<Diary>()
+    val navigateToDiary: LiveData<Diary>
+        get() = _navigateToDiary
+
     var vistitTimes = MutableLiveData<String>()
     var allCost = MutableLiveData<String>()
 
@@ -61,7 +65,6 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-//                    Log.d("queryHistory","${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
@@ -80,6 +83,7 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
                     null
                 }
             }
+            Log.d("store_history","history = ${history.value}")
             visitTimes()
             getCost()
         }
@@ -98,5 +102,13 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
             }
         }
         allCost.value = cost.toString()
+    }
+
+    fun navigateToDiary(diary: Diary) {
+        _navigateToDiary.value = diary
+    }
+
+    fun onDiaryNavigated() {
+        _navigateToDiary.value = null
     }
 }

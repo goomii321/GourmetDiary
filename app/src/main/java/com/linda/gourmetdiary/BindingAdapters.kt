@@ -25,6 +25,7 @@ import com.linda.gourmetdiary.diarys.DiarysAdapter
 import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.stores.StoresAdapter
+import com.linda.gourmetdiary.stores.detail.StoreDetailAdapter
 import java.util.*
 
 
@@ -34,6 +35,7 @@ fun bindRecyclerView(recyclerView: RecyclerView, diary: List<Diary>?) {
         recyclerView.adapter?.apply {
             when (this) {
                 is DailyItemAdapter -> submitList(it)
+                is StoreDetailAdapter -> submitList(it)
             }
         }
     }

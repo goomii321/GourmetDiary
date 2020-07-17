@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.databinding.DetailDiaryFragmentBinding
 import com.linda.gourmetdiary.databinding.DetailStoreFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
@@ -21,9 +24,20 @@ class StoreDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = DetailStoreFragmentBinding.inflate(inflater,container,false)
+        val adapter = StoreDetailAdapter(StoreDetailAdapter.OnClickListener{
+            viewModel.navigateToDiary(it)
+        })
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.foodOrderHistory.adapter = adapter
+
+        viewModel.navigateToDiary.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.navigateToDiaryDetail(it))
+                viewModel.onDiaryNavigated()
+            }
+        })
 
         when (viewModel.store.value?.storeBooking){
             true -> binding.bookingText.text = "可訂位"
