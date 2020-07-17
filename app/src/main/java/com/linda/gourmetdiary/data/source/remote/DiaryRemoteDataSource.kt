@@ -251,6 +251,32 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
         }
 
+    override suspend fun queryStoreHistory(): Result<List<Diary>> = suspendCoroutine { continuation ->
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
+            .document(UserManager.userId ?: "")
+            .collection(PATH_DIARYS)
+            .whereEqualTo(KEY_STORE_NAME,"麥當勞")
+            .orderBy(KEY_EATING_TIME,Query.Direction.DESCENDING)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Diary>()
+                    for (document in task.result!!) {
+                        Logger.i("queryStoreHistory: " + document.data)
+                        val diary = document.toObject(Diary::class.java)
+                        list.add(diary)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                    }
+                }
+            }
+    }
+
 }
 
 //        FirebaseFirestore.getInstance()

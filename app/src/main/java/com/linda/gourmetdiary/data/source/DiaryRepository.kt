@@ -26,4 +26,5 @@ interface DiaryRepository {
 
     suspend fun pushProfile(user: User): Result<Boolean>
 
+    suspend fun queryStoreHistory(): Result<List<Diary>>
 }

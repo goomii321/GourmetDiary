@@ -41,4 +41,8 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     override suspend fun pushProfile(user: User): Result<Boolean> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun queryStoreHistory(): Result<List<Diary>> {
+        TODO("Not yet implemented")
+    }
 }
