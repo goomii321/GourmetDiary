@@ -39,7 +39,7 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
         return diaryRemoteDataSource.pushProfile(user)
     }
 
-    override suspend fun queryStoreHistory(): Result<List<Diary>> {
-        return diaryRemoteDataSource.queryStoreHistory()
+    override suspend fun queryStoreHistory(storeName:String): Result<List<Diary>> {
+        return diaryRemoteDataSource.queryStoreHistory(storeName)
     }
 }

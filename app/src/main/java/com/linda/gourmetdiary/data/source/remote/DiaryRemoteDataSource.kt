@@ -22,7 +22,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val PATH_DIARYS = "diarys"
     private const val KEY_CREATED_TIME = "createdTime"
     private const val KEY_EATING_TIME = "eatingTime"
-    private const val KEY_STORE_NAME = "storeName"
+    private const val KEY_STORE_NAME = "store.storeName"
     private const val KEY_STORE_BRANCH = "storeBranch"
 
     //week offset: 6,604,740,000
@@ -59,7 +59,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
             val diary = FirebaseFirestore.getInstance().collection(PATH_USERS)
                 .document(UserManager.userId ?: "")
                 .collection(PATH_DIARYS)
-            val stores = FirebaseFirestore.getInstance().collection(PATH_STORESS)
+            val stores = FirebaseFirestore.getInstance().collection(PATH_USERS)
+                .document(UserManager.userId ?: "").collection(PATH_STORESS)
 
             val document = diary.document()
 
@@ -140,9 +141,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
     }
 
     override suspend fun getStore(): Result<List<Stores>> = suspendCoroutine { continuation ->
+
         FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
+            .document(UserManager.userId ?: "")
             .collection(PATH_STORESS)
-//            .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -170,11 +173,12 @@ object DiaryRemoteDataSource : DiaryDataSource {
         val liveData = MutableLiveData<List<Stores>>()
 
         FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
+            .document(UserManager.userId ?: "")
             .collection(PATH_STORESS)
-//            .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
-                Logger.i("addSnapshotListener detect")
+                Logger.i("addSnapshotListener detect, $snapshot")
 
                 exception?.let {
                     Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
@@ -251,14 +255,14 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
         }
 
-    override suspend fun queryStoreHistory(): Result<List<Diary>> = suspendCoroutine { continuation ->
+    override suspend fun queryStoreHistory(storeName:String): Result<List<Diary>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
             .collection(PATH_DIARYS)
-            .whereEqualTo(KEY_STORE_NAME,"麥當勞")
-            .orderBy(KEY_EATING_TIME,Query.Direction.DESCENDING)
+            .whereEqualTo(KEY_STORE_NAME,storeName)
+//            .orderBy(KEY_EATING_TIME,Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

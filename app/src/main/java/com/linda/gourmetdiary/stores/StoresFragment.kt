@@ -53,7 +53,6 @@ class StoresFragment : Fragment() {
 
         viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Logger.d("navigate $it")
                 findNavController().navigate(NavigationDirections.navigateToStoreDetail(it))
                 viewModel.onDetailNavigated()
             }

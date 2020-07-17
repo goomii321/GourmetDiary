@@ -57,5 +57,7 @@
     <string name="all_cost">累積總消費</string>
     <string name="visiting_count">來訪總次數</string>
     <string name="food_history">點過的餐點</string>
+    <string name="dollar">元</string>
+    <string name="visiting_times">次</string>
 
 </resources>

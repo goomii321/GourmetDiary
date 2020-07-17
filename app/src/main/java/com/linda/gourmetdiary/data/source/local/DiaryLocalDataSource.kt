@@ -42,7 +42,7 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun queryStoreHistory(): Result<List<Diary>> {
+    override suspend fun queryStoreHistory(storeName:String): Result<List<Diary>> {
         TODO("Not yet implemented")
     }
 }

@@ -25,5 +25,5 @@ interface DiaryDataSource {
 
     suspend fun pushProfile(user: User): Result<Boolean>
 
-    suspend fun queryStoreHistory(): Result<List<Diary>>
+    suspend fun queryStoreHistory(storeName:String): Result<List<Diary>>
 }
