@@ -283,6 +283,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             app:diary="@{viewModel.history}"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="16dp"
