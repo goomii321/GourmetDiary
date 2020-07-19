@@ -10,7 +10,8 @@ data class User(
     var userId: String? = "",
     var userName: String? = "",
     var userPhoto: String? = "",
-    var userEmail: String? = ""
+    var userEmail: String? = "",
+    var signUpDate: Long? = -1
 ) : Parcelable
 
 @Parcelize
@@ -26,7 +27,7 @@ data class Diary(
     var diaryId: String? = "",
     var mainImage: String? = "",
     var images: List<String>? = listOf("https://cdn.pixabay.com/photo/2013/07/13/09/37/taco-155812_960_720.png"),
-    var createdTime: Long? = 0,
+    var createdTime: Long? = -1,
     var type: String? = "",
     val store: Store? = null,
     var food: Food? = null,

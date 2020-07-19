@@ -35,7 +35,7 @@
     <string name="add_rating">評價分數</string>
     <string name="add_healthy">健康度</string>
     <string name="add_price">價格</string>
-    <string name="next_time_text">下次想嘗試...</string>
+    <string name="next_time_text">下次想嘗試…</string>
     <string name="memo_title">備忘錄</string>
     <string name="store_branch">分店</string>
     <string name="store_min_order">最低消費</string>
@@ -48,6 +48,7 @@
 
     <string name="facebook_application_id">307121663756980</string>
     <string name="facebook_app_id">307121663756980</string>
+
     <string name="log_out_question">請問確定要登出嗎?</string>
     <string name="yes">是</string>
     <string name="no">否</string>
@@ -59,6 +60,8 @@
     <string name="food_history">點過的餐點</string>
     <string name="dollar">元</string>
     <string name="visiting_times">次</string>
-    <string name="diary_count">紀錄的日記數</string>
+    <string name="diary_count">日記數</string>
+    <string name="store_count">餐廳數</string>
+    <string name="signup_date">註冊日期</string>
 
 </resources>

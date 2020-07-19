@@ -18,8 +18,8 @@
         <View
             android:id="@+id/view_profile"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/MASUHANA"
+            android:layout_height="160dp"
+            android:background="@color/kamenozoki"
             android:alpha="0.8"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,15 +42,14 @@
             style="@style/user_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:text="@{UserManager.INSTANCE.userData.userName}"
-            android:fontFamily="@font/noto_sans"
             android:textSize="24sp"
-            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/view_profile"
             app:layout_constraintEnd_toEndOf="@+id/user_image"
-            app:layout_constraintTop_toBottomOf="@+id/user_image"
-            app:layout_constraintStart_toStartOf="@+id/user_image" />
+            app:layout_constraintStart_toStartOf="@+id/user_image"
+            app:layout_constraintTop_toBottomOf="@+id/user_image" />
 
         <TextView
             android:id="@+id/diary_count"
@@ -60,7 +59,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/diary_count"
-            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_profile" />
 
@@ -70,10 +68,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{viewModel.convertLongToString(viewModel.count)}"
-            android:textColor="@color/black"
+            android:text="@{viewModel.convertLongToString(viewModel.diaryCount)}"
             app:layout_constraintStart_toEndOf="@+id/diary_count"
             app:layout_constraintTop_toTopOf="@+id/diary_count" />
+
+        <TextView
+            android:id="@+id/store_count"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/store_count"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/diary_count" />
+
+        <TextView
+            android:id="@+id/text_store_count"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{viewModel.convertLongToString(viewModel.storeCount)}"
+            app:layout_constraintStart_toEndOf="@+id/store_count"
+            app:layout_constraintTop_toTopOf="@+id/store_count" />
+
+        <TextView
+            android:id="@+id/signup_date"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/signup_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/store_count" />
+
+        <TextView
+            android:id="@+id/signup_date_count"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:dateToDisplayFormat="@{UserManager.INSTANCE.userData.signUpDate}"
+            app:layout_constraintStart_toEndOf="@+id/signup_date"
+            app:layout_constraintTop_toTopOf="@+id/signup_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

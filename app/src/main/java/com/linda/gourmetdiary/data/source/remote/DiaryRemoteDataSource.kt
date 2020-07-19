@@ -18,7 +18,7 @@ import kotlin.coroutines.suspendCoroutine
 object DiaryRemoteDataSource : DiaryDataSource {
 
     private const val PATH_USERS = "Users"
-    private const val PATH_STORESS = "Stores"
+    private const val PATH_STORES = "Stores"
     private const val PATH_DIARYS = "diarys"
     private const val KEY_CREATED_TIME = "createdTime"
     private const val KEY_EATING_TIME = "eatingTime"
@@ -61,7 +61,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 .document(UserManager.userId ?: "")
                 .collection(PATH_DIARYS)
             val stores = FirebaseFirestore.getInstance().collection(PATH_USERS)
-                .document(UserManager.userId ?: "").collection(PATH_STORESS)
+                .document(UserManager.userId ?: "").collection(PATH_STORES)
 
             val document = diary.document()
 
@@ -148,7 +148,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_STORESS)
+            .collection(PATH_STORES)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -178,7 +178,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_STORESS)
+            .collection(PATH_STORES)
             .addSnapshotListener { snapshot, exception ->
 
                 Logger.i("addSnapshotListener detect, $snapshot")
@@ -216,7 +216,30 @@ object DiaryRemoteDataSource : DiaryDataSource {
                     continuation.resume(Result.Success(count))
                 } else {
                     task.exception?.let {
+                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
+                }
+            }
+    }
 
+    override suspend fun queryStoreCount(): Result<Int> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
+            .document(UserManager.userId ?: "")
+            .collection(PATH_STORES)
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    var count = 0
+                    if (task.result?.count() != 0) {
+                        count = task.result?.size()!!
+                        Logger.d("queryStoreCount success $count, ${task.result}")
+                    }
+                    continuation.resume(Result.Success(count))
+                } else {
+                    task.exception?.let {
                         Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
                         continuation.resume(Result.Error(it))
                         return@addOnCompleteListener
@@ -235,6 +258,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 .get().addOnSuccessListener { task ->
                     if (task.isEmpty){
                         Logger.i("task = $task")
+                        user.signUpDate = Calendar.getInstance().timeInMillis
                         document.set(user)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
@@ -251,6 +275,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
                                 }
                             }
                     } else {
+                        document.get().addOnSuccessListener {signDate ->
+                            if (signDate != null){
+                             Logger.d("sign date = ${signDate.data} ")
+                            }
+                        }
                         document.update("userId",UserManager.userData.userId)
                     }
                 }

@@ -38,6 +38,10 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun queryStoreCount(): Result<Int> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun pushProfile(user: User): Result<Boolean> {
         TODO("Not yet implemented")
     }

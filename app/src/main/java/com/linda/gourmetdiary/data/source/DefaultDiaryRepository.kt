@@ -35,6 +35,10 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
         return diaryRemoteDataSource.queryDiaryCount()
     }
 
+    override suspend fun queryStoreCount(): Result<Int> {
+        return diaryRemoteDataSource.queryStoreCount()
+    }
+
     override suspend fun pushProfile(user: User): Result<Boolean> {
         return diaryRemoteDataSource.pushProfile(user)
     }

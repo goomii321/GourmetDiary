@@ -47,7 +47,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     val isLoggedIn
         get() = UserManager.isLoggedIn
 
-    var count = MutableLiveData<Int>().apply { value = 0 }
+    var count = MutableLiveData<Int>().apply { value = 3 }
     var listStore =MutableLiveData<String>()
     var countText = MutableLiveData<String>()
     var listStoreText = MutableLiveData<String>()

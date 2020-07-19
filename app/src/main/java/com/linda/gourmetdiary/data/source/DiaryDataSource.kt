@@ -23,6 +23,8 @@ interface DiaryDataSource {
 
     suspend fun queryDiaryCount(): Result<Int>
 
+    suspend fun queryStoreCount(): Result<Int>
+
     suspend fun pushProfile(user: User): Result<Boolean>
 
     suspend fun queryStoreHistory(storeName:String): Result<List<Diary>>

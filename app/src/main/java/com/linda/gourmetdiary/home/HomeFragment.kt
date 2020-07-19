@@ -66,11 +66,16 @@ class HomeFragment : Fragment() {
             }
         }
 
+        if (viewModel.listStore.value == null) {
+            binding.view2.visibility = View.GONE
+        }
+
         viewModel.listStore.observe(viewLifecycleOwner, Observer {
             viewModel.countText.value = viewModel.count.value.toString()
             viewModel.listStoreText.value = viewModel.listStore.value
-            binding.homeReminder.text = "最近七天你已吃 ${viewModel.count.value} 次 ${viewModel.listStore.value} 囉!!"
-//            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
+            binding.view2.visibility = View.VISIBLE
+            binding.homeReminder.text = "最近七天你已吃過 ${viewModel.count.value} 次 ${viewModel.listStore.value} 囉!!"
+            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
         })
 
         return binding.root
