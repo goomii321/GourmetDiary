@@ -42,4 +42,8 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
     override suspend fun queryStoreHistory(storeName:String): Result<List<Diary>> {
         return diaryRemoteDataSource.queryStoreHistory(storeName)
     }
+
+    override suspend fun queryReminder(): Result<List<Diary>> {
+        return diaryRemoteDataSource.queryReminder()
+    }
 }

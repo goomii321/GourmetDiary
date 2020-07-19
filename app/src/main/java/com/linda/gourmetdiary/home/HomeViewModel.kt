@@ -8,16 +8,38 @@ import com.linda.gourmetdiary.network.LoadApiStatus
 import com.google.firebase.firestore.FirebaseFirestore
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.util.Logger
+import com.linda.gourmetdiary.util.TimeConverters
 import com.linda.gourmetdiary.util.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.util.*
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
+
+    private val _status = MutableLiveData<LoadApiStatus>()
+    val status: LiveData<LoadApiStatus>
+        get() = _status
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
+
+    private val _refreshStatus = MutableLiveData<Boolean>()
+    val refreshStatus: LiveData<Boolean>
+        get() = _refreshStatus
+
+    private var _diary = MutableLiveData<List<Diary>>()
+    val diary: LiveData<List<Diary>>
+        get() = _diary
+
+    private var sameStore = mutableListOf<String>()
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -25,47 +47,82 @@ class HomeViewModel : ViewModel() {
     val isLoggedIn
         get() = UserManager.isLoggedIn
 
-    init {
+    var count = MutableLiveData<Int>().apply { value = 0 }
+    var listStore =MutableLiveData<String>()
+    var countText = MutableLiveData<String>()
+    var listStoreText = MutableLiveData<String>()
 
+    init {
+        getUsersResult(getStartTime(),getEndTime())
     }
 
+    private fun getUsersResult(startTime: Long, endTime: Long) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            val result = repository.getUsersDiarys(startTime, endTime)
+
+            _diary.value = when (result) {
+                is Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    result.data
+                }
+                is Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
+            _refreshStatus.value = false
+            getSameStore(diary.value!!)
+        }
+    }
+
+    fun getStartTime(): Long =
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(518348572)
+
+    //get LocaleDate's 00:00 and plus into 23:59
+    fun getEndTime(): Long =
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(86391428)
+
+    fun getSameStore(diarys: List<Diary>){
+
+        diarys.forEach { item ->
+            item.store?.storeName.let {
+                if (it != null) {
+                    sameStore.add(it)
+                }
+            }
+        }
+//        Log.d("getSameStore","sameStore = $sameStore")
+
+        for ( item in sameStore ){
+            val test = sameStore.filter { it == item }
+            if (test.count() > count.value!!){
+                count.value = test.count()
+            }
+            listStore.value = test.first()
+        }
+//        Log.d("getSameStore","listStore = ${listStore.value}; count = ${count.value}")
+    }
+
+    fun clearReminder(){
+        count.value = null
+        listStore.value = null
+        countText.value = null
+        listStoreText.value = null
+    }
 }
-
-
-//        var users = FirebaseFirestore.getInstance().collection("Users").document("G1P80SW55MbkixdY69cx")
-//            .collection("diarys")
-//
-//        users.get().addOnCompleteListener { task ->
-//
-//            if (task.isSuccessful) {
-//                for (document in task.result!!) {
-//
-//                        Log.d(
-//                            "getUsersResult",
-//                            document.id + " => " + document.data)
-
-//                    title.value= document.getString("title")
-//                    tag.value = document.getString("tag")
-//                    id.value = document.getString("id")
-//                    createdTime.value = document.getLong("createdTime")
-//                    content.value = document.getString("content")
-//
-//                    email.value = document.getString("author.email")
-//                    authorId.value= document.getString("author.id")
-//                    name.value = document.getString("author.name")
-//
-//                    val author = Author("${email.value}", "${authorId.value}", "${name.value}")
-//                    val articleData = Article(listOf(author),"${name.value}","${content.value}",
-//                        "${createdTime.value}", "${id.value}", "${tag.value}",
-//                        "${title.value}")
-//
-//                    list.add(articleData)
-//                    mutableData.value = list
-//                        Log.i("linda ", "mutableData = ${author}")
-//                }
-
-//            } else {
-//                Log.i("All data", "NO DATA ERROR, ${task.exception}")
-//            }
-//        }
-//

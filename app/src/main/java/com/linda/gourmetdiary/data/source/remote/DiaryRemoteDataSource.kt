@@ -23,6 +23,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val KEY_CREATED_TIME = "createdTime"
     private const val KEY_EATING_TIME = "eatingTime"
     private const val KEY_STORE_NAME = "store.storeName"
+    private const val KEY_STORES_NAME = "storeName"
     private const val KEY_STORE_BRANCH = "storeBranch"
 
     //week offset: 6,604,740,000
@@ -40,7 +41,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
                     for (document in task.result!!) {
-                        Logger.i("getUsersDiarys: " + document.data)
+//                        Logger.i("getUsersDiarys: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }
@@ -68,10 +69,13 @@ object DiaryRemoteDataSource : DiaryDataSource {
             diarys.createdTime = Calendar.getInstance().timeInMillis
 
             diarys.store?.let {
-                stores.whereEqualTo(KEY_STORE_NAME,it.storeName).whereEqualTo(KEY_STORE_BRANCH,it.storeBranch).get()
+                stores.whereEqualTo(KEY_STORES_NAME,"${it.storeName}").whereEqualTo(KEY_STORE_BRANCH,"${it.storeBranch}")
+                    .get()
                     .addOnSuccessListener { task ->
+                        Logger.d("storeTask whereEqualTo = ${task.documents}; ${it.storeName}")
                         if (task.isEmpty) {
-                            stores.document().set(it)
+                            Logger.d("whereEqualTo is Empty")
+                            stores.document("${it.storeName}").set(it)
                                 .addOnCompleteListener {task ->
                                 if (task.isSuccessful) {
                                     Logger.i("store task : ${task.result}")
@@ -87,14 +91,14 @@ object DiaryRemoteDataSource : DiaryDataSource {
                             }
 
                         } else {
-                            document.update(KEY_STORE_NAME,it.storeName)
+                            document.update(KEY_STORES_NAME,it.storeName)
                         }
                     }
             }
             document.set(diarys)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Logger.i("diary: $diarys")
+//                        Logger.i("diary: $diarys")
                         continuation.resume(Result.Success(true))
                     } else {
                         task.exception?.let {
@@ -106,7 +110,6 @@ object DiaryRemoteDataSource : DiaryDataSource {
                         continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
                     }
                 }
-
         }
 
     override fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>> {
@@ -277,6 +280,33 @@ object DiaryRemoteDataSource : DiaryDataSource {
                     task.exception?.let {
                         Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
                     }
+                }
+            }
+    }
+
+    override suspend fun queryReminder(): Result<List<Diary>> = suspendCoroutine { continuation ->
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
+            .document(UserManager.userId ?: "")
+            .collection(PATH_DIARYS)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Diary>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + "=>" + document.data)
+                        val diary = document.toObject(Diary::class.java)
+                        list.add(diary)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+                        Logger.d("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(DiaryApplication.instance.getString(R.string.ng_msg)))
                 }
             }
     }

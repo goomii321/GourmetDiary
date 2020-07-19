@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
 import com.linda.gourmetdiary.R
@@ -20,6 +22,7 @@ class HomeFragment : Fragment() {
 
     val viewModel by viewModels<HomeViewModel> { getVmFactory() }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,7 +66,18 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.listStore.observe(viewLifecycleOwner, Observer {
+            viewModel.countText.value = viewModel.count.value.toString()
+            viewModel.listStoreText.value = viewModel.listStore.value
+            binding.homeReminder.text = "最近七天你已吃 ${viewModel.count.value} 次 ${viewModel.listStore.value} 囉!!"
+//            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
+        })
 
         return binding.root
+    }
+
+    override fun onDestroy() {
+        viewModel.clearReminder()
+        super.onDestroy()
     }
 }

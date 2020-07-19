@@ -38,8 +38,6 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
         get() = _diary
 
     // diarys4Day
-    var liveDiarys4Day = MutableLiveData<List<Diarys4Day>>()
-
     var diarys4Days = mutableListOf<Diarys4Day>()
 
     private val _refreshStatus = MutableLiveData<Boolean>()
@@ -54,14 +52,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
-//        if (DiaryApplication.instance.isLiveDataDesign()) {
-//            getLiveDiaryResult(getTodayStartTime(), getTodayEndTime())
-//        } else {
-            getUsersResult(getTodayStartTime(), getTodayEndTime())
-        Log.i("checkTime","start time = ${TimeConverters.timeStampToTime(getTodayStartTime(),
-            Locale.TAIWAN)}; end time = ${TimeConverters.timeStampToTime(getTodayEndTime(),Locale.TAIWAN)}")
-//        assignData(diary.value!!)
-//        }
+        getUsersResult(getTodayStartTime(), getTodayEndTime())
     }
 
     // current time ~ six days ago = 604740000
@@ -72,13 +63,6 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     //get LocaleDate's 00:00 and plus into 23:59
     fun getTodayEndTime(): Long =
         TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(86391428)
-
-    fun getLiveDiaryResult(startTime: Long, endTime: Long) {
-        liveDiary = repository.getLiveDiary(startTime, endTime)
-        Log.i("diary", "getLiveDiaryResult diary = ${liveDiary.value}")
-        _status.value = LoadApiStatus.DONE
-        _refreshStatus.value = false
-    }
 
     private fun getUsersResult(startTime: Long, endTime: Long) {
 
@@ -148,17 +132,23 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
                     diarys4Day.dayTitle = condition
                     diarys4Day.diarys.add(diary)
                     diarys4Days.add(diarys4Day)
-                    Log.i("converter", "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} ")
+                    Log.i(
+                        "converter",
+                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
+                    )
                 } else { // if diarys4Days include day title of this day
                     diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
-                    Log.i("converter2", "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} ")
+                    Log.i(
+                        "converter2",
+                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
+                    )
                 }
             }
 
             diarys4Days.forEach {
-                Log.i("diarys4Days","dayTitle = ${it.dayTitle} ")
+                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
                 it.diarys.forEach {
-                    Log.d("diarys4Days","diary = ${it} ")
+                    Log.d("diarys4Days", "diary = ${it} ")
                 }
             }
         }

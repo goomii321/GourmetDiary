@@ -19,9 +19,9 @@
             android:id="@+id/profileFragment"
             android:title="@string/menu_profile" />
 
-        <item
-            android:id="@+id/setting"
-            android:title="@string/setting" />
+<!--        <item-->
+<!--            android:id="@+id/setting"-->
+<!--            android:title="@string/setting" />-->
     </group>
     <group android:id="@+id/menu_second">
         <item

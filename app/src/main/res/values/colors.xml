@@ -8,6 +8,12 @@
     <color name="black">#000000</color>
     <color name="white_normal">#FCFAF2</color>
 
+    <color name="kuwazome">#64363C</color>
+    <color name="ikkonzome">#F4A7B9</color>
+    <color name="sakura">#FEDFE1</color>
+    <color name="kurotobi">#554236</color>
+    <color name="kurobeni">#3F2B36</color>
+
     <color name="hiwada">#854836</color>
     <color name="shironezumi">#BDC0BA</color>
     <color name="sunezumi">#787D7B</color>
@@ -16,6 +22,7 @@
     <color name="kamenozoki">#A5DEE4</color>
     <color name="red_jinzamomi">#EB7A77</color>
     <color name="blue">#0D5661</color>
+    <color name="MASUHANA">#577C8A</color>
 
     <color name="transparent">#00000000</color>
 

@@ -23,7 +23,7 @@ class ViewModelFactory constructor(
                     MainViewModel(diaryRepository)
 
                 isAssignableFrom(HomeViewModel::class.java) ->
-                    HomeViewModel()
+                    HomeViewModel(diaryRepository)
 
                 isAssignableFrom(DiarysViewModel::class.java) ->
                     DiarysViewModel(diaryRepository)

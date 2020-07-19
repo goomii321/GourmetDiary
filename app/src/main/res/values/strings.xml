@@ -59,5 +59,6 @@
     <string name="food_history">點過的餐點</string>
     <string name="dollar">元</string>
     <string name="visiting_times">次</string>
+    <string name="diary_count">紀錄的日記數</string>
 
 </resources>
