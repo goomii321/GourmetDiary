@@ -191,6 +191,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/price" />
 
+                <Spinner
+                    android:id="@+id/food_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/eating_time"/>
+
                 <TextView
                     android:id="@+id/rating"
                     style="@style/text_style"
@@ -202,7 +212,7 @@
                     android:visibility="@{viewModel.foodStatus == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/eating_time" />
+                    app:layout_constraintTop_toBottomOf="@+id/food_type" />
 
                 <androidx.appcompat.widget.AppCompatSeekBar
                     android:id="@+id/add_rating"

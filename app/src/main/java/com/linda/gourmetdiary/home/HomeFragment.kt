@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
             viewModel.listStoreText.value = viewModel.listStore.value
             binding.view2.visibility = View.VISIBLE
             binding.homeReminder.text = "最近七天你已吃過 ${viewModel.count.value} 次 ${viewModel.listStore.value} 囉!!"
-            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
+//            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
         })
 
         return binding.root

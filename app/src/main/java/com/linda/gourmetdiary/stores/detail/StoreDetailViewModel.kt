@@ -88,7 +88,6 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
                     null
                 }
             }
-            Log.d("store_history","history = ${history.value}")
             visitTimes()
             getCost()
             calculateHealthy()
@@ -98,7 +97,6 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
 
     private fun visitTimes(){
         vistitTimes.value = history.value?.size.toString()
-        Log.d("storeTimes","times = ${vistitTimes.value}")
     }
 
     private fun getCost(){
@@ -130,7 +128,6 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         }
         listSize = history.value?.size?.toFloat() ?: 1F
         scoreAverage = score/listSize
-        Log.d("calculateHealthy","score = $score; listSize = $listSize ; scoreAverage = $scoreAverage")
 
         healthyText.value = BigDecimal(scoreAverage.toString()).setScale(1,RoundingMode.HALF_DOWN).toString()
     }
@@ -146,8 +143,6 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         }
         listSize = history.value?.size?.toFloat() ?: 1F
         scoreAverage = score/listSize
-        Log.d("calculateRate","score = $score; listSize = $listSize ; scoreAverage = $scoreAverage")
-
         rateText.value = BigDecimal(scoreAverage.toString()).setScale(1,RoundingMode.HALF_DOWN).toString()
     }
 
