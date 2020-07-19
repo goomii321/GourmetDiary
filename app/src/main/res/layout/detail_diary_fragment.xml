@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:text="8.0"
+                    android:text="@{viewModel.convertIntToString(viewModel.diary.food.foodRate)}"
                     app:layout_constraintBottom_toBottomOf="@+id/rate_score_title"
                     app:layout_constraintStart_toEndOf="@+id/rate_score_title" />
 
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:text="8.0"
+                    android:text="@{viewModel.convertIntToString(viewModel.diary.food.healthyScore)}"
                     app:layout_constraintBottom_toBottomOf="@+id/healthy_score_title"
                     app:layout_constraintStart_toEndOf="@+id/healthy_score_title" />
 

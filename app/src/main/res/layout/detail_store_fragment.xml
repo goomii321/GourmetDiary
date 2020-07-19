@@ -268,6 +268,50 @@
             app:layout_constraintTop_toTopOf="@+id/visiting_count_text" />
 
         <TextView
+            android:id="@+id/healthy_average"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/healthy_average"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visiting_count"/>
+
+        <TextView
+            android:id="@+id/healthy_average_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.healthyText}"
+            app:layout_constraintBottom_toBottomOf="@+id/healthy_average"
+            app:layout_constraintStart_toEndOf="@+id/healthy_average"
+            app:layout_constraintTop_toTopOf="@id/healthy_average"/>
+
+        <TextView
+            android:id="@+id/rating_average"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating_average"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/healthy_average"/>
+
+        <TextView
+            android:id="@+id/rating_average_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.rateText}"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_average"
+            app:layout_constraintStart_toEndOf="@+id/rating_average"
+            app:layout_constraintTop_toTopOf="@id/rating_average"/>
+
+        <TextView
             android:id="@+id/food_history"
             style="@style/text_style"
             android:layout_width="wrap_content"
@@ -276,7 +320,7 @@
             android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/visiting_count" />
+            app:layout_constraintTop_toBottomOf="@+id/rating_average" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/food_order_history"

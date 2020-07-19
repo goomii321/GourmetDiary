@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/kurobeni</item>
+        <item name="android:textColor">@color/kurotobi</item>
         <item name="android:textColorHint">@color/kurotobi</item>
         <item name="android:editTextColor">@color/black_sumi</item>
     </style>
@@ -19,13 +19,13 @@
     <style name="text_style">
         <item name="android:textSize">16dp</item>
         <item name="fontFamily">@font/noto_sans</item>
-        <item name="android:textColor">@color/kurobeni</item>
+        <item name="android:textColor">@color/kachi</item>
     </style>
 
     <style name="user_text_style">
         <item name="android:textSize">16dp</item>
         <item name="fontFamily">@font/noto_sans</item>
-        <item name="android:textColor">@color/kurobeni</item>
+        <item name="android:textColor">@color/kachi</item>
     </style>
 
     <style name="score_style">

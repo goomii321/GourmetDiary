@@ -52,6 +52,27 @@
             app:layout_constraintTop_toBottomOf="@+id/user_image" />
 
         <TextView
+            android:id="@+id/signup_date"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/signup_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_profile" />
+
+        <TextView
+            android:id="@+id/signup_date_count"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:dateToDisplayFormat="@{UserManager.INSTANCE.userData.signUpDate}"
+            app:layout_constraintStart_toEndOf="@+id/signup_date"
+            app:layout_constraintTop_toTopOf="@+id/signup_date" />
+
+        <TextView
             android:id="@+id/diary_count"
             style="@style/text_style"
             android:layout_width="wrap_content"
@@ -60,7 +81,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/diary_count"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_profile" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_date" />
 
         <TextView
             android:id="@+id/text_diary_count"
@@ -93,26 +114,7 @@
             app:layout_constraintStart_toEndOf="@+id/store_count"
             app:layout_constraintTop_toTopOf="@+id/store_count" />
 
-        <TextView
-            android:id="@+id/signup_date"
-            style="@style/text_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/signup_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/store_count" />
 
-        <TextView
-            android:id="@+id/signup_date_count"
-            style="@style/text_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:dateToDisplayFormat="@{UserManager.INSTANCE.userData.signUpDate}"
-            app:layout_constraintStart_toEndOf="@+id/signup_date"
-            app:layout_constraintTop_toTopOf="@+id/signup_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

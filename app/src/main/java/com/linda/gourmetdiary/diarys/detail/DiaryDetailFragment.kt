@@ -67,6 +67,12 @@ class DiaryDetailFragment : Fragment() {
             }
         }
 
+        when (viewModel.diary.value?.store?.storeBooking){
+            true -> binding.bookingText.text = "可訂位"
+            false -> binding.bookingText.text = "不可訂位"
+            else -> binding.bookingText.text = "無資料"
+        }
+
         binding.locationText.setOnLongClickListener {
             getClipboard(location_text.text.toString())
             Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()

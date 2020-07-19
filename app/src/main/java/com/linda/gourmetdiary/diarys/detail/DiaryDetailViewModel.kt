@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary.diarys.detail
 
+import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,4 +23,22 @@ class DiaryDetailViewModel(private val diaryRepository: DiaryRepository,
     }
     val diary: LiveData<Diary>
         get() = _diary
+
+    @InverseMethod("convertIntToString")
+    fun convertStringToInt(value: String): Int {
+        return try {
+            value.toInt().let {
+                when (it) {
+                    0 -> 0
+                    else -> it
+                }
+            }
+        } catch (e: NumberFormatException) {
+            1
+        }
+    }
+
+    fun convertIntToString(value: Int): String {
+        return value.toString()
+    }
 }

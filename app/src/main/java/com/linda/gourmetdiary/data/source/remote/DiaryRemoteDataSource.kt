@@ -52,6 +52,16 @@ object DiaryRemoteDataSource : DiaryDataSource {
                     }
                 }
             }
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_USERS)
+            .document(UserManager.userId ?: "")
+            .get().addOnSuccessListener {task2 ->
+                if (task2 != null){
+                    UserManager.userData.signUpDate = task2.getLong("signUpDate")
+                    Logger.d("signUpDate = ${UserManager.userData.signUpDate}")
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -275,11 +285,6 @@ object DiaryRemoteDataSource : DiaryDataSource {
                                 }
                             }
                     } else {
-                        document.get().addOnSuccessListener {signDate ->
-                            if (signDate != null){
-                             Logger.d("sign date = ${signDate.data} ")
-                            }
-                        }
                         document.update("userId",UserManager.userData.userId)
                     }
                 }

@@ -1,6 +1,7 @@
 package com.linda.gourmetdiary.stores.detail
 
 import android.util.Log
+import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import com.linda.gourmetdiary.data.Result
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
                            private val arguments: Stores?) : ViewModel() {
@@ -45,6 +48,8 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
 
     var vistitTimes = MutableLiveData<String>()
     var allCost = MutableLiveData<String>()
+    var healthyText = MutableLiveData<String>()
+    var rateText = MutableLiveData<String>()
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -86,6 +91,8 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
             Log.d("store_history","history = ${history.value}")
             visitTimes()
             getCost()
+            calculateHealthy()
+            calculateRate()
         }
     }
 
@@ -111,4 +118,37 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     fun onDiaryNavigated() {
         _navigateToDiary.value = null
     }
+
+    fun calculateHealthy() {
+        var score = 0F
+        var listSize = 1F
+        var scoreAverage = 0F
+        history.value?.forEach { number ->
+            number.food?.healthyScore.let {
+                score = score.plus(it?.toFloat()!!)
+            }
+        }
+        listSize = history.value?.size?.toFloat() ?: 1F
+        scoreAverage = score/listSize
+        Log.d("calculateHealthy","score = $score; listSize = $listSize ; scoreAverage = $scoreAverage")
+
+        healthyText.value = BigDecimal(scoreAverage.toString()).setScale(1,RoundingMode.HALF_DOWN).toString()
+    }
+
+    fun calculateRate()  {
+        var score = 0F
+        var listSize = 1F
+        var scoreAverage = 0F
+        history.value?.forEach { number ->
+            number.food?.foodRate.let {
+                score = score.plus(it?.toFloat()!!)
+            }
+        }
+        listSize = history.value?.size?.toFloat() ?: 1F
+        scoreAverage = score/listSize
+        Log.d("calculateRate","score = $score; listSize = $listSize ; scoreAverage = $scoreAverage")
+
+        rateText.value = BigDecimal(scoreAverage.toString()).setScale(1,RoundingMode.HALF_DOWN).toString()
+    }
+
 }
