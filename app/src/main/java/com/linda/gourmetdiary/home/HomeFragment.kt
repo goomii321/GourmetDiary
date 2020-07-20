@@ -44,13 +44,13 @@ class HomeFragment : Fragment() {
 
         binding.addFbtn.setOnClickListener {
             if (isOpen){
-                binding.reminder.startAnimation(fabClose)
+                binding.template.startAnimation(fabClose)
                 binding.addDefault.startAnimation(fabClose)
                 binding.addFbtn.startAnimation(fabRotate)
 
                 isOpen = false
             } else {
-                binding.reminder.startAnimation(fabOpen)
+                binding.template.startAnimation(fabOpen)
                 binding.addDefault.startAnimation(fabOpen)
                 binding.addFbtn.startAnimation(unfabRotate)
 
@@ -60,9 +60,18 @@ class HomeFragment : Fragment() {
 
         binding.addDefault.setOnClickListener {
             if (isOpen){
-                Log.i("addDefault","addDefault UserManager= ${UserManager.userData}; ${UserManager.userId};${UserManager.isLoggedIn}")
                 if (viewModel.isLoggedIn){
                     findNavController().navigate(R.id.navigate_to_add)
+                } else {
+                    Toast.makeText(context,"請重新登入",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.template.setOnClickListener {
+            if (isOpen){
+                if (viewModel.isLoggedIn){
+                    findNavController().navigate(R.id.navigate_to_template)
                 } else {
                     Toast.makeText(context,"請重新登入",Toast.LENGTH_SHORT).show()
                 }

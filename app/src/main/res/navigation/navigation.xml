@@ -23,6 +23,7 @@
     <action
         android:id="@+id/navigate_to_diarys" app:destination="@+id/diarysFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+
     <fragment
         android:id="@+id/storesFragment"
         android:name="com.linda.gourmetdiary.stores.StoresFragment"
@@ -31,6 +32,7 @@
     <action
         android:id="@+id/navigate_to_stores" app:destination="@+id/storesFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.linda.gourmetdiary.profile.ProfileFragment"
@@ -39,6 +41,7 @@
     <action
         android:id="@+id/navigate_to_profile" app:destination="@+id/profileFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+
     <fragment
         android:id="@+id/addDiaryFragment"
         android:name="com.linda.gourmetdiary.adding.AddDiaryFragment"
@@ -83,4 +86,12 @@
     <action
         android:id="@+id/navigate_to_log_Out" app:destination="@+id/logOutDialog"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+
+    <fragment
+        android:id="@+id/templateFragment"
+        android:name="com.linda.gourmetdiary.template.TemplateFragment"
+        android:label="TemplateFragment" />
+    <action
+        android:id="@+id/navigate_to_template" app:destination="@id/templateFragment"
+        app:popUpTo="@id/homeFragment" app:popUpToInclusive="false"/>
 </navigation>

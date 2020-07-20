@@ -10,6 +10,7 @@ import com.linda.gourmetdiary.home.HomeViewModel
 import com.linda.gourmetdiary.profile.ProfileViewModel
 import com.linda.gourmetdiary.stores.StoresViewModel
 import com.linda.gourmetdiary.signout.LogOutViewModel
+import com.linda.gourmetdiary.template.TemplateViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
@@ -37,6 +38,8 @@ class ViewModelFactory constructor(
                     LogOutViewModel()
                 isAssignableFrom(AddDiaryViewModel::class.java) ->
                     AddDiaryViewModel(diaryRepository)
+                isAssignableFrom(TemplateViewModel::class.java) ->
+                    TemplateViewModel(diaryRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
