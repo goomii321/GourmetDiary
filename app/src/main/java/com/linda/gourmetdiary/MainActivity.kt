@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> CurrentFragmentType.HOME
                 R.id.diarysFragment -> CurrentFragmentType.DIARY
                 R.id.storesFragment -> CurrentFragmentType.STORES
+//                R.id.diaryDetailFragment -> CurrentFragmentType.DETAIL
                 R.id.profileFragment -> CurrentFragmentType.PROFILE
                 R.id.addDiaryFragment -> CurrentFragmentType.ADD
                 else -> viewModel.currentFragmentType.value

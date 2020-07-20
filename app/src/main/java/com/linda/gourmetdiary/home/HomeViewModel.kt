@@ -83,7 +83,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
             helloStatus.value = -3
         } else if (timeNow.isAfter(timeNight) && timeNow.isBefore(timeMidnight)) {
             helloStatus.value = -4
-        } else if (timeNow.isAfter(timeMidnight) && timeNow.isBefore(timeMorning)) {
+        } else {
             helloStatus.value = -5
         }
     }

@@ -79,6 +79,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.helloStatus.observe(viewLifecycleOwner, Observer {
+            Log.d("helloStatus","helloStatus = $it")
             when(it){
                 -1 -> binding.title.text = "早安:)，睡飽就該開吃囉！"
                 -2 -> binding.title.text = "生活不是吃，就是在找吃的。"

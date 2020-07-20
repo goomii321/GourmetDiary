@@ -18,6 +18,7 @@ import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.DiarysFragmentBinding
+import kotlinx.android.synthetic.main.detail_diary_fragment.*
 
 class DiarysFragment : Fragment() {
 

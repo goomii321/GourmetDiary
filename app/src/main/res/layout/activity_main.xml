@@ -7,6 +7,8 @@
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.MainViewModel" />
+        <import type="com.linda.gourmetdiary.util.CurrentFragmentType"/>
+        <import type="android.view.View"/>
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
