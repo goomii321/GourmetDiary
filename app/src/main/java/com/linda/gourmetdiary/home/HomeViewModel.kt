@@ -18,6 +18,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDate
 import java.util.*
 
@@ -51,6 +53,8 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     var listStore =MutableLiveData<String>()
     var countText = MutableLiveData<String>()
     var listStoreText = MutableLiveData<String>()
+    val healthyScore = MutableLiveData<String>()
+    val healthyScoreText = MutableLiveData<String>()
 
     init {
         getUsersResult(getStartTime(),getEndTime())
@@ -88,6 +92,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
             }
             _refreshStatus.value = false
             getSameStore(diary.value!!)
+            getHealthy()
         }
     }
 
@@ -100,6 +105,8 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     fun getSameStore(diarys: List<Diary>){
 
+        var midStore = ""
+
         diarys.forEach { item ->
             item.store?.storeName.let {
                 if (it != null) {
@@ -107,16 +114,31 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                 }
             }
         }
-//        Log.d("getSameStore","sameStore = $sameStore")
 
         for ( item in sameStore ){
             val test = sameStore.filter { it == item }
             if (test.count() > count.value!!){
                 count.value = test.count()
+                midStore = test.first()
             }
-            listStore.value = test.first()
+            listStore.value = midStore
         }
-//        Log.d("getSameStore","listStore = ${listStore.value}; count = ${count.value}")
+    }
+
+    fun getHealthy(){
+        var score = 0F
+        var listSize = 1F
+        var scoreAverage = 0F
+        diary.value?.forEach {
+            it.food?.healthyScore.let {
+                if (it != null) {
+                    score = score + (it.toInt())
+                }
+            }
+        }
+        listSize = diary.value?.size?.toFloat() ?: 1F
+        scoreAverage = score/listSize
+        healthyScore.value = BigDecimal(scoreAverage.toString()).setScale(1, RoundingMode.HALF_DOWN).toString()
     }
 
     fun clearReminder(){

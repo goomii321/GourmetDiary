@@ -17,6 +17,9 @@ import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.HomeFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.util.UserManager
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class HomeFragment : Fragment() {
 
@@ -33,6 +36,13 @@ class HomeFragment : Fragment() {
         val fabClose = AnimationUtils.loadAnimation(context,R.anim.fab_close)
         val fabRotate = AnimationUtils.loadAnimation(context,R.anim.rotate_clockwise)
         val unfabRotate = AnimationUtils.loadAnimation(context,R.anim.rotate_anticlockwise)
+
+        var timeNow = LocalTime.now()
+        var timeMorning = LocalTime.parse("05:00:00.00")
+        var timeNoon = LocalTime.parse("11:00:00.00")
+        var timeAfternoon = LocalTime.parse("14:00:00.00")
+        var timeNight = LocalTime.parse("18:00:00.00")
+        Log.d("timeNow", "time is $timeNow, ${timeNow.isAfter(timeNoon)}, ${timeNow.isAfter(timeNight)}")
 
         val binding = HomeFragmentBinding.inflate(inflater,container,false)
 
@@ -70,12 +80,22 @@ class HomeFragment : Fragment() {
             binding.view2.visibility = View.GONE
         }
 
+        if(viewModel.healthyScore.value == null){
+            binding.view3.visibility = View.GONE
+        }
+
         viewModel.listStore.observe(viewLifecycleOwner, Observer {
             viewModel.countText.value = viewModel.count.value.toString()
             viewModel.listStoreText.value = viewModel.listStore.value
             binding.view2.visibility = View.VISIBLE
-            binding.homeReminder.text = "最近七天你已吃過 ${viewModel.count.value} 次 ${viewModel.listStore.value} 囉!!"
+            binding.homeReminder.text = "最近七天你已吃過 ${viewModel.count.value} 次${viewModel.listStore.value}囉!!"
 //            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
+        })
+
+        viewModel.healthyScore.observe(viewLifecycleOwner, Observer {
+            viewModel.healthyScoreText.value = viewModel.healthyScore.value
+            binding.view3.visibility = View.VISIBLE
+            binding.healthyReminder.text = "最近的健康度只有 ${viewModel.healthyScoreText.value} ，是不是該吃點蔬果啦~"
         })
 
         return binding.root
