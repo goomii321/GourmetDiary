@@ -50,4 +50,8 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
     override suspend fun queryReminder(): Result<List<Diary>> {
         return diaryRemoteDataSource.queryReminder()
     }
+
+    override suspend fun searchTemplate(searchWord: String): Result<List<Diary>> {
+        return diaryRemoteDataSource.searchTemplate(searchWord)
+    }
 }

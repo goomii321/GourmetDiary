@@ -62,5 +62,6 @@
     <string name="food_type">類型</string>
     <string name="weekily_cost">本週花費</string>
     <string name="weekily_healthy">本週健康度</string>
+    <string name="search_template">尋找範本...</string>
 
 </resources>

@@ -53,4 +53,8 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     override suspend fun queryReminder(): Result<List<Diary>> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun searchTemplate(searchWord: String): Result<List<Diary>> {
+        TODO("Not yet implemented")
+    }
 }

@@ -30,4 +30,6 @@ interface DiaryDataSource {
     suspend fun queryStoreHistory(storeName:String): Result<List<Diary>>
 
     suspend fun queryReminder(): Result<List<Diary>>
+
+    suspend fun searchTemplate(searchWord: String): Result<List<Diary>>
 }
