@@ -50,6 +50,10 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     val isLoggedIn
         get() = UserManager.isLoggedIn
 
+    var score = 0F
+    var listSize = 1F
+    var scoreAverage = 0F
+
     var count = MutableLiveData<Int>().apply { value = 3 }
     var listStore =MutableLiveData<String>()
     var countText = MutableLiveData<String>()
@@ -150,9 +154,6 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     }
 
     fun getHealthy(){
-        var score = 0F
-        var listSize = 1F
-        var scoreAverage = 0F
         diary.value?.forEach {
             it.food?.healthyScore.let {
                 if (it != null) {

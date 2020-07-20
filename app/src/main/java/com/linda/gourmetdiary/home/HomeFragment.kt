@@ -97,8 +97,10 @@ class HomeFragment : Fragment() {
 
         viewModel.healthyScore.observe(viewLifecycleOwner, Observer {
             viewModel.healthyScoreText.value = viewModel.healthyScore.value
-            binding.view3.visibility = View.VISIBLE
-            binding.healthyReminder.text = "最近的健康度只有 ${viewModel.healthyScoreText.value} ，是不是該吃點蔬果啦~"
+            if (viewModel.scoreAverage <= 6.0){
+                binding.view3.visibility = View.VISIBLE
+                binding.healthyReminder.text = "最近的健康度只有 ${viewModel.healthyScoreText.value} ，是不是該吃點蔬果啦~"
+            }
         })
 
         return binding.root
