@@ -31,8 +31,8 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:alpha="0.4"
-            android:background="@drawable/corner_shape"
-            app:layout_constraintBottom_toBottomOf="@+id/title_content"
+            android:background="@drawable/corner_hello"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,30 +41,17 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginVertical="16dp"
             android:fontFamily="@font/jf_openhuninn_"
-            android:text="@string/good_morning"
-            android:textColor="@color/hiwada"
+            android:gravity="center"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            android:maxLines="2"
+            android:singleLine="false"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@+id/view" />
-
-        <TextView
-            android:id="@+id/title_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/jf_openhuninn_"
-            android:paddingBottom="16dp"
-            android:text="@string/greeting"
-            android:textColor="@color/hiwada"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <View
             android:id="@+id/view2"
@@ -90,6 +77,31 @@
             app:layout_constraintStart_toStartOf="@+id/view2"
             app:layout_constraintTop_toTopOf="@+id/view2"
             tools:text="本週已吃過4次王品囉!!" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.4"
+            android:background="@drawable/corner_shape"
+            app:layout_constraintBottom_toBottomOf="@+id/healthy_reminder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/healthy_reminder"
+            style="@style/text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/view3"
+            app:layout_constraintStart_toStartOf="@+id/view3"
+            app:layout_constraintTop_toTopOf="@+id/view3"
+            tools:text="最近的健康度只有..." />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fbtn"

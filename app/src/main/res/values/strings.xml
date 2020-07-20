@@ -5,12 +5,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- home page -->
-    <string name="good_morning">早安 :)</string>
-    <string name="good_evening">午安 ;)</string>
-    <string name="good_afternoon">晚安 Zzz</string>
-    <string name="greeting">我不是正在吃，就是在去吃的路上</string>
-
     <!-- menu item -->
     <string name="menu_diarys">每週日記</string>
     <string name="menu_stores">餐廳總覽</string>
@@ -66,5 +60,7 @@
     <string name="healthy_average">平均健康度</string>
     <string name="rating_average">平均評價分數</string>
     <string name="food_type">類型</string>
+    <string name="weekily_cost">本週花費</string>
+    <string name="weekily_healthy">本週健康度</string>
 
 </resources>

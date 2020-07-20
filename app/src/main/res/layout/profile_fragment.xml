@@ -114,7 +114,47 @@
             app:layout_constraintStart_toEndOf="@+id/store_count"
             app:layout_constraintTop_toTopOf="@+id/store_count" />
 
+        <TextView
+            android:id="@+id/weekily_cost"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/weekily_cost"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/store_count" />
 
+        <TextView
+            android:id="@+id/text_weekily_cost"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{viewModel.convertLongToString(viewModel.weekulyCost)}"
+            app:layout_constraintStart_toEndOf="@+id/weekily_cost"
+            app:layout_constraintTop_toTopOf="@+id/weekily_cost" />
+
+        <TextView
+            android:id="@+id/weekily_healthy"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/weekily_healthy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weekily_cost" />
+
+        <TextView
+            android:id="@+id/text_weekily_healthy"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{viewModel.healthyScore}"
+            app:layout_constraintStart_toEndOf="@+id/weekily_healthy"
+            app:layout_constraintTop_toTopOf="@+id/weekily_healthy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

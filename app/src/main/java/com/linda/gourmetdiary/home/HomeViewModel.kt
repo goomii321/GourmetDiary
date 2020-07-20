@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 
 class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
@@ -56,8 +57,31 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     val healthyScore = MutableLiveData<String>()
     val healthyScoreText = MutableLiveData<String>()
 
+    var timeNow = LocalTime.now()
+    var timeMorning = LocalTime.parse("05:00:00.00")
+    var timeNoon = LocalTime.parse("11:00:00.00")
+    var timeAfternoon = LocalTime.parse("14:00:00.00")
+    var timeNight = LocalTime.parse("18:00:00.00")
+    var timeMidnight = LocalTime.parse("21:00:00.00")
+    var helloStatus = MutableLiveData<Int>()
+
     init {
+        helloWorld()
         getUsersResult(getStartTime(),getEndTime())
+    }
+
+    fun helloWorld(){
+        if (timeNow.isAfter(timeMorning) && timeNow.isBefore(timeNoon)){
+            helloStatus.value = -1
+        } else if (timeNow.isAfter(timeNoon) && timeNow.isBefore(timeAfternoon)) {
+            helloStatus.value = -2
+        } else if (timeNow.isAfter(timeAfternoon) && timeNow.isBefore(timeNight)) {
+            helloStatus.value = -3
+        } else if (timeNow.isAfter(timeNight) && timeNow.isBefore(timeMidnight)) {
+            helloStatus.value = -4
+        } else if (timeNow.isAfter(timeMidnight) && timeNow.isBefore(timeMorning)) {
+            helloStatus.value = -5
+        }
     }
 
     private fun getUsersResult(startTime: Long, endTime: Long) {

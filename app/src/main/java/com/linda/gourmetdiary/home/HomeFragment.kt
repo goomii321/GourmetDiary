@@ -37,13 +37,6 @@ class HomeFragment : Fragment() {
         val fabRotate = AnimationUtils.loadAnimation(context,R.anim.rotate_clockwise)
         val unfabRotate = AnimationUtils.loadAnimation(context,R.anim.rotate_anticlockwise)
 
-        var timeNow = LocalTime.now()
-        var timeMorning = LocalTime.parse("05:00:00.00")
-        var timeNoon = LocalTime.parse("11:00:00.00")
-        var timeAfternoon = LocalTime.parse("14:00:00.00")
-        var timeNight = LocalTime.parse("18:00:00.00")
-        Log.d("timeNow", "time is $timeNow, ${timeNow.isAfter(timeNoon)}, ${timeNow.isAfter(timeNight)}")
-
         val binding = HomeFragmentBinding.inflate(inflater,container,false)
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -75,6 +68,16 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.helloStatus.observe(viewLifecycleOwner, Observer {
+            when(it){
+                -1 -> binding.title.text = "早安:)，睡飽就該開吃囉！"
+                -2 -> binding.title.text = "生活不是吃，就是在找吃的。"
+                -3 -> binding.title.text = "點心是裝在另一個胃袋裡啦;)"
+                -4 -> binding.title.text = "今天辛苦啦~快吃頓好吃的晚餐犒勞自己吧！"
+                else -> binding.title.text = "晚安Zzz...要吃宵夜也要注意健康，\n才可以一直吃一直吃~"
+            }
+        })
 
         if (viewModel.listStore.value == null) {
             binding.view2.visibility = View.GONE
