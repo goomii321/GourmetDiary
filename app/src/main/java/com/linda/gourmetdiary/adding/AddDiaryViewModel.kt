@@ -1,6 +1,7 @@
 package com.linda.gourmetdiary.adding
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -60,6 +61,8 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
     val healthyScore = MutableLiveData<Int>()
     val imageValue = MutableLiveData<String>()
 
+    private val _invalidCheckout = MutableLiveData<Int>()
+
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -72,6 +75,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
     }
 
     fun addData(diarys: Diary) {
+
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING

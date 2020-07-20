@@ -65,5 +65,6 @@
     <string name="signup_date">註冊日期</string>
     <string name="healthy_average">平均健康度</string>
     <string name="rating_average">平均評價分數</string>
+    <string name="food_type">類型</string>
 
 </resources>

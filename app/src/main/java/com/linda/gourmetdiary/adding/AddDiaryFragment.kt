@@ -179,9 +179,10 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         })
 
         //set Spinner
-        val type = arrayListOf<String>("類型","早餐","午餐","晚餐","點心/宵夜")
+        val type = arrayListOf("早餐","午餐","晚餐","點心/宵夜")
         val spinnerAdapter = ArrayAdapter(DiaryApplication.instance,android.R.layout.simple_spinner_dropdown_item, type)
         binding.foodType.adapter = spinnerAdapter
+
 
         binding.foodType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -195,10 +196,9 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 id: Long
             ) {
                 when(position){
-                    0 -> null
+                    0 -> viewModel.user.value?.type = type[position]
                     1 -> viewModel.user.value?.type = type[position]
                     2 -> viewModel.user.value?.type = type[position]
-                    3 -> viewModel.user.value?.type = type[position]
                     else -> viewModel.user.value?.type = type[position]
                 }
             }

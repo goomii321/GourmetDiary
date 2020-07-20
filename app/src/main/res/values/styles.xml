@@ -66,4 +66,10 @@
         <item name="android:windowBackground">@color/transparent</item>
     </style>
 
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/ugly_green</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColorSecondary">@color/blue</item>
+    </style>
+
 </resources>
