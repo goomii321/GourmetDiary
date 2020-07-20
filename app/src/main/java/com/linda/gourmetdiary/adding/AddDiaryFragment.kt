@@ -222,6 +222,14 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         binding.checkBox1.setOnCheckedChangeListener(btnCheckedListener)
         binding.checkBox2.setOnCheckedChangeListener(btnCheckedListener)
 
+        //check post
+        viewModel.invalidCheckout.observe(viewLifecycleOwner, Observer {
+          when(it){
+              -1 -> Toast.makeText(context,"請輸入餐點名稱",Toast.LENGTH_SHORT).show()
+              -2 -> Toast.makeText(context,"請輸入用餐時間",Toast.LENGTH_SHORT).show()
+              -3 -> Toast.makeText(context,"請輸入餐廳名稱",Toast.LENGTH_SHORT).show()
+          }
+        })
 
         return binding.root
     }

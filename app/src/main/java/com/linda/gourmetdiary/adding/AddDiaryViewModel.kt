@@ -59,9 +59,10 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     val foodRating = MutableLiveData<Int>()
     val healthyScore = MutableLiveData<Int>()
-    val imageValue = MutableLiveData<String>()
 
     private val _invalidCheckout = MutableLiveData<Int>()
+    val invalidCheckout: LiveData<Int>
+        get() = _invalidCheckout
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -76,26 +77,31 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     fun addData(diarys: Diary) {
 
-        coroutineScope.launch {
+        when {
+            user.value?.food?.foodName.isNullOrEmpty() -> _invalidCheckout.value = -1
+            user.value?.eatingTime == null -> _invalidCheckout.value = -2
+            user.value?.store?.storeName.isNullOrEmpty() -> _invalidCheckout.value = -3
+            else -> coroutineScope.launch {
 
-            _status.value = LoadApiStatus.LOADING
+                _status.value = LoadApiStatus.LOADING
 
-            when (val result = repository.postDiary(diarys)) {
-                is Result.Success -> {
-                    _error.value = null
-                    _status.value = LoadApiStatus.DONE
-                }
-                is Result.Fail -> {
-                    _error.value = result.error
-                    _status.value = LoadApiStatus.ERROR
-                }
-                is Result.Error -> {
-                    _error.value = result.exception.toString()
-                    _status.value = LoadApiStatus.ERROR
-                }
-                else -> {
-                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
-                    _status.value = LoadApiStatus.ERROR
+                when (val result = repository.postDiary(diarys)) {
+                    is Result.Success -> {
+                        _error.value = null
+                        _status.value = LoadApiStatus.DONE
+                    }
+                    is Result.Fail -> {
+                        _error.value = result.error
+                        _status.value = LoadApiStatus.ERROR
+                    }
+                    is Result.Error -> {
+                        _error.value = result.exception.toString()
+                        _status.value = LoadApiStatus.ERROR
+                    }
+                    else -> {
+                        _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                        _status.value = LoadApiStatus.ERROR
+                    }
                 }
             }
         }
