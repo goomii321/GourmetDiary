@@ -40,7 +40,8 @@
                     android:text="@{viewModel.currentFragmentType.value}"
                     android:letterSpacing="0.1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:text="吃貨日記"/>
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -64,7 +65,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            android:theme="@style/item_nav"
+            android:theme="@style/menu_style"
             app:menu="@menu/menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

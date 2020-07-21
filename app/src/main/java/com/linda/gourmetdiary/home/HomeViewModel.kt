@@ -75,16 +75,22 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     }
 
     fun helloWorld(){
+        _status.value = LoadApiStatus.LOADING
         if (timeNow.isAfter(timeMorning) && timeNow.isBefore(timeNoon)){
             helloStatus.value = -1
+            _status.value = LoadApiStatus.DONE
         } else if (timeNow.isAfter(timeNoon) && timeNow.isBefore(timeAfternoon)) {
             helloStatus.value = -2
+            _status.value = LoadApiStatus.DONE
         } else if (timeNow.isAfter(timeAfternoon) && timeNow.isBefore(timeNight)) {
             helloStatus.value = -3
+            _status.value = LoadApiStatus.DONE
         } else if (timeNow.isAfter(timeNight) && timeNow.isBefore(timeMidnight)) {
             helloStatus.value = -4
+            _status.value = LoadApiStatus.DONE
         } else {
             helloStatus.value = -5
+            _status.value = LoadApiStatus.DONE
         }
     }
 
@@ -171,5 +177,8 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
         listStore.value = null
         countText.value = null
         listStoreText.value = null
+        healthyScore.value = null
+        healthyScoreText.value = null
     }
+
 }

@@ -22,24 +22,34 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.6"
-            android:scaleType="fitXY"
-            android:src="@drawable/food_right_nav_drawer"
+            android:alpha="0.3"
+            android:scaleType="fitEnd"
+            android:src="@drawable/healthy_breakfast_icon_02"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:alpha="0.2"
+            android:background="@color/kamenozoki"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginBottom="8dp"
             app:civ_border_color="@color/black"
             app:civ_border_width="2dp"
             app:layout_constraintBottom_toTopOf="@+id/user_name"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/food_nav_drawer"/>
 
         <TextView
             android:id="@+id/user_name"
@@ -47,11 +57,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/noto_sans"
-            android:textSize="24sp"
+            android:textColor="@color/oldcolorPrimaryDark"
+            android:fontFamily="@font/jf_openhuninn_"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/user_image"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="linda" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#455a64</color>
-    <color name="colorPrimaryDark">#022332</color>
+    <color name="colorPrimary">#e1f5fe</color>
+    <color name="colorPrimaryDark">#afc2cb</color>
     <color name="colorAccent">#718792</color>
 
     <color name="white">#FFFFFF</color>
@@ -29,6 +29,8 @@
     <color name="ugly_green">#28FF28</color>
     <color name="red">#CB1B45</color>
 
-
+    <color name="oldcolorPrimary">#455a64</color>
+    <color name="oldcolorPrimaryDark">#022332</color>
+    <color name="oldcolorAccent">#718792</color>
 
 </resources>

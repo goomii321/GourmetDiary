@@ -25,7 +25,7 @@
     <string name="store_phone">連絡電話</string>
     <string name="store_location">地址</string>
     <string name="ng_msg">NG</string>
-    <string name="eating_time">用餐時間</string>
+    <string name="eating_time">用餐時間：</string>
     <string name="add_rating">評價分數</string>
     <string name="add_healthy">健康度</string>
     <string name="add_price">價格</string>

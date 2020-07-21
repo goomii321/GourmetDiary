@@ -11,8 +11,10 @@
         <item name="android:editTextColor">@color/black_sumi</item>
     </style>
 
-    <style name="item_nav">
+    <style name="menu_style">
         <item name="android:textSize">16dp</item>
+        <item name="colorPrimary">@color/MASUHANA</item>
+        <item name="android:textColor">@color/oldcolorPrimaryDark</item>
         <item name="fontFamily">@font/jf_openhuninn_</item>
     </style>
 
@@ -50,16 +52,15 @@
         <item name="colorAccent">@color/black_sumi</item>
     </style>
 
-    <style name="toolbar_style" parent="AppTheme">
+    <style name="toolbar_style" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textSize">16dp</item>
         <item name="fontFamily">@font/jf_openhuninn_</item>
-        <item name="android:textColor">@color/white_normal</item>
-        <item name="android:textColorSecondary">@color/white_normal</item>
-        <item name="android:colorControlNormal">@color/white_normal</item>
+        <item name="android:textColorPrimary">@color/oldcolorPrimaryDark</item>
     </style>
 
     <style name="button_style" parent="AppTheme">
-        <item name="android:textColorSecondary">@color/white_normal</item>
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+        <item name="tint">@color/oldcolorPrimaryDark</item>
     </style>
 
     <style name="LogOutDialog">
