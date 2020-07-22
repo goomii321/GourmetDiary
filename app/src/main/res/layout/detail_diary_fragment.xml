@@ -426,8 +426,9 @@
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginVertical="8dp"
                     android:text="@string/store_booking"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/store_min_order"
                     app:layout_constraintTop_toBottomOf="@id/store_min_order" />
 
@@ -473,27 +474,27 @@
                     app:layout_constraintTop_toTopOf="@id/store_time_img"
                     tools:text="禮拜日休息"/>
 
-                <TextView
-                    android:id="@+id/store_web"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:text="@string/store_web"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/store_booking"
-                    app:layout_constraintTop_toBottomOf="@id/store_booking" />
+<!--                <TextView-->
+<!--                    android:id="@+id/store_web"-->
+<!--                    style="@style/text_style"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginVertical="8dp"-->
+<!--                    android:text="@string/store_web"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/store_booking"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/store_booking" />-->
 
-                <TextView
-                    android:id="@+id/web_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{viewModel.diary.store.storeHtml}"
-                    app:layout_constraintStart_toEndOf="@+id/store_web"
-                    app:layout_constraintTop_toTopOf="@id/store_web"
-                    tools:text="www.bento.com"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/web_text"-->
+<!--                    style="@style/text_style"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:text="@{viewModel.diary.store.storeHtml}"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/store_web"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/store_web"-->
+<!--                    tools:text="www.bento.com"/>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

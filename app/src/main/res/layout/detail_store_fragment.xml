@@ -209,27 +209,27 @@
                     app:layout_constraintTop_toTopOf="@id/store_location"
                     tools:text="台北市東門路222號" />
 
-                <TextView
-                    android:id="@+id/store_web"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_web"
-                    app:layout_constraintStart_toStartOf="@+id/store_booking"
-                    app:layout_constraintTop_toBottomOf="@id/store_booking" />
+<!--                <TextView-->
+<!--                    android:id="@+id/store_web"-->
+<!--                    style="@style/text_style"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:text="@string/store_web"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/store_booking"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/store_booking" />-->
 
-                <TextView
-                    android:id="@+id/web_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{viewModel.store.storeHtml}"
-                    app:layout_constraintBottom_toBottomOf="@+id/store_web"
-                    app:layout_constraintStart_toEndOf="@id/store_web"
-                    app:layout_constraintTop_toTopOf="@id/store_web"
-                    tools:text="www.tea.com" />
+<!--                <TextView-->
+<!--                    android:id="@+id/web_text"-->
+<!--                    style="@style/text_style"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:text="@{viewModel.store.storeHtml}"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/store_web"-->
+<!--                    app:layout_constraintStart_toEndOf="@id/store_web"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/store_web"-->
+<!--                    tools:text="www.tea.com" />-->
 
                 <View
                     android:id="@+id/divider_store"
@@ -254,8 +254,7 @@
                     android:background="@color/sunezumi"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/web_text"
-                    tools:layout_editor_absoluteX="6dp" />
+                    app:layout_constraintTop_toBottomOf="@+id/store_booking" />
 
                 <ImageView
                     android:id="@+id/chart_img"
@@ -274,7 +273,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/all_cost"
-                    app:layout_constraintStart_toStartOf="@+id/store_web"
+                    app:layout_constraintStart_toStartOf="@+id/store_booking"
                     app:layout_constraintTop_toBottomOf="@+id/divider_query" />
 
                 <TextView
