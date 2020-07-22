@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Profile
 import com.linda.gourmetdiary.data.User
 
 object UserManager {

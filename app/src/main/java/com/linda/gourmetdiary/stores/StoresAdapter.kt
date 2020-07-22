@@ -1,6 +1,7 @@
 package com.linda.gourmetdiary.stores
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,6 +22,9 @@ class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<S
 
             binding.store = store
             binding.root.setOnClickListener { onClickListener.onClick(store) }
+            if (store.storeBranch == "無"){
+                binding.storeItemBranch.visibility = View.GONE
+            }
             binding.executePendingBindings()
         }
     }

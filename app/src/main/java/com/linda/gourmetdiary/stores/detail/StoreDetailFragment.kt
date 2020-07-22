@@ -32,6 +32,10 @@ class StoreDetailFragment : Fragment() {
         binding.viewModel = viewModel
         binding.foodOrderHistory.adapter = adapter
 
+        if (viewModel.store?.value?.storeMinOrder == "無" || viewModel.store?.value?.storeMinOrder == ""){
+            binding.dollarMin.visibility = View.GONE
+        }
+
         viewModel.navigateToDiary.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(NavigationDirections.navigateToDiaryDetail(it))

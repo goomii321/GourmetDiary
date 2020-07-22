@@ -15,14 +15,6 @@ data class User(
 ) : Parcelable
 
 @Parcelize
-data class Profile(
-    var userId: String? = "",
-    var userName: String? = "",
-    var userPhoto: String? = "",
-    var userEmail: String? = ""
-) : Parcelable
-
-@Parcelize
 data class Diary(
     var diaryId: String? = "",
     var mainImage: String? = "",

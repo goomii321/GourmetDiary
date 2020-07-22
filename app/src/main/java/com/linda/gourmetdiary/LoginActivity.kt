@@ -24,7 +24,6 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.linda.gourmetdiary.data.Profile
 import com.linda.gourmetdiary.data.User
 import kotlinx.android.synthetic.main.activity_login.*
 import java.security.MessageDigest

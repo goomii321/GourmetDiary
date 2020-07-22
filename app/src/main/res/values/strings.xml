@@ -49,19 +49,20 @@
     <string name="adding_image">新增照片</string>
     <string name="booking_ok">可以</string>
     <string name="booking_no">不可以</string>
-    <string name="all_cost">累積總消費</string>
-    <string name="visiting_count">來訪總次數</string>
-    <string name="food_history">點過的餐點</string>
+
+    <string name="all_cost">累積總消費：</string>
+    <string name="visiting_count">來訪總次數：</string>
+    <string name="food_history">點過的餐點：</string>
     <string name="dollar">元</string>
     <string name="visiting_times">次</string>
-    <string name="diary_count">日記數</string>
-    <string name="store_count">餐廳數</string>
-    <string name="signup_date">註冊日期</string>
-    <string name="healthy_average">平均健康度</string>
-    <string name="rating_average">平均評價分數</string>
+    <string name="diary_count">日記數：</string>
+    <string name="store_count">餐廳數：</string>
+    <string name="signup_date">註冊日期：</string>
+    <string name="healthy_average">平均健康度：</string>
+    <string name="rating_average">平均評價分數：</string>
     <string name="food_type">類型</string>
-    <string name="weekily_cost">本週花費</string>
-    <string name="weekily_healthy">本週健康度</string>
+    <string name="weekily_cost">本週花費：</string>
+    <string name="weekily_healthy">本週健康度：</string>
     <string name="search_template">尋找範本...</string>
 
 </resources>

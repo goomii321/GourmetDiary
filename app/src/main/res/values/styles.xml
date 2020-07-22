@@ -45,7 +45,8 @@
     <style name="stores_title_style">
         <item name="android:textSize">24dp</item>
         <item name="fontFamily">@font/jf_openhuninn_</item>
-        <item name="android:textColor">@color/blue</item>
+        <item name="android:textColor">@color/kachi</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="ProgressTheme" parent="Widget.AppCompat.ProgressBar">

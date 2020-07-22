@@ -18,18 +18,31 @@
         android:background="@drawable/corners_bg">
 
         <TextView
-            android:id="@+id/text222"
+            android:id="@+id/store_item_name"
             style="@style/stores_title_style"
-            android:layout_margin="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             android:text="@{store.storeName}"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="@string/store_name"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/store_name" />
+
+        <TextView
+            android:id="@+id/store_item_branch"
+            style="@style/stores_title_style"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="@{store.storeBranch}"
+            app:layout_constraintTop_toBottomOf="@+id/store_item_name"
+            app:layout_constraintStart_toStartOf="@+id/store_item_name"
+            app:layout_constraintEnd_toEndOf="@+id/store_item_name"
+            tools:text="@string/store_branch"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
