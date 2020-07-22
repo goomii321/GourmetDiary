@@ -13,21 +13,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginHorizontal="4dp"
-        android:elevation="4dp"
-        android:background="@drawable/corners_bg">
+        android:layout_marginTop="8dp"
+        android:background="@drawable/corners_bg"
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/store_item_name"
             style="@style/stores_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@{store.storeName}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/store_item_branch"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/store_name" />
@@ -35,15 +36,16 @@
         <TextView
             android:id="@+id/store_item_branch"
             style="@style/stores_title_style"
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@{store.storeBranch}"
-            app:layout_constraintTop_toBottomOf="@+id/store_item_name"
-            app:layout_constraintStart_toStartOf="@+id/store_item_name"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/store_item_name"
-            tools:text="@string/store_branch"/>
+            app:layout_constraintStart_toStartOf="@+id/store_item_name"
+            app:layout_constraintTop_toBottomOf="@+id/store_item_name"
+            tools:text="@string/store_branch" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
