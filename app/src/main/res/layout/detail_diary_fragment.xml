@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -10,11 +11,13 @@
         <variable
             name="diary"
             type="com.linda.gourmetdiary.data.Diary" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/corners_detail_background">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -31,8 +34,13 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_detail_gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:orientation="horizontal"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:layout_constraintCircleRadius="10dp"
+                    android:background="@drawable/corner_shape"
+                    android:backgroundTint="@color/black_sumi"
                     app:images="@{viewModel.diary.images}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -43,51 +51,46 @@
                     android:id="@+id/divider_gallery"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:alpha="0.8"
+                    android:layout_marginHorizontal="16dp"
+                    android:alpha="0.3"
                     android:background="@color/sunezumi"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recycler_detail_gallery" />
+
+<!--                <View-->
+<!--                    android:id="@+id/food_background"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:alpha="0.3"-->
+<!--                    android:layout_marginVertical="8dp"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:background="@drawable/corners_detail_background"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/divider_store"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/recycler_detail_gallery" />-->
 
                 <ImageView
                     android:id="@+id/store_rate_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_width="28dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_favorite_black_24dp"
+                    android:src="@drawable/like"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider_gallery"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/rate_score_title"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="24dp"-->
-<!--                    android:text="@string/add_rating"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/divider_gallery" />-->
-
-                <View
-                    android:id="@+id/divider21"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/store_rate_img" />
 
                 <TextView
                     android:id="@+id/rate_score"
                     style="@style/score_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="16dp"
                     android:text="@{viewModel.convertIntToString(viewModel.diary.food.foodRate)}"
                     app:layout_constraintBottom_toBottomOf="@+id/store_rate_img"
-                    app:layout_constraintStart_toEndOf="@+id/store_rate_img" />
+                    app:layout_constraintStart_toEndOf="@+id/store_rate_img"
+                    tools:text="8.8"/>
 
                 <TextView
                     android:id="@+id/mid_line"
@@ -95,16 +98,18 @@
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/store_rate_img"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/store_rate_img"/>
 
                 <ImageView
                     android:id="@+id/healthy_score_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_mood_black_24dp"
+                    android:src="@drawable/health"
                     app:layout_constraintStart_toEndOf="@+id/mid_line"
+                    app:layout_constraintBottom_toBottomOf="@id/store_rate_img"
                     app:layout_constraintTop_toTopOf="@id/store_rate_img"/>
 
 <!--                <TextView-->
@@ -122,227 +127,146 @@
                     style="@style/score_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="16dp"
                     android:text="@{viewModel.convertIntToString(viewModel.diary.food.healthyScore)}"
                     app:layout_constraintBottom_toBottomOf="@+id/healthy_score_img"
-                    app:layout_constraintStart_toEndOf="@+id/healthy_score_img" />
+                    app:layout_constraintStart_toEndOf="@+id/healthy_score_img"
+                    tools:text="9.9"/>
 
                 <ImageView
                     android:id="@+id/food_name_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_local_dining_black_24dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/drawkit_breakfast"
+                    app:layout_constraintEnd_toEndOf="@id/store_rate_img"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_rate_img"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/food_name"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/food_name"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/store_rate_img" />-->
-
-                <View
-                    android:id="@+id/divider22"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/food_name_img" />
+                    app:layout_constraintTop_toBottomOf="@+id/store_rate_img"
+                    tools:layout_editor_absoluteY="94dp" />
 
                 <TextView
                     android:id="@+id/food_name_text"
-                    style="@style/text_style"
+                    style="@style/text_title_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@{viewModel.diary.food.foodName}"
                     app:layout_constraintStart_toEndOf="@+id/food_name_img"
-                    app:layout_constraintTop_toTopOf="@id/food_name_img" />
+                    app:layout_constraintBottom_toBottomOf="@id/food_name_img"
+                    tools:text="雞排便當"/>
 
-                <ImageView
-                    android:id="@+id/food_combo_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                <TextView
+                    android:id="@+id/food_eating_time"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/baseline_bento_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/food_name_img"/>
+                    android:text="@string/eating_time"
+                    app:layout_constraintStart_toStartOf="@+id/food_name_text"
+                    app:layout_constraintTop_toBottomOf="@id/food_name_img" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/food_combo"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/combo_name"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/food_name_img" />-->
-
-                <View
-                    android:id="@+id/divider23"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/food_combo_img" />
+                <TextView
+                    android:id="@+id/food_combo_img"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/combo_name"
+                    app:layout_constraintStart_toStartOf="@+id/food_eating_time"
+                    app:layout_constraintTop_toBottomOf="@id/food_eating_time" />
 
                 <TextView
                     android:id="@+id/food_combo_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
+                    android:maxLines="2"
+                    android:singleLine="false"
                     android:text="@{viewModel.diary.food.foodCombo}"
                     app:layout_constraintStart_toEndOf="@+id/food_combo_img"
-                    app:layout_constraintTop_toTopOf="@id/food_combo_img" />
+                    app:layout_constraintBottom_toBottomOf="@+id/food_combo_img"
+                    tools:text="湯和紅茶" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/price_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_attach_money_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/food_combo_img"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/price"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/add_price"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/food_combo_text" />-->
-
-                <View
-                    android:id="@+id/divider24"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/price_img" />
+                    android:text="@string/add_price"
+                    app:layout_constraintEnd_toEndOf="@+id/food_combo_img"
+                    app:layout_constraintStart_toStartOf="@+id/food_combo_img"
+                    app:layout_constraintTop_toBottomOf="@id/food_combo_img" />
 
                 <TextView
                     android:id="@+id/price_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@{viewModel.diary.food.price}"
-                    app:layout_constraintStart_toEndOf="@+id/price_img"
-                    app:layout_constraintTop_toTopOf="@id/price_img" />
+                    app:layout_constraintStart_toStartOf="@+id/food_combo_text"
+                    app:layout_constraintTop_toTopOf="@+id/price_img"
+                    tools:text="180" />
 
-                <ImageView
+                <TextView
+                    android:id="@+id/price_dollar_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="元"
+                    android:visibility='@{viewModel.diary.food.price == "" ? View.GONE : View.VISIBLE}'
+                    app:layout_constraintStart_toEndOf="@+id/price_text"
+                    app:layout_constraintTop_toTopOf="@+id/price_text"
+                    tools:text="元"/>
+
+                <TextView
                     android:id="@+id/eating_time_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_query_builder_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/price_img"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/eating_time"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/eating_time"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/price_img" />-->
-
-                <View
-                    android:id="@+id/divider25"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/eating_time_img" />
+                    android:text="@string/experience_title"
+                    app:layout_constraintStart_toStartOf="@+id/price_img"
+                    app:layout_constraintTop_toBottomOf="@id/price_img" />
 
                 <TextView
                     android:id="@+id/eating_time_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/eating_time_img"
-                    app:layout_constraintTop_toTopOf="@id/eating_time_img"
-                    app:timeToDisplayFormat="@{viewModel.diary.eatingTime}" />
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/food_eating_time"
+                    app:layout_constraintStart_toEndOf="@+id/food_eating_time"
+                    app:timeToDisplayFormat="@{viewModel.diary.eatingTime}"
+                    tools:text="2020.04.04.18:05" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/content_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_mood_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/eating_time_img"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/content"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/experience_title"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/eating_time_img" />-->
-
-                <View
-                    android:id="@+id/divider26"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/content_img" />
+                    android:text="@string/memo_title"
+                    app:layout_constraintEnd_toEndOf="@+id/eating_time_img"
+                    app:layout_constraintStart_toStartOf="@+id/eating_time_img"
+                    app:layout_constraintTop_toBottomOf="@id/eating_time_img" />
 
                 <TextView
                     android:id="@+id/food_content_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:maxLines="2"
+                    android:singleLine="false"
                     android:text="@{viewModel.diary.food.foodContent}"
-                    app:layout_constraintStart_toEndOf="@+id/content_img"
-                    app:layout_constraintTop_toTopOf="@id/content_img" />
+                    app:layout_constraintStart_toStartOf="@+id/price_text"
+                    app:layout_constraintTop_toTopOf="@+id/eating_time_img"
+                    tools:text="好吃" />
 
-                <ImageView
-                    android:id="@+id/remind_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_grade_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/content_img"/>
-
-<!--                <TextView-->
+                <!--                <TextView-->
 <!--                    android:id="@+id/remind_title"-->
 <!--                    style="@style/text_style"-->
 <!--                    android:layout_width="wrap_content"-->
@@ -358,258 +282,175 @@
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:maxLines="2"
+                    android:singleLine="false"
                     android:text="@{viewModel.diary.food.nextTimeRemind}"
-                    app:layout_constraintStart_toEndOf="@+id/remind_img"
-                    app:layout_constraintTop_toTopOf="@id/remind_img" />
+                    app:layout_constraintStart_toStartOf="@+id/food_content_text"
+                    app:layout_constraintTop_toTopOf="@+id/content_img"
+                    tools:text="出餐很快很方便" />
 
                 <View
                     android:id="@+id/divider_store"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/sunezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/remind_img" />
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:alpha="0.3"
+                    android:background="@color/transparent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/remind_text"
+                    tools:layout_editor_absoluteX="6dp" />
 
                 <ImageView
                     android:id="@+id/store_name_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="32dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_local_dining_black_24dp"
+                    android:src="@drawable/shop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider_store"/>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/store_title"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/store_name"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/divider_store" />-->
-
-                <View
-                    android:id="@+id/divider27"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/store_name_img" />
-
                 <TextView
                     android:id="@+id/store_text"
-                    style="@style/text_style"
+                    style="@style/text_title_style"
+                    android:textSize="18dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@{viewModel.diary.store.storeName}"
+                    app:layout_constraintBottom_toBottomOf="@+id/store_name_img"
                     app:layout_constraintStart_toEndOf="@+id/store_name_img"
-                    app:layout_constraintTop_toTopOf="@id/store_name_img" />
+                    tools:text="池上便當店" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/store_branch_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_store_mall_directory_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_name_img"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/store_branch"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/store_branch"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/store_name_img" />-->
-
-                <View
-                    android:id="@+id/divider28"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/store_branch_img" />
+                    android:text="@string/store_branch"
+                    app:layout_constraintStart_toStartOf="@+id/store_text"
+                    app:layout_constraintTop_toBottomOf="@+id/store_text" />
 
                 <TextView
                     android:id="@+id/branch_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
                     android:text="@{viewModel.diary.store.storeBranch}"
                     app:layout_constraintStart_toEndOf="@+id/store_branch_img"
-                    app:layout_constraintTop_toTopOf="@id/store_branch_img" />
+                    app:layout_constraintTop_toTopOf="@id/store_branch_img"
+                    tools:text="市政府店"/>
 
-                <ImageView
+                <TextView
                     android:id="@+id/phone_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    style="@style/text_style"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_local_phone_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_branch_img"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/store_phone"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/store_phone"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/store_branch_img" />-->
-
-                <View
-                    android:id="@+id/divider29"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_img" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/store_phone"
+                    app:layout_constraintStart_toStartOf="@+id/store_branch_img"
+                    app:layout_constraintTop_toBottomOf="@+id/store_branch_img" />
 
                 <TextView
                     android:id="@+id/phone_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
                     android:text="@{viewModel.diary.store.storePhone}"
                     app:layout_constraintStart_toEndOf="@+id/phone_img"
-                    app:layout_constraintTop_toTopOf="@id/phone_img" />
+                    app:layout_constraintTop_toTopOf="@id/phone_img"
+                    tools:text="09123456"/>
 
-                <ImageView
+                <TextView
                     android:id="@+id/store_location_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_location_on_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/phone_img"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/store_location"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/store_location"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/phone_img" />-->
+                    android:text="@string/store_location"
+                    app:layout_constraintStart_toStartOf="@+id/phone_img"
+                    app:layout_constraintTop_toBottomOf="@id/phone_img" />
 
                 <TextView
                     android:id="@+id/location_text"
                     style="@style/text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="4dp"
                     android:maxLines="2"
                     android:singleLine="false"
                     android:text="@{viewModel.diary.store.storeLocation}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/store_location_img"
-                    app:layout_constraintTop_toTopOf="@id/store_location_img" />
-
-                <View
-                    android:id="@+id/divider30"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/store_location_img" />
+                    app:layout_constraintTop_toTopOf="@id/store_location_img"
+                    tools:text="台北市市政府忠孝東路2222號"/>
 
                 <TextView
                     android:id="@+id/store_min_order"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/store_min_order"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/store_time_img"
                     app:layout_constraintTop_toBottomOf="@id/store_time_img" />
-
-                <View
-                    android:id="@+id/divider32"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/store_min_order" />
 
                 <TextView
                     android:id="@+id/min_order_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
                     android:text="@{viewModel.diary.store.storeMinOrder}"
                     app:layout_constraintStart_toEndOf="@+id/store_min_order"
-                    app:layout_constraintTop_toTopOf="@id/store_min_order" />
+                    app:layout_constraintTop_toTopOf="@id/store_min_order"
+                    tools:text="180"/>
+
+                <TextView
+                    android:id="@+id/min_order_dollar_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="元"
+                    app:layout_constraintStart_toEndOf="@+id/min_order_text"
+                    app:layout_constraintTop_toTopOf="@+id/min_order_text"
+                    tools:text="元"/>
 
                 <TextView
                     android:id="@+id/store_booking"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/store_booking"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/store_min_order"
                     app:layout_constraintTop_toBottomOf="@id/store_min_order" />
-
-                <View
-                    android:id="@+id/divider33"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/store_booking" />
 
                 <TextView
                     android:id="@+id/booking_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
                     app:layout_constraintStart_toEndOf="@+id/store_booking"
-                    app:layout_constraintTop_toTopOf="@id/store_booking" />
+                    app:layout_constraintTop_toTopOf="@id/store_booking"
+                    tools:text="可訂位"/>
 
-                <ImageView
+                <TextView
                     android:id="@+id/store_time_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_query_builder_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/location_text"/>
+                    android:text="@string/store_time"
+                    app:layout_constraintStart_toStartOf="@+id/store_location_img"
+                    app:layout_constraintTop_toBottomOf="@id/location_text" />
 
 <!--                <TextView-->
 <!--                    android:id="@+id/store_time"-->
@@ -622,25 +463,16 @@
 <!--                    app:layout_constraintStart_toStartOf="parent"-->
 <!--                    app:layout_constraintTop_toBottomOf="@id/location_text" />-->
 
-                <View
-                    android:id="@+id/divider31"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_marginTop="1dp"
-                    android:alpha="0.8"
-                    android:background="@color/shironezumi"
-                    app:layout_constraintTop_toBottomOf="@+id/store_time_img" />
-
                 <TextView
                     android:id="@+id/open_time_text"
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
                     android:text="@{viewModel.diary.store.storeOpenTime}"
                     app:layout_constraintStart_toEndOf="@+id/store_time_img"
-                    app:layout_constraintTop_toTopOf="@id/store_time_img" />
+                    app:layout_constraintTop_toTopOf="@id/store_time_img"
+                    tools:text="禮拜日休息"/>
 
                 <TextView
                     android:id="@+id/store_web"
@@ -648,10 +480,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="8dp"
-                    android:layout_marginStart="16dp"
                     android:text="@string/store_web"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/store_booking"
                     app:layout_constraintTop_toBottomOf="@id/store_booking" />
 
                 <TextView
@@ -659,10 +490,11 @@
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
                     android:text="@{viewModel.diary.store.storeHtml}"
                     app:layout_constraintStart_toEndOf="@+id/store_web"
-                    app:layout_constraintTop_toTopOf="@id/store_web" />
+                    app:layout_constraintTop_toTopOf="@id/store_web"
+                    tools:text="www.bento.com"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

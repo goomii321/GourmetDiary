@@ -15,6 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/corners_detail_background"
         tools:context=".stores.StoresFragment">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

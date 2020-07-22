@@ -12,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".stores.detail.StoreDetailFragment">
+        tools:context=".stores.detail.StoreDetailFragment"
+        android:background="@drawable/corners_detail_background">
 
         <TextView
             android:id="@+id/store_title"

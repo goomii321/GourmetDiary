@@ -16,26 +16,26 @@
 
     <!--    add diary-->
     <string name="food_name">餐點名稱</string>
-    <string name="combo_name">套餐內容</string>
+    <string name="combo_name">套餐內容：</string>
     <string name="food_info">餐點資訊</string>
-    <string name="experience_title">用餐心得</string>
+    <string name="experience_title">用餐心得：</string>
     <string name="confirm">確認</string>
     <string name="store_info">店家資訊</string>
     <string name="store_name">店家名稱</string>
-    <string name="store_phone">連絡電話</string>
-    <string name="store_location">地址</string>
+    <string name="store_phone">連絡電話：</string>
+    <string name="store_location">地&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;址：</string>
     <string name="ng_msg">NG</string>
     <string name="eating_time">用餐時間：</string>
     <string name="add_rating">評價分數</string>
     <string name="add_healthy">健康度</string>
-    <string name="add_price">價格</string>
+    <string name="add_price">價&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
     <string name="next_time_text">下次想嘗試…</string>
-    <string name="memo_title">備忘錄</string>
-    <string name="store_branch">分店</string>
-    <string name="store_min_order">最低消費</string>
-    <string name="store_booking">是否可訂位</string>
-    <string name="store_time">營業時段</string>
-    <string name="store_web">網站/粉專</string>
+    <string name="memo_title">備&#160;&#160;忘&#160;&#160;錄：</string>
+    <string name="store_branch">分&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;店：</string>
+    <string name="store_min_order">最低消費：</string>
+    <string name="store_booking">訂位/外送：</string>
+    <string name="store_time">營業時段：</string>
+    <string name="store_web">網站/粉專：</string>
 
     <string name="signin_facebook">Facebook 帳戶登入</string>
     <string name="signin_google">Google 帳戶登入</string>

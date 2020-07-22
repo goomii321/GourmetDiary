@@ -79,6 +79,10 @@ class DiaryDetailFragment : Fragment() {
             return@setOnLongClickListener true
         }
 
+        if (viewModel.diary.value?.store?.storeMinOrder == "無"){
+            binding.minOrderDollarText.visibility = View.GONE
+        }
+
         return binding.root
     }
 
