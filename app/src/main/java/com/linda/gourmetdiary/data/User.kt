@@ -20,7 +20,7 @@ data class Diary(
     var mainImage: String? = "",
     var images: List<String>? = listOf("https://cdn.pixabay.com/photo/2013/07/13/09/37/taco-155812_960_720.png"),
     var createdTime: Long? = -1,
-    var type: String? = "",
+    var type: String? = "早餐",
     val store: Store? = null,
     var food: Food? = null,
     var eatingTime: Long? = 0
