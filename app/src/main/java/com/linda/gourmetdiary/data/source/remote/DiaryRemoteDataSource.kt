@@ -23,6 +23,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val KEY_CREATED_TIME = "createdTime"
     private const val KEY_EATING_TIME = "eatingTime"
     private const val KEY_STORE_NAME = "store.storeName"
+    private const val KEY_OF_STORE_BRANCH = "store.storeBranch"
     private const val KEY_FOOD_NAME = "food.foodName"
     private const val KEY_STORES_NAME = "storeName"
     private const val KEY_STORE_BRANCH = "storeBranch"
@@ -293,14 +294,14 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
         }
 
-    override suspend fun queryStoreHistory(storeName:String): Result<List<Diary>> = suspendCoroutine { continuation ->
+    override suspend fun queryStoreHistory(storeName:String, storeBranch:String): Result<List<Diary>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
             .collection(PATH_DIARYS)
             .whereEqualTo(KEY_STORE_NAME,storeName)
-//            .orderBy(KEY_EATING_TIME,Query.Direction.DESCENDING)
+            .whereEqualTo( KEY_OF_STORE_BRANCH,storeBranch)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

@@ -27,7 +27,7 @@ interface DiaryDataSource {
 
     suspend fun pushProfile(user: User): Result<Boolean>
 
-    suspend fun queryStoreHistory(storeName:String): Result<List<Diary>>
+    suspend fun queryStoreHistory(storeName:String, storeBranch:String): Result<List<Diary>>
 
     suspend fun queryReminder(): Result<List<Diary>>
 

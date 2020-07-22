@@ -55,16 +55,17 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     
     init {
-        queryHistory("${_store.value?.storeName}")
+        Log.d("checkBranch","store branch is ${_store.value?.storeBranch}")
+        queryHistory("${_store.value?.storeName}","${_store.value?.storeBranch}")
     }
 
-    private fun queryHistory(storeName:String) {
+    private fun queryHistory(storeName:String,storeBranch:String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = diaryRepository.queryStoreHistory(storeName)
+            val result = diaryRepository.queryStoreHistory(storeName,storeBranch)
 
             _history.value = when (result) {
                 is Result.Success -> {
@@ -118,9 +119,9 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     }
 
     fun calculateHealthy() {
-        var score = 0F
+        var score = 1F
         var listSize = 1F
-        var scoreAverage = 0F
+        var scoreAverage = 1F
         history.value?.forEach { number ->
             number.food?.healthyScore.let {
                 score = score.plus(it?.toFloat()!!)
@@ -133,9 +134,9 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     }
 
     fun calculateRate()  {
-        var score = 0F
+        var score = 1F
         var listSize = 1F
-        var scoreAverage = 0F
+        var scoreAverage = 1F
         history.value?.forEach { number ->
             number.food?.foodRate.let {
                 score = score.plus(it?.toFloat()!!)
