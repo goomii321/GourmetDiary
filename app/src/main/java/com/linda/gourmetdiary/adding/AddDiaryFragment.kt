@@ -34,6 +34,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.storage.FirebaseStorage
 import com.linda.gourmetdiary.DiaryApplication
+import com.linda.gourmetdiary.MainActivity
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
@@ -163,6 +164,8 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             override fun onPlaceSelected(place: Place) {
                 Log.d("autocompleteFragment","$place")
                 viewModel.user.value?.store?.storeLocation = place.address
+                viewModel.user.value?.store?.storeName = place.name
+                binding.storeNameInput.setText(place.name)
             }
 
             override fun onError(status: Status) {
