@@ -23,7 +23,7 @@ data class Diary(
     var type: String? = "早餐",
     val store: Store? = null,
     var food: Food? = null,
-    var eatingTime: Long? = 0
+    var eatingTime: Long? = null
 ) : Parcelable {
 
 }

@@ -24,6 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.linda.gourmetdiary.DiaryApplication
+import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.DetailDiaryFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
 import kotlinx.android.synthetic.main.detail_diary_fragment.*
@@ -68,9 +69,9 @@ class DiaryDetailFragment : Fragment() {
 
         //set booking text
         when (viewModel.diary.value?.store?.storeBooking){
-            true -> binding.bookingText.text = "可訂位"
-            false -> binding.bookingText.text = "不可訂位"
-            else -> binding.bookingText.text = "無資料"
+            true -> binding.bookingText.setText(R.string.can_booking)
+            false -> binding.bookingText.setText(R.string.cannot_booking)
+            else -> binding.bookingText.setText(R.string.no_data)
         }
 
         binding.locationText.setOnLongClickListener {

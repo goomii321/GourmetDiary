@@ -66,4 +66,8 @@
     <string name="search_template">尋找範本...</string>
     <string name="colon_text">：</string>
 
+    <string name="can_booking">可訂位</string>
+    <string name="cannot_booking">不可訂位</string>
+    <string name="no_data">無資料</string>
+
 </resources>

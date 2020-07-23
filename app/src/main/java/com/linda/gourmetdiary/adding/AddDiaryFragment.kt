@@ -129,7 +129,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                         "${viewModel.saveHour.value}:${viewModel.saveMinute.value}"
             binding.timeShow.text = nowTime
             var test = TimeConverters.timeToTimestamp(nowTime, Locale.TAIWAN)
-            Log.i("eatingTimeCheck", "time is = $test ")
+//            Log.i("eatingTimeCheck", "time is = $test ")
             viewModel.user.value?.eatingTime = test
         })
 

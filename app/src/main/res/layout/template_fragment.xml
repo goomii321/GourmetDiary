@@ -4,24 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.template.TemplateViewModel" />
-
         <import type="com.linda.gourmetdiary.network.LoadApiStatus" />
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="16dp"
         android:background="@drawable/corners_detail_background"
         tools:context=".template.TemplateFragment">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
             app:layout_constraintBottom_toTopOf="@+id/confirm_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:diary="@{viewModel.diary}"
+                    android:visibility="@{viewModel.recyclerViewStarus == true ? View.VISIBLE : View.GONE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@string/food_name"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:text="@={viewModel.editDiary.food.foodName}"
                     app:layout_constraintBottom_toBottomOf="@+id/tem_food_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tem_food_name"
@@ -88,7 +91,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@string/food_name"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:text="@={viewModel.editDiary.food.foodCombo}"
                     app:layout_constraintBottom_toBottomOf="@+id/tem_food_combo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tem_food_combo"
@@ -110,7 +116,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@string/food_name"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:text="@={viewModel.editDiary.food.price}"
                     app:layout_constraintBottom_toBottomOf="@+id/tem_food_price"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tem_food_price"
@@ -125,6 +133,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tem_eating_time" />
 
+                <EditText
+                    android:id="@+id/tem_eating_time_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_eating_time"
+                    app:layout_constraintEnd_toEndOf="@+id/tem_food_price_text"
+                    app:layout_constraintStart_toStartOf="@+id/tem_food_price_text"
+                    app:layout_constraintTop_toTopOf="@+id/tem_eating_time" />
+
                 <TextView
                     android:id="@+id/tem_eating_time"
                     style="@style/text_style"
@@ -136,6 +155,21 @@
                     app:layout_constraintStart_toStartOf="@+id/tem_food_price"
                     app:layout_constraintTop_toBottomOf="@+id/tem_food_price_text" />
 
+                <Spinner
+                    android:id="@+id/food_type"
+                    style="@style/text_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:overlapAnchor="false"
+                    android:foregroundGravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:prompt="@string/food_type"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_eating_time" />
+
                 <TextView
                     android:id="@+id/tem_rating"
                     style="@style/text_style"
@@ -144,7 +178,21 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/add_rating"
                     app:layout_constraintStart_toStartOf="@+id/tem_eating_time"
-                    app:layout_constraintTop_toBottomOf="@+id/tem_eating_time" />
+                    app:layout_constraintTop_toBottomOf="@+id/food_type" />
+
+                <EditText
+                    android:id="@+id/tem_rating_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:inputType="number"
+                    android:gravity="center_horizontal"
+                    android:text="@={viewModel.convertIntToString(viewModel.editDiary.food.foodRate)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_rating"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_rating"
+                    app:layout_constraintTop_toTopOf="@+id/tem_rating" />
 
                 <TextView
                     android:id="@+id/tem_healthy"
@@ -156,6 +204,207 @@
                     app:layout_constraintStart_toStartOf="@+id/tem_rating"
                     app:layout_constraintTop_toBottomOf="@+id/tem_rating" />
 
+                <EditText
+                    android:id="@+id/tem_healthy_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:inputType="number"
+                    android:gravity="center_horizontal"
+                    android:text="@={viewModel.convertIntToString(viewModel.editDiary.food.healthyScore)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_healthy"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_healthy"
+                    app:layout_constraintTop_toTopOf="@+id/tem_healthy" />
+
+                <TextView
+                    android:id="@+id/tem_store_name"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/store_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_healthy" />
+
+                <EditText
+                    android:id="@+id/tem_store_name_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="@={viewModel.editDiary.store.storeName}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_store_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_store_name"
+                    app:layout_constraintTop_toTopOf="@+id/tem_store_name" />
+
+                <TextView
+                    android:id="@+id/tem_store_branch"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/store_branch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_store_name_text" />
+
+                <EditText
+                    android:id="@+id/tem_store_branch_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="@={viewModel.editDiary.store.storeBranch}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_store_branch"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_store_branch"
+                    app:layout_constraintTop_toTopOf="@+id/tem_store_branch" />
+
+                <TextView
+                    android:id="@+id/tem_store_phone"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/store_phone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_store_branch" />
+
+                <EditText
+                    android:id="@+id/tem_store_phone_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="@={viewModel.editDiary.store.storePhone}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_store_phone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_store_phone"
+                    app:layout_constraintTop_toTopOf="@+id/tem_store_phone" />
+
+                <TextView
+                    android:id="@+id/tem_store_booking"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/store_booking"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_store_phone" />
+
+                <EditText
+                    android:id="@+id/tem_store_booking_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_store_booking"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_store_booking"
+                    app:layout_constraintTop_toTopOf="@+id/tem_store_booking" />
+
+                <TextView
+                    android:id="@+id/tem_store_min_order"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/store_min_order"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_store_booking" />
+
+                <EditText
+                    android:id="@+id/tem_store_min_order_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="@={viewModel.editDiary.store.storeMinOrder}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_store_min_order"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_store_min_order"
+                    app:layout_constraintTop_toTopOf="@+id/tem_store_min_order" />
+
+                <TextView
+                    android:id="@+id/tem_store_open_time"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/store_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_store_min_order" />
+
+                <EditText
+                    android:id="@+id/tem_store_open_time_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="@={viewModel.editDiary.store.storeOpenTime}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_store_open_time"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_store_open_time"
+                    app:layout_constraintTop_toTopOf="@+id/tem_store_open_time" />
+
+                <TextView
+                    android:id="@+id/tem_content"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/experience_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_store_open_time" />
+
+                <EditText
+                    android:id="@+id/tem_content_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:text="@={viewModel.editDiary.store.storeOpenTime}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_content"
+                    app:layout_constraintTop_toTopOf="@+id/tem_content" />
+
+                <TextView
+                    android:id="@+id/tem_next_time_memo"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="16dp"
+                    android:text="@string/memo_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_content_text" />
+
+                <EditText
+                    android:id="@+id/tem_next_time_memo_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:text="@={viewModel.editDiary.food.nextTimeRemind}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_next_time_memo"
+                    app:layout_constraintTop_toTopOf="@+id/tem_next_time_memo" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -164,9 +413,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="16dp"
             android:background="@color/oldcolorPrimaryDark"
             android:clickable="@{viewModel.status == LoadApiStatus.LOADING ? false : true}"
             android:gravity="center"
+            android:onClick="@{() -> viewModel.addData(viewModel.editDiary)}"
             android:text='@{viewModel.status != LoadApiStatus.LOADING ? "Post" : "LOADING"}'
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
