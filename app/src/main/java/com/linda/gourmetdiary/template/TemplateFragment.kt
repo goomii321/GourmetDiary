@@ -46,6 +46,9 @@ class TemplateFragment : Fragment() {
             }
         })
 
+        //set EditText input
+
+
         viewModel.diary.observe(viewLifecycleOwner, Observer {
             Log.d("search","search $it")
             autoAdapter?.notifyDataSetChanged()

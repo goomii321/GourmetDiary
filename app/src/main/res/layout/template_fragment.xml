@@ -1,46 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.template.TemplateViewModel" />
+
         <import type="com.linda.gourmetdiary.network.LoadApiStatus" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
         android:background="@drawable/corners_detail_background"
         tools:context=".template.TemplateFragment">
 
-        <EditText
-            android:id="@+id/search_diary"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_template"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:diary="@{viewModel.diary}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/search_diary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/search_diary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search_template"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/search_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:diary="@{viewModel.diary}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/search_diary" />
+
+                <TextView
+                    android:id="@+id/tem_food_name"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/food_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/search_recycler" />
+
+                <EditText
+                    android:id="@+id/tem_food_name_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/food_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_food_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_food_name"
+                    app:layout_constraintTop_toTopOf="@+id/tem_food_name" />
+
+                <TextView
+                    android:id="@+id/tem_food_combo"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/combo_name"
+                    app:layout_constraintStart_toStartOf="@+id/tem_food_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_food_name_text" />
+
+                <EditText
+                    android:id="@+id/tem_food_combo_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/food_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_food_combo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_food_combo"
+                    app:layout_constraintTop_toTopOf="@+id/tem_food_combo" />
+
+                <TextView
+                    android:id="@+id/tem_food_price"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/add_price"
+                    app:layout_constraintStart_toStartOf="@+id/tem_food_combo"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_food_combo_text" />
+
+                <EditText
+                    android:id="@+id/tem_food_price_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/food_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_food_price"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tem_food_price"
+                    app:layout_constraintTop_toTopOf="@+id/tem_food_price" />
+
+                <ImageView
+                    android:id="@+id/right_arrow"
+                    android:layout_width="24dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/baseline_keyboard_arrow_right_black_18dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tem_eating_time"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tem_eating_time" />
+
+                <TextView
+                    android:id="@+id/tem_eating_time"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/eating_time"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tem_food_price"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_food_price_text" />
+
+                <TextView
+                    android:id="@+id/tem_rating"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/add_rating"
+                    app:layout_constraintStart_toStartOf="@+id/tem_eating_time"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_eating_time" />
+
+                <TextView
+                    android:id="@+id/tem_healthy"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/add_healthy"
+                    app:layout_constraintStart_toStartOf="@+id/tem_rating"
+                    app:layout_constraintTop_toBottomOf="@+id/tem_rating" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/oldcolorPrimaryDark"
             android:clickable="@{viewModel.status == LoadApiStatus.LOADING ? false : true}"
             android:gravity="center"
             android:text='@{viewModel.status != LoadApiStatus.LOADING ? "Post" : "LOADING"}'
