@@ -18,10 +18,10 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:id="@+id/log_in_animator"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -46,7 +46,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/highlight_stories"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_store" />
@@ -63,173 +63,294 @@
                     app:layout_constraintTop_toTopOf="@+id/store_title"
                     tools:text="茶湯會" />
 
-                <TextView
-                    android:id="@+id/branch_title"
-                    style="@style/text_style"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/store_title_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@string/store_branch"
                     app:layout_constraintStart_toStartOf="@+id/store_detail_name"
-                    app:layout_constraintTop_toBottomOf="@+id/store_detail_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/store_detail_name">
 
-                <TextView
-                    android:id="@+id/store_branch_name"
-                    style="@style/text_style"
+                    <TextView
+                        android:id="@+id/branch_title"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/store_branch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/store_location"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/store_location"
+                        app:layout_constraintStart_toStartOf="@+id/branch_title"
+                        app:layout_constraintTop_toBottomOf="@id/branch_title" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/store_colon_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{viewModel.store.storeBranch}"
-                    app:layout_constraintBottom_toBottomOf="@+id/branch_title"
-                    app:layout_constraintStart_toEndOf="@+id/branch_title"
-                    app:layout_constraintTop_toTopOf="@+id/branch_title"
-                    tools:text="東門店" />
+                    app:layout_constraintStart_toEndOf="@+id/store_title_layout"
+                    app:layout_constraintTop_toTopOf="@+id/store_title_layout">
 
-                <TextView
-                    android:id="@+id/store_phone"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_phone"
-                    app:layout_constraintStart_toStartOf="@+id/store_location"
-                    app:layout_constraintTop_toBottomOf="@id/store_location" />
+                    <TextView
+                        android:id="@+id/colon1"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/colon_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/store_min_order"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_min_order"
-                    app:layout_constraintStart_toStartOf="@+id/store_time"
-                    app:layout_constraintTop_toBottomOf="@id/store_time" />
+                    <TextView
+                        android:id="@+id/colon2"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/colon_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon1" />
 
-                <TextView
-                    android:id="@+id/min_order_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{viewModel.store.storeMinOrder}"
-                    app:layout_constraintBottom_toBottomOf="@+id/store_min_order"
-                    app:layout_constraintStart_toEndOf="@+id/store_min_order"
-                    app:layout_constraintTop_toTopOf="@id/store_min_order"
-                    tools:text="50" />
 
-                <TextView
-                    android:id="@+id/dollar_min"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@string/dollar"
-                    app:layout_constraintBottom_toBottomOf="@+id/min_order_text"
-                    app:layout_constraintStart_toEndOf="@+id/min_order_text"
-                    app:layout_constraintTop_toTopOf="@+id/min_order_text" />
 
-                <TextView
-                    android:id="@+id/store_booking"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_booking"
-                    app:layout_constraintStart_toStartOf="@+id/store_min_order"
-                    app:layout_constraintTop_toBottomOf="@id/store_min_order" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/booking_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/store_booking"
-                    app:layout_constraintStart_toEndOf="@+id/store_booking"
-                    app:layout_constraintTop_toTopOf="@id/store_booking"
-                    tools:text="可外送" />
-
-                <TextView
-                    android:id="@+id/phone_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{viewModel.store.storePhone}"
-                    app:layout_constraintBottom_toBottomOf="@+id/store_phone"
-                    app:layout_constraintStart_toEndOf="@+id/store_phone"
-                    app:layout_constraintTop_toTopOf="@id/store_phone"
-                    tools:text="09123455" />
-
-                <TextView
-                    android:id="@+id/store_time"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_time"
-                    app:layout_constraintStart_toStartOf="@+id/store_phone"
-                    app:layout_constraintTop_toBottomOf="@id/store_phone" />
-
-                <TextView
-                    android:id="@+id/time_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{viewModel.store.storeOpenTime}"
-                    app:layout_constraintBottom_toBottomOf="@+id/store_time"
-                    app:layout_constraintStart_toEndOf="@+id/store_time"
-                    app:layout_constraintTop_toTopOf="@id/store_time"
-                    tools:text="11:00~23:00" />
-
-                <TextView
-                    android:id="@+id/store_location"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/store_location"
-                    app:layout_constraintStart_toStartOf="@+id/branch_title"
-                    app:layout_constraintTop_toBottomOf="@id/branch_title" />
-
-                <TextView
-                    android:id="@+id/location_text"
-                    style="@style/text_style"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/store_info_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="16dp"
-                    android:maxLines="2"
-                    android:singleLine="false"
-                    android:text="@{viewModel.store.storeLocation}"
-                    app:layout_constraintBottom_toBottomOf="@+id/store_location"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/store_location"
-                    app:layout_constraintTop_toTopOf="@id/store_location"
-                    tools:text="台北市東門路222號" />
+                    app:layout_constraintStart_toEndOf="@+id/store_colon_layout"
+                    app:layout_constraintTop_toTopOf="@+id/store_colon_layout">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/store_web"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/store_web"-->
-<!--                    app:layout_constraintStart_toStartOf="@+id/store_booking"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/store_booking" />-->
+                    <TextView
+                        android:id="@+id/store_branch_name"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@{viewModel.store.storeBranch}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="東門店" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/web_text"-->
-<!--                    style="@style/text_style"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="4dp"-->
-<!--                    android:text="@{viewModel.store.storeHtml}"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/store_web"-->
-<!--                    app:layout_constraintStart_toEndOf="@id/store_web"-->
-<!--                    app:layout_constraintTop_toTopOf="@id/store_web"-->
-<!--                    tools:text="www.tea.com" />-->
+                    <TextView
+                        android:id="@+id/location_text"
+                        style="@style/text_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:text="@{viewModel.store.storeLocation}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/store_branch_name"
+                        tools:text="台北市東門路222號" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/title_layout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@+id/store_title_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/store_title_layout">
+
+                    <TextView
+                        android:id="@+id/store_phone"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/store_phone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/store_time"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/store_time"
+                        app:layout_constraintStart_toStartOf="@+id/store_phone"
+                        app:layout_constraintTop_toBottomOf="@id/store_phone" />
+
+                    <TextView
+                        android:id="@+id/store_min_order"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/store_min_order"
+                        app:layout_constraintStart_toStartOf="@+id/store_time"
+                        app:layout_constraintTop_toBottomOf="@id/store_time" />
+
+                    <TextView
+                        android:id="@+id/store_booking"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/store_booking"
+                        app:layout_constraintStart_toStartOf="@+id/store_min_order"
+                        app:layout_constraintTop_toBottomOf="@id/store_min_order" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/store_colon_layout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/title_layout2"
+                    app:layout_constraintTop_toTopOf="@+id/title_layout2">
+
+                    <TextView
+                        android:id="@+id/colon3"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/colon_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/colon4"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/colon_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon3" />
+
+                    <TextView
+                        android:id="@+id/colon5"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/colon_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon4" />
+
+                    <TextView
+                        android:id="@+id/colon6"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/colon_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon5" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/store_info_layout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/store_info_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/store_info_layout">
+
+                    <TextView
+                        android:id="@+id/phone_text"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewModel.store.storePhone}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="09123455" />
+
+                    <TextView
+                        android:id="@+id/time_text"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewModel.store.storeOpenTime}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/phone_text"
+                        tools:text="11:00~23:00" />
+
+                    <TextView
+                        android:id="@+id/min_order_text"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewModel.store.storeMinOrder}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/time_text"
+                        tools:text="50" />
+
+                    <TextView
+                        android:id="@+id/dollar_min"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/dollar"
+                        app:layout_constraintBottom_toBottomOf="@+id/min_order_text"
+                        app:layout_constraintStart_toEndOf="@+id/min_order_text"
+                        app:layout_constraintTop_toTopOf="@+id/min_order_text" />
+
+                    <TextView
+                        android:id="@+id/booking_text"
+                        style="@style/text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/min_order_text"
+                        tools:text="可外送" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/store_web"-->
+                <!--                    style="@style/text_style"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="8dp"-->
+                <!--                    android:text="@string/store_web"-->
+                <!--                    app:layout_constraintStart_toStartOf="@+id/store_booking"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/store_booking" />-->
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/web_text"-->
+                <!--                    style="@style/text_style"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="4dp"-->
+                <!--                    android:text="@{viewModel.store.storeHtml}"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@+id/store_web"-->
+                <!--                    app:layout_constraintStart_toEndOf="@id/store_web"-->
+                <!--                    app:layout_constraintTop_toTopOf="@id/store_web"-->
+                <!--                    tools:text="www.tea.com" />-->
 
                 <View
                     android:id="@+id/divider_store"
@@ -254,14 +375,14 @@
                     android:background="@color/sunezumi"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/store_booking" />
+                    app:layout_constraintTop_toBottomOf="@+id/store_info_layout2" />
 
                 <ImageView
                     android:id="@+id/chart_img"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/business_and_finance"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_query" />
@@ -271,9 +392,9 @@
                     style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/all_cost"
-                    app:layout_constraintStart_toStartOf="@+id/store_booking"
+                    app:layout_constraintStart_toStartOf="@+id/store_title_layout"
                     app:layout_constraintTop_toBottomOf="@+id/divider_query" />
 
                 <TextView
@@ -391,7 +512,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
                     android:orientation="horizontal"
                     app:diary="@{viewModel.history}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -401,6 +523,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/food_history" />
 
                 <ProgressBar
+                    android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:theme="@style/ProgressTheme"
