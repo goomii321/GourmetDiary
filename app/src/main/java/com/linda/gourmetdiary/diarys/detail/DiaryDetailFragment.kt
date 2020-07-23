@@ -20,7 +20,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
@@ -67,6 +66,7 @@ class DiaryDetailFragment : Fragment() {
             }
         }
 
+        //set booking text
         when (viewModel.diary.value?.store?.storeBooking){
             true -> binding.bookingText.text = "可訂位"
             false -> binding.bookingText.text = "不可訂位"
