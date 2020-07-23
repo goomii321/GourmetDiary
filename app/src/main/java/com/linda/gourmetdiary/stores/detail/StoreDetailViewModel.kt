@@ -119,7 +119,7 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     }
 
     fun calculateHealthy() {
-        var score = 1F
+        var score = 0F
         var listSize = 1F
         var scoreAverage = 1F
         history.value?.forEach { number ->
@@ -134,7 +134,7 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     }
 
     fun calculateRate()  {
-        var score = 1F
+        var score = 0F
         var listSize = 1F
         var scoreAverage = 1F
         history.value?.forEach { number ->
