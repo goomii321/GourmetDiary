@@ -15,7 +15,8 @@
         android:id="@+id/navigate_to_home" app:destination="@+id/homeFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"
         app:enterAnim="@anim/fragment_slide_in"
-        app:popExitAnim="@anim/fragment_slide_out" />
+        app:exitAnim="@anim/fragment_fade_out"
+        app:popEnterAnim="@anim/fragment_fade_in" />
     <fragment
         android:id="@+id/diarysFragment"
         android:name="com.linda.gourmetdiary.diarys.DiarysFragment"
@@ -25,8 +26,10 @@
     <action
         android:id="@+id/navigate_to_diarys" app:destination="@+id/diarysFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"
-        app:enterAnim="@anim/fragment_slide_in"
-        app:popExitAnim="@anim/fragment_slide_out"/>
+        app:enterAnim="@anim/fragment_fade_in"
+        app:exitAnim="@anim/fragment_fade_out"
+        app:popEnterAnim="@anim/fragment_fade_in"
+        app:popExitAnim="@anim/fragment_fade_out"/>
 
     <fragment
         android:id="@+id/storesFragment"
@@ -36,8 +39,10 @@
     <action
         android:id="@+id/navigate_to_stores" app:destination="@+id/storesFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"
-        app:enterAnim="@anim/fragment_slide_in"
-        app:popExitAnim="@anim/fragment_slide_out"/>
+        app:enterAnim="@anim/fragment_fade_in"
+        app:exitAnim="@anim/fragment_fade_out"
+        app:popEnterAnim="@anim/fragment_fade_in"
+        app:popExitAnim="@anim/fragment_fade_out"/>
 
     <fragment
         android:id="@+id/profileFragment"
@@ -48,6 +53,7 @@
         android:id="@+id/navigate_to_profile" app:destination="@+id/profileFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"
         app:enterAnim="@anim/fragment_slide_in"
+        app:exitAnim="@anim/fragment_slide_out"
         app:popExitAnim="@anim/fragment_slide_out" />
 
     <fragment
@@ -64,6 +70,7 @@
         android:id="@+id/navigate_to_add" app:destination="@id/addDiaryFragment"
         app:popUpTo="@id/homeFragment" app:popUpToInclusive="false"
         app:enterAnim="@anim/fragment_slide_in"
+        app:exitAnim="@anim/fragment_slide_out"
         app:popExitAnim="@anim/fragment_slide_out" />
     <fragment
         android:id="@+id/diaryDetailFragment"
@@ -78,6 +85,7 @@
         android:id="@+id/navigate_to_diary_detail" app:destination="@+id/diaryDetailFragment"
         app:popUpTo="@id/diarysFragment" app:popUpToInclusive="false"
         app:enterAnim="@anim/fragment_slide_in"
+        app:exitAnim="@anim/fragment_fade_out"
         app:popExitAnim="@anim/fragment_slide_out"/>
     <fragment
         android:id="@+id/storeDetailFragment"
@@ -92,6 +100,7 @@
         android:id="@+id/navigate_to_store_detail" app:destination="@+id/storeDetailFragment"
         app:popUpTo="@id/storesFragment" app:popUpToInclusive="false"
         app:enterAnim="@anim/fragment_slide_in"
+        app:exitAnim="@anim/fragment_fade_out"
         app:popExitAnim="@anim/fragment_slide_out" />
     <dialog
         android:id="@+id/logOutDialog"
@@ -99,9 +108,7 @@
         android:label="LogOutDialog" />
     <action
         android:id="@+id/navigate_to_log_Out" app:destination="@+id/logOutDialog"
-        app:popUpTo="@id/navigation" app:popUpToInclusive="true"
-        app:enterAnim="@anim/fragment_slide_in"
-        app:popExitAnim="@anim/fragment_slide_out"/>
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
 
     <fragment
         android:id="@+id/templateFragment"
@@ -111,5 +118,6 @@
         android:id="@+id/navigate_to_template" app:destination="@id/templateFragment"
         app:popUpTo="@id/homeFragment" app:popUpToInclusive="false"
         app:enterAnim="@anim/fragment_slide_in"
+        app:exitAnim="@anim/fragment_slide_out"
         app:popExitAnim="@anim/fragment_slide_out" />
 </navigation>
