@@ -76,7 +76,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     fun getTodayEndTime(): Long =
         TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(86391428)
 
-    private fun getUsersResult(startTime: Long, endTime: Long) {
+    fun getUsersResult(startTime: Long, endTime: Long) {
 
         coroutineScope.launch {
 
@@ -88,7 +88,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-//                    Log.i("diary", "Result.Success diary = ${result.data}")
+                    Log.i("diary", "Result.Success diary = ${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
@@ -144,16 +144,16 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
                     diarys4Day.dayTitle = condition
                     diarys4Day.diarys.add(diary)
                     diarys4Days.add(diarys4Day)
-                    Log.i(
-                        "converter",
-                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
-                    )
+//                    Log.i(
+//                        "converter",
+//                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
+//                    )
                 } else { // if diarys4Days include day title of this day
                     diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
-                    Log.i(
-                        "converter2",
-                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
-                    )
+//                    Log.i(
+//                        "converter2",
+//                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
+//                    )
                 }
             }
 //            diarys4Days.forEach {
@@ -163,7 +163,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 //                }
 //            }
         }
-        Log.d("dataitems","_dataItems.value=${_dataItems.value}")
+//        Log.d("dataitems","_dataItems.value=${_dataItems.value}")
         _dataItems.value = diarysToDataItems(diarys4Days = diarys4Days)
     }
 
@@ -181,5 +181,6 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     fun onDataAssigned() {
         _diary.value = null
+        diarys4Days.clear()
     }
 }

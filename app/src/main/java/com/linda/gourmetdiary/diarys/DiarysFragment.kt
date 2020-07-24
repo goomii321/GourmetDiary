@@ -20,6 +20,7 @@ import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.DiarysFragmentBinding
+import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.android.synthetic.main.detail_diary_fragment.*
 import java.util.*
 
@@ -43,10 +44,21 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             getDate()
         })
 
+        viewModel.saveYear.observe(viewLifecycleOwner, Observer {
+            var nowTime =
+                "${viewModel.saveYear.value}-${viewModel.saveMonth.value}-${viewModel.saveDay.value} "
+            var checkEndDay = TimeConverters.dateToTimestamp(nowTime, Locale.TAIWAN)
+            var checkStartDay = checkEndDay - 518348572
+            Log.i("eatingTimeCheck", "choose time is $nowTime and timestamp is = $checkEndDay and start day is ${TimeConverters.timestampToDate(checkStartDay,
+                Locale.TAIWAN)}")
+            viewModel.getUsersResult(checkStartDay,checkEndDay)
+        })
+
         viewModel.diary.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.assignData(it)
                 viewModel.onDataAssigned()
+                DiarysAdapter(viewModel, DiarysAdapter.OnClickListener{}).notifyDataSetChanged()
             }
         })
 
@@ -85,23 +97,23 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         return binding.root
     }
 
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        viewModel.saveDay.value = dayOfMonth
-        viewModel.saveMonth.value = month + 1
-        viewModel.saveYear.value = year
-
-        getDateTimeCalendar()
-    }
-
-    private fun getDateTimeCalendar() {
+    private fun getDateCalendar() {
         val calendar = Calendar.getInstance()
         viewModel.day = calendar.get(Calendar.DAY_OF_MONTH)
         viewModel.month = calendar.get(Calendar.MONTH)
         viewModel.year = calendar.get(Calendar.YEAR)
     }
 
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        viewModel.saveDay.value = dayOfMonth
+        viewModel.saveMonth.value = month + 1
+        viewModel.saveYear.value = year
+
+        getDateCalendar()
+    }
+
     private fun getDate() {
-        getDateTimeCalendar()
+        getDateCalendar()
         activity?.let {
             DatePickerDialog(
                 it,

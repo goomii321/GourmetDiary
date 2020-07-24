@@ -60,7 +60,7 @@ class MainViewModel(private val repository: DiaryRepository): ViewModel() {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-                    Log.i("getProfile","success")
+//                    Log.i("getProfile","success")
                 }
                 is Result.Fail -> {
                     _error.value = result.error
