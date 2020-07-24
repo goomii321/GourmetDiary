@@ -89,20 +89,22 @@ class HomeFragment : Fragment() {
             }
         })
 
-        if (viewModel.listStore.value == null) {
-            binding.view2.visibility = View.GONE
-        }
+//        if (viewModel.listStore.value == null) {
+//            binding.view2.visibility = View.GONE
+//        }
 
         if(viewModel.healthyScore.value == null){
             binding.view3.visibility = View.GONE
         }
 
-        viewModel.listStore.observe(viewLifecycleOwner, Observer {
+        viewModel.sameStoreStatus.observe(viewLifecycleOwner, Observer {
             viewModel.countText.value = viewModel.count.value.toString()
             viewModel.listStoreText.value = viewModel.listStore.value
-            binding.view2.visibility = View.VISIBLE
-            binding.homeReminder.text = "最近七天你已吃過 ${viewModel.count.value} 次${viewModel.listStore.value}囉!!"
-//            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
+            if ( it == true){
+//                binding.view2.visibility = View.VISIBLE
+                binding.homeReminder.text = "最近七天你已吃過 ${viewModel.count.value} 次${viewModel.listStore.value}囉!!"
+            }
+            Log.d("getSameStore","0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
         })
 
         viewModel.healthyScore.observe(viewLifecycleOwner, Observer {

@@ -43,6 +43,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
         get() = _diary
 
     private var sameStore = mutableListOf<String>()
+    var sameStoreStatus = MutableLiveData<Boolean>().apply { value = false }
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -154,9 +155,14 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
             if (test.count() > count.value!!){
                 count.value = test.count()
                 midStore = test.first()
+                sameStoreStatus.value == true
+            } else {
+                sameStoreStatus.value == false
             }
             listStore.value = midStore
+            Log.d("getSameStore","getSameStore = ${test.count()}; ${test}")
         }
+        Log.d("getSameStore","listStore = $listStore")
     }
 
     fun getHealthy(){
