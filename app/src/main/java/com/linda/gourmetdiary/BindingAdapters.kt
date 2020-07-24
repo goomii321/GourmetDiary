@@ -71,10 +71,11 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         val imgUri = it.toUri().buildUpon().build()
         Glide.with(imgView.context)
             .load(imgUri)
-            .transform(MultiTransformation(FitCenter(), RoundedCorners(10)))
+//            .transform(MultiTransformation(FitCenter(), RoundedCorners(10)))
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.user_photo_illustration)
+                    .transform(MultiTransformation(FitCenter(), RoundedCorners(10)))
                     .error(R.drawable.user_photo_illustration))
             .into(imgView)
     }

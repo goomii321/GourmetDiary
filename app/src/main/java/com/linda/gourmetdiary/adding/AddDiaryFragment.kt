@@ -231,6 +231,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
               -1 -> Toast.makeText(context,"請輸入餐點名稱",Toast.LENGTH_SHORT).show()
               -2 -> Toast.makeText(context,"請輸入用餐時間",Toast.LENGTH_SHORT).show()
               -3 -> Toast.makeText(context,"請輸入餐廳名稱",Toast.LENGTH_SHORT).show()
+              -4 -> Toast.makeText(context,"請上傳至少一張圖片",Toast.LENGTH_SHORT).show()
           }
         })
 

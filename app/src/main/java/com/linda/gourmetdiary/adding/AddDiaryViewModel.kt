@@ -81,6 +81,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
             user.value?.food?.foodName.isNullOrEmpty() -> _invalidCheckout.value = -1
             user.value?.eatingTime == null -> _invalidCheckout.value = -2
             user.value?.store?.storeName.isNullOrEmpty() -> _invalidCheckout.value = -3
+            user.value?.mainImage == "" -> _invalidCheckout.value = -4
             else -> coroutineScope.launch {
 
                 _status.value = LoadApiStatus.LOADING
