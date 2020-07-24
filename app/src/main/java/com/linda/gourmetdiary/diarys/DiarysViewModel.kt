@@ -171,8 +171,8 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
         val dataList = mutableListOf<DataItem>()
 
         dataList.add(DataItem.Title(title))
-
         diarys4Days.forEach {
+            it.diarys.sortBy { it.eatingTime }
             dataList.add(DataItem.Diarys(it))
         }
 
