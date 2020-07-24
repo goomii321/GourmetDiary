@@ -47,7 +47,7 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         viewModel.saveYear.observe(viewLifecycleOwner, Observer {
             var nowTime =
                 "${viewModel.saveYear.value}-${viewModel.saveMonth.value}-${viewModel.saveDay.value} "
-            var checkEndDay = TimeConverters.dateToTimestamp(nowTime, Locale.TAIWAN)
+            var checkEndDay = TimeConverters.dateToTimestamp(nowTime, Locale.TAIWAN) + 86391428
             var checkStartDay = checkEndDay - 518348572
 //            Log.i("eatingTimeCheck", "choose time is $nowTime and timestamp is = $checkEndDay and start day is ${TimeConverters.timestampToDate(checkStartDay,
 //                Locale.TAIWAN)}")
