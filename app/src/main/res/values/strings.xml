@@ -37,8 +37,8 @@
     <string name="store_time">營業時段</string>
     <string name="store_web">網站/粉專</string>
 
-    <string name="signin_facebook">Facebook 帳戶登入</string>
-    <string name="signin_google">Google 帳戶登入</string>
+    <string name="signin_facebook">以 Facebook 帳戶登入</string>
+    <string name="signin_google">以 Google 帳戶登入</string>
 
     <string name="facebook_application_id">307121663756980</string>
     <string name="facebook_app_id">307121663756980</string>

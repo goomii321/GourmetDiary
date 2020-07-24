@@ -10,42 +10,61 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/imageView3"
+            style="@style/text_title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:foregroundGravity="center_horizontal"
+            android:text="@string/app_name"
+            android:textColor="@color/colorAccent"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/log_in_animator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/log_in_animator"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_marginHorizontal="16dp"
-            app:lottie_rawRes="@raw/food_carousel"
+            android:layout_marginVertical="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:lottie_rawRes="@raw/food_carousel" />
 
         <Button
             android:id="@+id/facebook_login_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="30dp"
-            android:background="@color/blue"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
             android:text="@string/signin_facebook"
-            android:textColor="@color/white_normal"
-            app:layout_constraintTop_toBottomOf="@+id/log_in_animator"/>
+            android:textColor="@color/kachi"
+            app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/google_sign_in_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/blue"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
             android:text="@string/signin_google"
-            android:textColor="@color/white_normal"
-            app:layout_constraintTop_toBottomOf="@+id/facebook_login_button"/>
+            android:textColor="@color/kachi"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </RelativeLayout>
