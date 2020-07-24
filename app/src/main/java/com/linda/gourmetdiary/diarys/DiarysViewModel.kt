@@ -19,6 +19,14 @@ import java.util.*
 
 class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
+    var year = 0
+    var month = 0
+    var day = 0
+
+    var saveYear = MutableLiveData<Int>()
+    var saveMonth = MutableLiveData<Int>()
+    var saveDay = MutableLiveData<Int>()
+
     var endTime = MutableLiveData<Long>()
     var startTime = MutableLiveData<Long>().value
 
@@ -39,6 +47,10 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     // diarys4Day
     var diarys4Days = mutableListOf<Diarys4Day>()
+
+    private var _dataItems = MutableLiveData<List<DataItem>>()
+    val dataItems: LiveData<List<DataItem>>
+        get() = _dataItems
 
     private val _refreshStatus = MutableLiveData<Boolean>()
     val refreshStatus: LiveData<Boolean>
@@ -144,14 +156,27 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
                     )
                 }
             }
-
-            diarys4Days.forEach {
-                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
-                it.diarys.forEach {
-                    Log.d("diarys4Days", "diary = ${it} ")
-                }
-            }
+//            diarys4Days.forEach {
+//                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
+//                it.diarys.forEach {
+//                    Log.d("diarys4Days", "diary = ${it} ")
+//                }
+//            }
         }
+        Log.d("dataitems","_dataItems.value=${_dataItems.value}")
+        _dataItems.value = diarysToDataItems(diarys4Days = diarys4Days)
+    }
+
+    fun diarysToDataItems(title: String = "選擇其他日期", diarys4Days: MutableList<Diarys4Day>): List<DataItem> {
+        val dataList = mutableListOf<DataItem>()
+
+        dataList.add(DataItem.Title(title))
+
+        diarys4Days.forEach {
+            dataList.add(DataItem.Diarys(it))
+        }
+
+        return dataList
     }
 
     fun onDataAssigned() {

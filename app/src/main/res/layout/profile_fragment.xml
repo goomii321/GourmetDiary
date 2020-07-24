@@ -70,10 +70,11 @@
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             app:dateToDisplayFormat="@{UserManager.INSTANCE.userData.signUpDate}"
             app:layout_constraintStart_toEndOf="@+id/signup_date"
-            app:layout_constraintTop_toTopOf="@+id/signup_date" />
+            app:layout_constraintTop_toTopOf="@+id/signup_date"
+            tools:text="2020.02.02"/>
 
         <TextView
             android:id="@+id/diary_count"
@@ -91,10 +92,11 @@
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:text="@{viewModel.convertLongToString(viewModel.diaryCount)}"
             app:layout_constraintStart_toEndOf="@+id/diary_count"
-            app:layout_constraintTop_toTopOf="@+id/diary_count" />
+            app:layout_constraintTop_toTopOf="@+id/diary_count"
+            tools:text="20"/>
 
         <TextView
             android:id="@+id/store_count"
@@ -112,10 +114,11 @@
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:text="@{viewModel.convertLongToString(viewModel.storeCount)}"
             app:layout_constraintStart_toEndOf="@+id/store_count"
-            app:layout_constraintTop_toTopOf="@+id/store_count" />
+            app:layout_constraintTop_toTopOf="@+id/store_count"
+            tools:text="20"/>
 
         <TextView
             android:id="@+id/weekily_cost"
@@ -133,10 +136,11 @@
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:text="@{viewModel.convertLongToString(viewModel.weekulyCost)}"
             app:layout_constraintStart_toEndOf="@+id/weekily_cost"
-            app:layout_constraintTop_toTopOf="@+id/weekily_cost" />
+            app:layout_constraintTop_toTopOf="@+id/weekily_cost"
+            tools:text="20"/>
 
         <TextView
             android:id="@+id/weekily_healthy"
@@ -154,10 +158,11 @@
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:text="@{viewModel.healthyScore}"
             app:layout_constraintStart_toEndOf="@+id/weekily_healthy"
-            app:layout_constraintTop_toTopOf="@+id/weekily_healthy" />
+            app:layout_constraintTop_toTopOf="@+id/weekily_healthy"
+            tools:text="20"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

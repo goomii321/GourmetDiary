@@ -61,7 +61,7 @@
     <string name="healthy_average">平均健康度：</string>
     <string name="rating_average">平均評價分：</string>
     <string name="food_type">類型</string>
-    <string name="weekily_cost">本週花費：</string>
+    <string name="weekily_cost">本週花費：$</string>
     <string name="weekily_healthy">本週健康度：</string>
     <string name="search_template">尋找範本...</string>
     <string name="colon_text">：</string>
@@ -69,5 +69,6 @@
     <string name="can_booking">可訂位</string>
     <string name="cannot_booking">不可訂位</string>
     <string name="no_data">無資料</string>
+    <string name="check_day">選擇其他日期</string>
 
 </resources>

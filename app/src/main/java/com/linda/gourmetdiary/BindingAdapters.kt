@@ -21,6 +21,7 @@ import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.data.Stores
 import com.linda.gourmetdiary.diarys.DailyItemAdapter
+import com.linda.gourmetdiary.diarys.DataItem
 import com.linda.gourmetdiary.diarys.DiarysAdapter
 import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
 import com.linda.gourmetdiary.network.LoadApiStatus
@@ -54,9 +55,9 @@ fun bindStoreRecyclerView(recyclerView: RecyclerView, stores: List<Stores>?) {
     }
 }
 
-@BindingAdapter("diarys4Days")
-fun bindDiarys4DaysRecyclerView(recyclerView: RecyclerView, stores: List<Diarys4Day>?) {
-    stores?.let {
+@BindingAdapter("dataItems")
+fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, homeItems: List<DataItem>?) {
+    homeItems?.let {
         recyclerView.adapter?.apply {
             when (this) {
                 is DiarysAdapter -> submitList(it)
@@ -64,6 +65,17 @@ fun bindDiarys4DaysRecyclerView(recyclerView: RecyclerView, stores: List<Diarys4
         }
     }
 }
+
+//@BindingAdapter("diarys4Days")
+//fun bindDiarys4DaysRecyclerView(recyclerView: RecyclerView, stores: List<Diarys4Day>?) {
+//    stores?.let {
+//        recyclerView.adapter?.apply {
+//            when (this) {
+//                is DiarysAdapter -> submitList(it)
+//            }
+//        }
+//    }
+//}
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {

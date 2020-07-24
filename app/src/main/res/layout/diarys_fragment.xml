@@ -33,7 +33,7 @@
                 android:layout_height="0dp"
                 android:background="@drawable/corners_detail_background"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:diarys4Days="@{viewModel.diarys4Days}">
+                app:dataItems="@{viewModel.dataItems}">
 
             </androidx.recyclerview.widget.RecyclerView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

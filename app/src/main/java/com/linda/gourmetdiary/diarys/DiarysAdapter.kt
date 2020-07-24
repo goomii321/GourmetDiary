@@ -1,31 +1,47 @@
 package com.linda.gourmetdiary.diarys
 
+import android.app.DatePickerDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Diarys4Day
-import com.linda.gourmetdiary.data.source.DiaryRepository
-import com.linda.gourmetdiary.databinding.ItemDiaryOnedayBinding
+import com.linda.gourmetdiary.databinding.ItemDiaryCheckDayBinding
 import com.linda.gourmetdiary.databinding.ItemDiarylistBinding
-import com.linda.gourmetdiary.ext.getVmFactory
 
-class DiarysAdapter( val viewModel: DiarysViewModel) :
-    ListAdapter<Diarys4Day, RecyclerView.ViewHolder>(DiffCallback) {
+class DiarysAdapter( val viewModel: DiarysViewModel, private val onClickListener: OnClickListener) :
+    ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback) {
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Diarys4Day>() {
-        override fun areItemsTheSame(oldItem: Diarys4Day, newItem: Diarys4Day): Boolean {
+    class OnClickListener(val clickListener: (data: String) -> Unit) {
+        fun onClick(data: String) = clickListener(data)
+    }
+
+    companion object DiffCallback : DiffUtil.ItemCallback<DataItem>() {
+        override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Diarys4Day, newItem: Diarys4Day): Boolean {
+        override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
             return oldItem == newItem
         }
 
         private const val ITEM_VIEW_TYPE_LV1 = 0
+        private const val ITEM_VIEW_TYPE_LV2 = 1
+    }
+
+    class TitleViewHolder(private var binding: ItemDiaryCheckDayBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(title: String, onClickListener: OnClickListener) {
+            binding.title = title
+            binding.root.setOnClickListener { onClickListener.onClick(title) }
+//            binding.textSearch.setOnClickListener {
+//                getDate()
+//            }
+
+            binding.executePendingBindings()
+        }
     }
 
     class DiaryViewHolder(private var binding: ItemDiarylistBinding) :
@@ -44,7 +60,11 @@ class DiarysAdapter( val viewModel: DiarysViewModel) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_LV1 -> DiaryViewHolder(
+            ITEM_VIEW_TYPE_LV1 -> TitleViewHolder(
+                ItemDiaryCheckDayBinding.inflate(
+                    LayoutInflater.from(parent.context),parent,false))
+
+            ITEM_VIEW_TYPE_LV2 -> DiaryViewHolder(
                 ItemDiarylistBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
@@ -56,16 +76,33 @@ class DiarysAdapter( val viewModel: DiarysViewModel) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder) {
+            is TitleViewHolder -> {
+                holder.bind((getItem(position) as DataItem.Title).title,onClickListener)
+            }
             is DiaryViewHolder -> {
-                holder.bind((getItem(position) as Diarys4Day), viewModel)
+                holder.bind((getItem(position) as DataItem.Diarys).diarys4Day, viewModel)
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return ITEM_VIEW_TYPE_LV1
+        return when(getItem(position)){
+            is DataItem.Title -> ITEM_VIEW_TYPE_LV1
+            is DataItem.Diarys -> ITEM_VIEW_TYPE_LV2
+        }
     }
+}
 
+sealed class DataItem {
+
+    abstract val id: Long
+
+    data class Title(val title: String): DataItem() {
+        override val id: Long = -1
+    }
+    data class Diarys(val diarys4Day: Diarys4Day): DataItem() {
+        override val id: Long = -2
+    }
 }
 
 
