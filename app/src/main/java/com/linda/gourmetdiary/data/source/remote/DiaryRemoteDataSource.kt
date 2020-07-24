@@ -43,7 +43,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
                     for (document in task.result!!) {
-//                        Logger.i("getUsersDiarys: " + document.data)
+                        Logger.i("getUsersDiarys: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }

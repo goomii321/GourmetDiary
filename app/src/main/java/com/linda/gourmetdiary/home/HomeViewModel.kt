@@ -160,9 +160,9 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                 sameStoreStatus.value == false
             }
             listStore.value = midStore
-            Log.d("getSameStore","getSameStore = ${test.count()}; ${test}")
+//            Log.d("getSameStore","getSameStore = ${test.count()}; ${test}")
         }
-        Log.d("getSameStore","listStore = $listStore")
+//        Log.d("getSameStore","listStore = $listStore")
     }
 
     fun getHealthy(){

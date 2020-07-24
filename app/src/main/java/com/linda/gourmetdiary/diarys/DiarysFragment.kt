@@ -49,8 +49,8 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 "${viewModel.saveYear.value}-${viewModel.saveMonth.value}-${viewModel.saveDay.value} "
             var checkEndDay = TimeConverters.dateToTimestamp(nowTime, Locale.TAIWAN)
             var checkStartDay = checkEndDay - 518348572
-            Log.i("eatingTimeCheck", "choose time is $nowTime and timestamp is = $checkEndDay and start day is ${TimeConverters.timestampToDate(checkStartDay,
-                Locale.TAIWAN)}")
+//            Log.i("eatingTimeCheck", "choose time is $nowTime and timestamp is = $checkEndDay and start day is ${TimeConverters.timestampToDate(checkStartDay,
+//                Locale.TAIWAN)}")
             viewModel.getUsersResult(checkStartDay,checkEndDay)
         })
 
@@ -58,7 +58,10 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             it?.let {
                 viewModel.assignData(it)
                 viewModel.onDataAssigned()
-                DiarysAdapter(viewModel, DiarysAdapter.OnClickListener{}).notifyDataSetChanged()
+                DiarysAdapter(viewModel, DiarysAdapter.OnClickListener {}).notifyDataSetChanged()
+                if(it.isEmpty()){
+                    binding.noDiaryText.visibility = View.VISIBLE
+               }
             }
         })
 
