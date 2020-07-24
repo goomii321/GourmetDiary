@@ -43,7 +43,7 @@
             style="@style/text_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="找不到日記資料!!"
+            android:text="@string/no_diary_data"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
