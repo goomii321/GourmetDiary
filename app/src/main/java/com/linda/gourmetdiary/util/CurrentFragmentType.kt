@@ -5,5 +5,6 @@ enum class CurrentFragmentType(val value:String) {
     DIARY("每週日記"),
     STORES("餐廳總覽"),
     PROFILE("個人資訊"),
-    ADD("添加日記")
+    ADD("添加日記"),
+    TEMPLATE("添加範本日記")
 }

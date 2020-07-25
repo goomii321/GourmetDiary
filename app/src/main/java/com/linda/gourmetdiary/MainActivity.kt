@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +21,7 @@ import androidx.navigation.ui.NavigationUI
 import app.appworks.school.stylish.ext.getVmFactory
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.linda.gourmetdiary.databinding.ActivityMainBinding
 import com.linda.gourmetdiary.util.CurrentFragmentType
 import com.linda.gourmetdiary.util.UserManager
@@ -75,8 +77,12 @@ class MainActivity : AppCompatActivity() {
         var ivHeaderPhoto: ImageView = headerLayout.findViewById(R.id.user_image)
         var userName: TextView = headerLayout.findViewById(R.id.user_name)
 
+        UserManager.userData.userName = FirebaseAuth.getInstance().currentUser?.displayName
+        UserManager.userData.userPhoto = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
+
         userName.text = UserManager.userData.userName
         Glide.with(navigationView).load(UserManager.userData.userPhoto).into(ivHeaderPhoto)
+        Log.d("checkDrawer","name = ${userName.text}")
 
         setupDrawer()
         setupNavController()
@@ -88,9 +94,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> CurrentFragmentType.HOME
                 R.id.diarysFragment -> CurrentFragmentType.DIARY
                 R.id.storesFragment -> CurrentFragmentType.STORES
-//                R.id.diaryDetailFragment -> CurrentFragmentType.DETAIL
                 R.id.profileFragment -> CurrentFragmentType.PROFILE
                 R.id.addDiaryFragment -> CurrentFragmentType.ADD
+                R.id.templateFragment -> CurrentFragmentType.TEMPLATE
                 else -> viewModel.currentFragmentType.value
             }
         }
