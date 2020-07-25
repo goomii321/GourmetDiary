@@ -79,6 +79,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
             diarys.diaryId = document.id
             diarys.createdTime = Calendar.getInstance().timeInMillis
+            diarys.store?.updateTime = Calendar.getInstance().timeInMillis
+            Logger.d("update time is ${diarys.store?.updateTime}")
 
             diarys.store?.let {
                 stores.whereEqualTo(KEY_STORES_NAME,"${it.storeName}").whereEqualTo(KEY_STORE_BRANCH,"${it.storeBranch}")
@@ -103,7 +105,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                             }
 
                         } else {
-                            document.update(KEY_STORES_NAME,it.storeName)
+                            document.update("updateTime",it.updateTime)
                         }
                     }
             }

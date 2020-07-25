@@ -30,7 +30,7 @@ data class Diary(
 
 @Parcelize
 data class Store(
-    var storeId: String? = "",
+    var updateTime: Long? = -1,
     var storeName: String? = "",
     var storePhone: String? ="無",
     var storeBooking: Boolean? = false ,
