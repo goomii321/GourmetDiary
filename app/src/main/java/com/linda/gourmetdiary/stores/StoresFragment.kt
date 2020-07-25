@@ -99,6 +99,7 @@ class StoresFragment : Fragment() {
                     return@addOnSuccessListener
                 }
                 val photoMetadata = metada.first()
+                Log.d("photoMetadata","photoMetadata = ${metada}")
 
                 // Get the attribution text.
                 val attributions = photoMetadata?.attributions
@@ -111,7 +112,7 @@ class StoresFragment : Fragment() {
                 placesClient.fetchPhoto(photoRequest)
                     .addOnSuccessListener { fetchPhotoResponse: FetchPhotoResponse ->
                         val bitmap = fetchPhotoResponse.bitmap
-                        binding.imageView4.setImageBitmap(bitmap)
+//                        binding.imageView4.setImageBitmap(bitmap)
                         Log.w("placesClient", "${fetchPhotoResponse.bitmap}")
                     }.addOnFailureListener { exception: Exception ->
                         if (exception is ApiException) {

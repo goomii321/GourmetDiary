@@ -310,7 +310,6 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         ref.putFile(saveUri!!)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
-                    Logger.d("downloadUrl $it")
                     image.value = it.toString()
                     if (firstPhoto) {
                         viewModel.user.value?.mainImage = image.value
