@@ -5,12 +5,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -27,14 +23,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.Status
-import com.google.android.gms.common.api.internal.BackgroundDetector.initialize
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.storage.FirebaseStorage
 import com.linda.gourmetdiary.DiaryApplication
-import com.linda.gourmetdiary.MainActivity
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
@@ -42,6 +36,7 @@ import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.android.synthetic.main.add_diary_fragment.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import java.util.*
 
 
@@ -220,7 +215,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     checkBox1.isChecked = false
                 }
             }
-            Log.i("CompoundButton","check ${viewModel.user.value?.store?.storeBooking}")
+//            Log.i("CompoundButton","check ${viewModel.user.value?.store?.storeBooking}")
         }
         binding.checkBox1.setOnCheckedChangeListener(btnCheckedListener)
         binding.checkBox2.setOnCheckedChangeListener(btnCheckedListener)

@@ -38,7 +38,8 @@ data class Store(
     var storeHtml: String? = "無",
     var storeLocation: String? = "無",
     var storeMinOrder: String? = "無",
-    var storeOpenTime: String? = "無"
+    var storeOpenTime: String? = "無",
+    var storeLocationId: String? = ""
 ) : Parcelable
 
 @Parcelize
