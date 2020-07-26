@@ -41,7 +41,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
         value = mutableListOf()
     }
 
-    private val _status = MutableLiveData<LoadApiStatus>()
+    val _status = MutableLiveData<LoadApiStatus>()
     val status: LiveData<LoadApiStatus>
         get() = _status
 

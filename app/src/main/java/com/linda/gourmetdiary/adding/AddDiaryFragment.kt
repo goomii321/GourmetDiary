@@ -7,6 +7,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -22,9 +23,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.*
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.storage.FirebaseStorage
@@ -37,6 +40,7 @@ import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.android.synthetic.main.add_diary_fragment.*
 import kotlinx.android.synthetic.main.nav_header_main.*
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -160,7 +164,9 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 Log.d("autocompleteFragment","$place")
                 viewModel.user.value?.store?.storeLocation = place.address
                 viewModel.user.value?.store?.storeName = place.name
+                viewModel.user.value?.store?.storeLocationId = place.id
                 binding.storeNameInput.setText(place.name)
+                getPlacePhoto("${place.id}")
             }
 
             override fun onError(status: Status) {
@@ -325,6 +331,79 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     viewModel.images.value = viewModel.images.value
                     viewModel.user.value?.images = viewModel.images.value
                 }
+            }
+    }
+
+    fun getPlacePhoto(placeId : String){
+        viewModel._status.value = LoadApiStatus.LOADING
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), getString(R.string.GoogleMapKey))
+        }
+
+        // Specify fields. Requests for photos must always have the PHOTO_METADATAS field.
+        val fields = listOf(Place.Field.PHOTO_METADATAS)
+
+        // Get a Place object (this example uses fetchPlace(), but you can also use findCurrentPlace())
+        val placeRequest = FetchPlaceRequest.newInstance(placeId, fields)
+        var placesClient : PlacesClient = Places.createClient(DiaryApplication.instance)
+
+        placesClient.fetchPlace(placeRequest)
+            .addOnSuccessListener { response: FetchPlaceResponse ->
+                val place = response.place
+
+                // Get the photo metadata.
+                val metada = place.photoMetadatas
+                if (metada == null || metada.isEmpty()) {
+                    Log.w("placesClient", "No photo metadata.")
+                    return@addOnSuccessListener
+                }
+                val photoMetadata = metada.first()
+                Log.d("photoMetadata","photoMetadata = ${metada}")
+
+                // Get the attribution text.
+                val attributions = photoMetadata?.attributions
+
+                // Create a FetchPhotoRequest.
+                val photoRequest = FetchPhotoRequest.builder(photoMetadata)
+                    .setMaxWidth(500) // Optional.
+                    .setMaxHeight(400) // Optional.
+                    .build()
+                placesClient.fetchPhoto(photoRequest)
+                    .addOnSuccessListener { fetchPhotoResponse: FetchPhotoResponse ->
+                        val bitmap = fetchPhotoResponse.bitmap
+                        convert2Uri(bitmap)
+
+//                        binding.imageView4.setImageBitmap(bitmap)
+                    }.addOnFailureListener { exception: Exception ->
+                        if (exception is ApiException) {
+                            Log.e("Placeexception", "Place not found: " + exception.message)
+                            val statusCode = exception.statusCode
+                        }
+                    }
+            }
+    }
+
+    fun convert2Uri(bitmap: Bitmap) {
+        val baos = ByteArrayOutputStream()
+        val filename = UUID.randomUUID().toString()
+        val image = MutableLiveData<String>()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos)
+        val data = baos.toByteArray()
+
+        ref.putBytes(data)
+            .addOnSuccessListener {
+                ref.downloadUrl.addOnSuccessListener {
+                    image.value = it.toString()
+
+                    Log.d("convert2Uri","convert2Uri ${image.value}")
+                    viewModel._status.value = LoadApiStatus.DONE
+                }
+            }
+            .addOnFailureListener{
+                Log.d("convert2Uri","convert2Uri ${it.message}")
+                viewModel._status.value = LoadApiStatus.ERROR
             }
     }
 
