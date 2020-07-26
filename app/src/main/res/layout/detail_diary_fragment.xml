@@ -416,8 +416,6 @@
                         app:layout_constraintStart_toStartOf="@+id/phone_img"
                         app:layout_constraintTop_toBottomOf="@id/phone_img" />
 
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -508,14 +506,25 @@
                         app:layout_constraintTop_toBottomOf="@id/phone_text"
                         tools:text="台北市市政府忠孝東路2222號"/>
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/point"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:alpha="0.6"
+                    android:text="@string/point"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/info_store_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/info_store_layout" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/store_layout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/info_store_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/point"
                     app:layout_constraintStart_toStartOf="@+id/store_layout">
 
                     <TextView
