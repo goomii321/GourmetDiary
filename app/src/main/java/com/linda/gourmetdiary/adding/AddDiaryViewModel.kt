@@ -41,9 +41,11 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
         value = mutableListOf()
     }
 
-    val _status = MutableLiveData<LoadApiStatus>()
+    private val _status = MutableLiveData<LoadApiStatus>()
     val status: LiveData<LoadApiStatus>
         get() = _status
+
+    val updateImageStatus = MutableLiveData<Boolean>()
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -82,6 +84,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
             user.value?.eatingTime == null -> _invalidCheckout.value = -2
             user.value?.store?.storeName.isNullOrEmpty() -> _invalidCheckout.value = -3
             user.value?.mainImage == "" -> _invalidCheckout.value = -4
+            updateImageStatus.value == false -> _invalidCheckout.value = -5
             else -> coroutineScope.launch {
 
                 _status.value = LoadApiStatus.LOADING

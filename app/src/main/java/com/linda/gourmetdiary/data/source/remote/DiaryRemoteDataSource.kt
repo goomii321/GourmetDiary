@@ -105,7 +105,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                             }
 
                         } else {
-                            document.update("updateTime",it.updateTime)
+                            document.update("updateTime",it.updateTime, "storeImage",it.storeImage)
                         }
                     }
             }

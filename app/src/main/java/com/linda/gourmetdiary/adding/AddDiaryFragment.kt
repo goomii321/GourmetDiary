@@ -233,6 +233,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
               -2 -> Toast.makeText(context,"請輸入用餐時間",Toast.LENGTH_SHORT).show()
               -3 -> Toast.makeText(context,"請輸入餐廳名稱",Toast.LENGTH_SHORT).show()
               -4 -> Toast.makeText(context,"請上傳至少一張圖片",Toast.LENGTH_SHORT).show()
+              -5 -> Toast.makeText(context,"搜尋店家照片中",Toast.LENGTH_SHORT).show()
           }
         })
 
@@ -335,7 +336,8 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     fun getPlacePhoto(placeId : String){
-        viewModel._status.value = LoadApiStatus.LOADING
+        viewModel.updateImageStatus.value = false
+
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), getString(R.string.GoogleMapKey))
         }
@@ -396,14 +398,14 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
                     image.value = it.toString()
-
+                    viewModel.user.value?.store?.storeImage = it.toString()
                     Log.d("convert2Uri","convert2Uri ${image.value}")
-                    viewModel._status.value = LoadApiStatus.DONE
+                    viewModel.updateImageStatus.value = true
                 }
             }
             .addOnFailureListener{
                 Log.d("convert2Uri","convert2Uri ${it.message}")
-                viewModel._status.value = LoadApiStatus.ERROR
+                viewModel.updateImageStatus.value = false
             }
     }
 
