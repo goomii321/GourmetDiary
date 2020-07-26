@@ -2,6 +2,8 @@ package com.linda.gourmetdiary.stores.detail
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -29,6 +31,7 @@ import com.linda.gourmetdiary.ext.getVmFactory
 
 import com.linda.gourmetdiary.databinding.StoresFragmentBinding
 import com.linda.gourmetdiary.diarys.detail.DiaryDetailFragment
+import kotlinx.android.synthetic.main.detail_store_fragment.*
 
 class StoreDetailFragment : Fragment() {
 
@@ -64,6 +67,12 @@ class StoreDetailFragment : Fragment() {
             } else {
                 getLocation()
             }
+        }
+
+        binding.locationText.setOnLongClickListener {
+            getClipboard(location_text.text.toString())
+            Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
         }
 
         if (viewModel.store?.value?.storeMinOrder == "無" || viewModel.store?.value?.storeMinOrder == ""){
@@ -145,6 +154,12 @@ class StoreDetailFragment : Fragment() {
         } else {
             Toast.makeText(context, "未開啟定位或網路功能", Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun getClipboard(text: CharSequence){
+        var clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        var clip = ClipData.newPlainText("location", text)
+        clipboard.setPrimaryClip(clip)
     }
 
 }
