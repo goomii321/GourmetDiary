@@ -36,9 +36,11 @@ class DiaryDetailFragment : Fragment() {
 
     companion object {
         private val PERMISSION_REQUEST = 10
+        private val PERMISSION_CALL = 11
     }
 
-    private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+    private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,11 +76,24 @@ class DiaryDetailFragment : Fragment() {
             else -> binding.bookingText.setText(R.string.no_data)
         }
 
+        //set clipboard
         binding.locationText.setOnLongClickListener {
             getClipboard(location_text.text.toString())
             Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
+
+        //add phone call
+        binding.phoneText.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(permissions, PERMISSION_CALL)
+            } else {
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = Uri.parse("tel:" + viewModel.diary.value?.store?.storePhone)
+                startActivity(callIntent)
+            }
+        }
+
 
         if (viewModel.diary.value?.store?.storeMinOrder == "無"){
             binding.minOrderDollarText.visibility = View.GONE
@@ -113,6 +128,9 @@ class DiaryDetailFragment : Fragment() {
                         }
                     }
                 }
+            }
+            PERMISSION_CALL -> {
+                Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
             }
         }
     }

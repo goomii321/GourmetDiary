@@ -39,9 +39,11 @@ class StoreDetailFragment : Fragment() {
 
     companion object {
         private val PERMISSION_REQUEST2 = 10
+        private val PERMISSION_CALL = 11
     }
 
-    private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+    private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,6 +92,17 @@ class StoreDetailFragment : Fragment() {
             true -> binding.bookingText.text = "可訂位"
             false -> binding.bookingText.text = "不可訂位"
             else -> binding.bookingText.text = "無資料"
+        }
+
+        //add phone call
+        binding.phoneText.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(permissions, PERMISSION_CALL)
+            } else {
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = Uri.parse("tel:" + viewModel.store.value?.storePhone)
+                startActivity(callIntent)
+            }
         }
 
         return binding.root
