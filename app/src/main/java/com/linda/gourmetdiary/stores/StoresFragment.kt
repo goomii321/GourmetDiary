@@ -76,18 +76,15 @@ class StoresFragment : Fragment() {
             })
         }
 
-//        getPlacePhoto()
+//        getPlacePhoto("ChIJ0WB2rr6rQjQReOccQdUp0qA")
 
         return binding.root
     }
 
-    fun getPlacePhoto(){
+    fun getPlacePhoto(placeId : String){
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), getString(R.string.GoogleMapKey))
         }
-
-        // Define a Place ID.
-        val placeId = "ChIJ0WB2rr6rQjQReOccQdUp0qA"
 
         // Specify fields. Requests for photos must always have the PHOTO_METADATAS field.
         val fields = listOf(Place.Field.PHOTO_METADATAS)
@@ -120,8 +117,8 @@ class StoresFragment : Fragment() {
                 placesClient.fetchPhoto(photoRequest)
                     .addOnSuccessListener { fetchPhotoResponse: FetchPhotoResponse ->
                         val bitmap = fetchPhotoResponse.bitmap
-                        convert2Uri(bitmap)
-                        Log.d("convert2Uri","convert2Uri = ${convert2Uri(bitmap)}")
+//                        convert2Uri(bitmap)
+
 //                        binding.imageView4.setImageBitmap(bitmap)
                     }.addOnFailureListener { exception: Exception ->
                         if (exception is ApiException) {

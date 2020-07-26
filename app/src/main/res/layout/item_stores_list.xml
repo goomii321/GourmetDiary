@@ -7,6 +7,9 @@
         <variable
             name="store"
             type="com.linda.gourmetdiary.data.Stores" />
+        <variable
+            name="viewModel"
+            type="com.linda.gourmetdiary.stores.StoresViewModel" />
         <import type="android.view.View" />
     </data>
 
