@@ -20,17 +20,30 @@
 
         <ImageView
             android:id="@+id/store_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:imageUrl="@{store.storeImage}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/mask"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/corner_shape"
+            android:backgroundTint="@color/kachi"
+            android:alpha="0.4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <TextView
             android:id="@+id/store_item_name"
             style="@style/stores_title_style"
+            android:textColor="@color/white_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -51,6 +64,7 @@
             android:layout_marginBottom="16dp"
             android:text="@{store.storeBranch}"
             android:textSize="16dp"
+            android:textColor="@color/white_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/store_item_name"
             app:layout_constraintStart_toStartOf="@+id/store_item_name"

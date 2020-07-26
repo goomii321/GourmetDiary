@@ -163,6 +163,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
             .collection(PATH_STORES)
+            .orderBy("updateTime",Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -193,6 +194,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
             .collection(PATH_STORES)
+            .orderBy("updateTime",Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
                 Logger.i("addSnapshotListener detect, $snapshot")
