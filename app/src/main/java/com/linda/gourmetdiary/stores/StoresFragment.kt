@@ -1,28 +1,30 @@
 package com.linda.gourmetdiary.stores
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.PhotoMetadata
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.*
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.MainViewModel
 import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.R
-import com.linda.gourmetdiary.ext.getVmFactory
-
 import com.linda.gourmetdiary.databinding.StoresFragmentBinding
-import com.linda.gourmetdiary.util.Logger
+import com.linda.gourmetdiary.ext.getVmFactory
+import java.io.ByteArrayOutputStream
+
 
 class StoresFragment : Fragment() {
 
@@ -74,6 +76,12 @@ class StoresFragment : Fragment() {
             })
         }
 
+//        getPlacePhoto()
+
+        return binding.root
+    }
+
+    fun getPlacePhoto(){
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), getString(R.string.GoogleMapKey))
         }
@@ -112,8 +120,9 @@ class StoresFragment : Fragment() {
                 placesClient.fetchPhoto(photoRequest)
                     .addOnSuccessListener { fetchPhotoResponse: FetchPhotoResponse ->
                         val bitmap = fetchPhotoResponse.bitmap
+                        convert2Uri(bitmap)
+                        Log.d("convert2Uri","convert2Uri = ${convert2Uri(bitmap)}")
 //                        binding.imageView4.setImageBitmap(bitmap)
-                        Log.w("placesClient", "${fetchPhotoResponse.bitmap}")
                     }.addOnFailureListener { exception: Exception ->
                         if (exception is ApiException) {
                             Log.e("Placeexception", "Place not found: " + exception.message)
@@ -121,8 +130,21 @@ class StoresFragment : Fragment() {
                         }
                     }
             }
+    }
 
-        return binding.root
+    fun convert2Uri(bitmap: Bitmap): Uri {
+        val baos = ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos)
+        val data = baos.toByteArray()
+
+        val path: String = MediaStore.Images.Media.insertImage(
+            DiaryApplication.instance.contentResolver,
+            bitmap,
+            "Title","tt"
+        )
+        
+        return Uri.parse(path)
     }
 
 }

@@ -1,11 +1,20 @@
 package com.linda.gourmetdiary.stores
 
+import android.provider.Settings.Global.getString
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.api.ApiException
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.*
+import com.linda.gourmetdiary.DiaryApplication
+import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Stores
 import com.linda.gourmetdiary.databinding.ItemStoresListBinding
 
@@ -25,6 +34,7 @@ class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<S
             if (store.storeBranch == "無"){
                 binding.storeItemBranch.visibility = View.GONE
             }
+
             binding.executePendingBindings()
         }
     }
