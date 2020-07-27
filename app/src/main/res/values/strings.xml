@@ -27,7 +27,9 @@
     <string name="ng_msg">NG</string>
     <string name="eating_time">用餐時間</string>
     <string name="add_rating">評&#160;&#160;分&#160;&#160;數</string>
+    <string name="detail_rating">評分數</string>
     <string name="add_healthy">健&#160;&#160;康&#160;&#160;度</string>
+    <string name="detail_healthy">健康度</string>
     <string name="add_price">價&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格</string>
     <string name="next_time_text">下次想嘗試…</string>
     <string name="memo_title">備&#160;&#160;忘&#160;&#160;錄</string>
@@ -71,6 +73,6 @@
     <string name="no_data">無資料</string>
     <string name="check_day">選擇其他日期</string>
     <string name="no_diary_data">這段時間都沒有日記紀錄…</string>
-    <string name="point">點擊地址以開啟導航，或是長按複製到剪貼簿</string>
+    <string name="point">點擊地址或電話號碼，以開啟導航或通話功能，或是長按可複製到剪貼簿</string>
 
 </resources>

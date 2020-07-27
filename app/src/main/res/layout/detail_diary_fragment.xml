@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.diarys.detail.DiaryDetailViewModel" />
@@ -11,7 +12,8 @@
         <variable
             name="diary"
             type="com.linda.gourmetdiary.data.Diary" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,13 +37,13 @@
                     android:id="@+id/recycler_detail_gallery"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
                     android:layout_marginHorizontal="16dp"
-                    app:layout_constraintCircleRadius="10dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/corners_detail_background"
+                    android:orientation="horizontal"
                     app:images="@{viewModel.diary.images}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintCircleRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -50,23 +52,35 @@
                     android:id="@+id/divider_gallery"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
                     android:alpha="0.3"
                     android:background="@color/sunezumi"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recycler_detail_gallery" />
 
                 <ImageView
                     android:id="@+id/store_rate_img"
                     android:layout_width="28dp"
                     android:layout_height="32dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/like"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider_gallery"/>
+                    app:layout_constraintTop_toBottomOf="@id/divider_gallery" />
+
+                <TextView
+                    android:id="@+id/store_rate_point"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="@string/detail_rating"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/store_rate_img"
+                    app:layout_constraintStart_toStartOf="@+id/store_rate_img"
+                    app:layout_constraintTop_toBottomOf="@+id/store_rate_img" />
 
                 <TextView
                     android:id="@+id/rate_score"
@@ -77,17 +91,18 @@
                     android:text="@{viewModel.convertIntToString(viewModel.diary.food.foodRate)}"
                     app:layout_constraintBottom_toBottomOf="@+id/store_rate_img"
                     app:layout_constraintStart_toEndOf="@+id/store_rate_img"
-                    tools:text="8.8"/>
+                    app:layout_constraintTop_toTopOf="@+id/store_rate_img"
+                    tools:text="8.8" />
 
                 <TextView
                     android:id="@+id/mid_line"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="@+id/store_rate_img"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/store_rate_img"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/store_rate_img" />
 
                 <ImageView
                     android:id="@+id/healthy_score_img"
@@ -95,9 +110,21 @@
                     android:layout_height="32dp"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/health"
-                    app:layout_constraintStart_toEndOf="@+id/mid_line"
                     app:layout_constraintBottom_toBottomOf="@id/store_rate_img"
-                    app:layout_constraintTop_toTopOf="@id/store_rate_img"/>
+                    app:layout_constraintStart_toEndOf="@+id/mid_line"
+                    app:layout_constraintTop_toTopOf="@id/store_rate_img" />
+
+                <TextView
+                    android:id="@+id/store_healthy_point"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="@string/detail_healthy"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/healthy_score_img"
+                    app:layout_constraintStart_toStartOf="@+id/healthy_score_img"
+                    app:layout_constraintTop_toBottomOf="@+id/healthy_score_img" />
 
                 <TextView
                     android:id="@+id/healthy_score"
@@ -108,19 +135,18 @@
                     android:text="@{viewModel.convertIntToString(viewModel.diary.food.healthyScore)}"
                     app:layout_constraintBottom_toBottomOf="@+id/healthy_score_img"
                     app:layout_constraintStart_toEndOf="@+id/healthy_score_img"
-                    tools:text="9.9"/>
+                    tools:text="9.9" />
 
                 <ImageView
                     android:id="@+id/food_name_img"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
                     android:src="@drawable/drawkit_breakfast"
                     app:layout_constraintEnd_toEndOf="@id/store_rate_img"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/store_rate_img"
-                    tools:layout_editor_absoluteY="94dp" />
+                    app:layout_constraintTop_toBottomOf="@+id/store_rate_point" />
 
                 <TextView
                     android:id="@+id/food_name_text"
@@ -129,9 +155,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@{viewModel.diary.food.foodName}"
-                    app:layout_constraintStart_toEndOf="@+id/food_name_img"
                     app:layout_constraintBottom_toBottomOf="@id/food_name_img"
-                    tools:text="雞排便當"/>
+                    app:layout_constraintStart_toEndOf="@+id/food_name_img"
+                    tools:text="雞排便當" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/title_layout"
@@ -199,8 +225,8 @@
                     android:id="@+id/colon_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/title_layout"
-                    app:layout_constraintStart_toEndOf="@+id/title_layout">
+                    app:layout_constraintStart_toEndOf="@+id/title_layout"
+                    app:layout_constraintTop_toTopOf="@+id/title_layout">
 
                     <TextView
                         android:id="@+id/colon1"
@@ -208,53 +234,53 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/colon_text"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/colon2"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon1"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon1" />
 
                     <TextView
                         android:id="@+id/colon3"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon2"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon2" />
 
                     <TextView
                         android:id="@+id/colon4"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon3"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon3" />
 
                     <TextView
                         android:id="@+id/colon5"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon4"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon4" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -348,12 +374,12 @@
                     android:id="@+id/divider_store"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
                     android:alpha="0.3"
                     android:background="@color/transparent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/data_layout"
                     tools:layout_editor_absoluteX="6dp" />
 
@@ -361,20 +387,20 @@
                     android:id="@+id/store_name_img"
                     android:layout_width="32dp"
                     android:layout_height="24dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/shop"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider_store"/>
+                    app:layout_constraintTop_toBottomOf="@id/divider_store" />
 
                 <TextView
                     android:id="@+id/store_text"
                     style="@style/text_title_style"
-                    android:textSize="18dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
                     android:text="@{viewModel.diary.store.storeName}"
+                    android:textSize="18dp"
                     app:layout_constraintBottom_toBottomOf="@+id/store_name_img"
                     app:layout_constraintStart_toEndOf="@+id/store_name_img"
                     tools:text="池上便當店" />
@@ -399,9 +425,9 @@
                     <TextView
                         android:id="@+id/phone_img"
                         style="@style/text_style"
-                        android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="@string/store_phone"
                         app:layout_constraintStart_toStartOf="@+id/store_branch_img"
                         app:layout_constraintTop_toBottomOf="@+id/store_branch_img" />
@@ -431,32 +457,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/colon_text"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/colon7"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon6"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon6" />
 
                     <TextView
                         android:id="@+id/colon8"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon7"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon7" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -479,7 +504,7 @@
                         android:text="@{viewModel.diary.store.storeBranch}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="市政府店"/>
+                        tools:text="市政府店" />
 
                     <TextView
                         android:id="@+id/phone_text"
@@ -490,7 +515,7 @@
                         android:text="@{viewModel.diary.store.storePhone}"
                         app:layout_constraintStart_toStartOf="@+id/branch_text"
                         app:layout_constraintTop_toBottomOf="@id/branch_text"
-                        tools:text="09123456"/>
+                        tools:text="09123456" />
 
                     <TextView
                         android:id="@+id/location_text"
@@ -504,28 +529,33 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/phone_text"
                         app:layout_constraintTop_toBottomOf="@id/phone_text"
-                        tools:text="台北市市政府忠孝東路2222號"/>
+                        tools:text="台北市市政府忠孝東路2222號" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/point"
                     style="@style/text_style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginBottom="16dp"
                     android:alpha="0.6"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     android:text="@string/point"
                     android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/info_store_layout"
-                    app:layout_constraintTop_toBottomOf="@+id/info_store_layout" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/info_store_layout2"
+                    app:layout_constraintStart_toStartOf="@+id/info_store_layout2"
+                    app:layout_constraintTop_toBottomOf="@+id/info_store_layout2" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/store_layout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/point"
-                    app:layout_constraintStart_toStartOf="@+id/store_layout">
+                    app:layout_constraintStart_toStartOf="@+id/store_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/info_store_layout">
 
                     <TextView
                         android:id="@+id/store_time_img"
@@ -559,47 +589,49 @@
                         app:layout_constraintTop_toBottomOf="@id/store_min_order" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/colon_store_layout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/store_layout2"
-                    app:layout_constraintStart_toEndOf="@id/store_layout2">
+                    app:layout_constraintStart_toEndOf="@id/store_layout2"
+                    app:layout_constraintTop_toTopOf="@id/store_layout2">
 
                     <TextView
                         android:id="@+id/colon9"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/colon10"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon9"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon9" />
 
                     <TextView
                         android:id="@+id/colon11"
                         style="@style/text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/colon10"
+                        android:text="@string/colon_text"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/colon10" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/info_store_layout2"
                     android:layout_width="0dp"
@@ -607,8 +639,8 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/colon_store_layout2"
-                    app:layout_constraintStart_toEndOf="@id/colon_store_layout2">
+                    app:layout_constraintStart_toEndOf="@id/colon_store_layout2"
+                    app:layout_constraintTop_toTopOf="@id/colon_store_layout2">
 
                     <TextView
                         android:id="@+id/open_time_text"
@@ -619,7 +651,7 @@
                         android:text="@{viewModel.diary.store.storeOpenTime}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="禮拜日休息"/>
+                        tools:text="禮拜日休息" />
 
                     <TextView
                         android:id="@+id/min_order_text"
@@ -630,7 +662,7 @@
                         android:text="@{viewModel.diary.store.storeMinOrder}"
                         app:layout_constraintStart_toStartOf="@+id/open_time_text"
                         app:layout_constraintTop_toBottomOf="@id/open_time_text"
-                        tools:text="180"/>
+                        tools:text="180" />
 
                     <TextView
                         android:id="@+id/min_order_dollar_text"
@@ -641,7 +673,7 @@
                         android:text="元"
                         app:layout_constraintStart_toEndOf="@+id/min_order_text"
                         app:layout_constraintTop_toTopOf="@+id/min_order_text"
-                        tools:text="元"/>
+                        tools:text="元" />
 
                     <TextView
                         android:id="@+id/booking_text"
@@ -651,7 +683,7 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="@+id/min_order_text"
                         app:layout_constraintTop_toBottomOf="@id/min_order_text"
-                        tools:text="可訂位"/>
+                        tools:text="可訂位" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

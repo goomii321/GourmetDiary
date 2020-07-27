@@ -164,21 +164,24 @@
                 <TextView
                     android:id="@+id/point"
                     style="@style/text_style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:alpha="0.6"
+                    android:maxLines="2"
+                    android:singleLine="false"
                     android:text="@string/point"
                     android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/store_info_layout"
-                    app:layout_constraintTop_toBottomOf="@+id/store_info_layout" />
+                    app:layout_constraintEnd_toEndOf="@+id/store_info_layout2"
+                    app:layout_constraintStart_toStartOf="@+id/store_info_layout2"
+                    app:layout_constraintTop_toBottomOf="@+id/store_info_layout2" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/title_layout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@+id/store_title_layout"
-                    app:layout_constraintTop_toBottomOf="@+id/point">
+                    app:layout_constraintTop_toBottomOf="@+id/store_info_layout">
 
                     <TextView
                         android:id="@+id/store_phone"
@@ -284,7 +287,7 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/store_info_layout"
-                    app:layout_constraintTop_toBottomOf="@+id/point">
+                    app:layout_constraintTop_toBottomOf="@+id/store_info_layout">
 
                     <TextView
                         android:id="@+id/phone_text"
@@ -387,7 +390,7 @@
                     android:background="@color/sunezumi"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/store_info_layout2" />
+                    app:layout_constraintTop_toBottomOf="@+id/point" />
 
                 <ImageView
                     android:id="@+id/chart_img"
