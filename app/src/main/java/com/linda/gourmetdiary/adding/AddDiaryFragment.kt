@@ -90,6 +90,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         binding.addRating.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 ratingScore = progress
+                binding.ratingText.text = "$ratingScore"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -97,7 +98,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Toast.makeText(context, "Score is $ratingScore .", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "Score is $ratingScore .", Toast.LENGTH_SHORT).show()
                 viewModel.user.value?.food?.foodRate = ratingScore
             }
         })
@@ -105,6 +106,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         binding.addHealthy.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 healthyScore = progress
+                binding.healthyText.text = "$healthyScore"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -112,7 +114,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Toast.makeText(context, "Score is $healthyScore .", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "Score is $healthyScore .", Toast.LENGTH_SHORT).show()
                 viewModel.user.value?.food?.healthyScore = healthyScore
             }
         })

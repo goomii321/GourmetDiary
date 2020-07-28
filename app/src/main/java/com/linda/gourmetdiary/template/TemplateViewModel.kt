@@ -36,6 +36,8 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
     val status: LiveData<LoadApiStatus>
         get() = _status
 
+    val navigate2Home = MutableLiveData<Boolean>().apply { value = false }
+
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
         get() = _error
@@ -110,6 +112,7 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
                 when (val result = repository.postDiary(diarys)) {
                     is Result.Success -> {
                         _error.value = null
+                        navigate2Home.value = true
                         _status.value = LoadApiStatus.DONE
                     }
                     is Result.Fail -> {

@@ -2,6 +2,7 @@ package com.linda.gourmetdiary.adding
 
 import android.util.Log
 import android.widget.Toast
+import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -109,5 +110,23 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    @InverseMethod("convertIntToString")
+    fun convertStringToInt(value: String): Int {
+        return try {
+            value.toInt().let {
+                when (it) {
+                    0 -> 0
+                    else -> it
+                }
+            }
+        } catch (e: NumberFormatException) {
+            1
+        }
+    }
+
+    fun convertIntToString(value: Int): String {
+        return value.toString()
     }
 }

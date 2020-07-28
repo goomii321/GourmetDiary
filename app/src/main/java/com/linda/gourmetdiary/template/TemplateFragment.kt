@@ -3,6 +3,7 @@ package com.linda.gourmetdiary.template
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -13,10 +14,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.TemplateFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
+import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.TimeConverters
 import java.util.*
 
@@ -138,6 +141,14 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 -1 -> Toast.makeText(context,"請輸入餐點名稱", Toast.LENGTH_SHORT).show()
                 -2 -> Toast.makeText(context,"請輸入用餐時間", Toast.LENGTH_SHORT).show()
                 -3 -> Toast.makeText(context,"請輸入餐廳名稱", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.navigate2Home.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                Handler().postDelayed({
+                    findNavController().navigate(R.id.navigate_to_home)
+                }, 1000)
             }
         })
 
