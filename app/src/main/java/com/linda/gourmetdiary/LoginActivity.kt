@@ -2,6 +2,7 @@ package com.linda.gourmetdiary
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -61,6 +62,11 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         //printHashKey()
         callbackManager = CallbackManager.Factory.create()
+
+        privacy.setOnClickListener {
+            val url = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.synct.com.tw/privacy.html"))
+            startActivity(url)
+        }
     }
 
     override fun onStart() {

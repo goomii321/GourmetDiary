@@ -58,13 +58,26 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
+            android:layout_marginBottom="8dp"
             android:background="@color/colorPrimary"
+            android:gravity="center"
             android:text="@string/signin_google"
             android:textColor="@color/kachi"
+            app:layout_constraintBottom_toTopOf="@+id/privacy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/privacy"
+            style="@style/text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/privacy"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
