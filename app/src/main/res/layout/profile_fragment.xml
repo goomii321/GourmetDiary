@@ -143,7 +143,7 @@
             tools:text="20"/>
 
         <TextView
-            android:id="@+id/weekily_healthy"
+            android:id="@+id/weekly_healthy"
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,15 +154,26 @@
             app:layout_constraintTop_toBottomOf="@+id/weekily_cost" />
 
         <TextView
-            android:id="@+id/text_weekily_healthy"
+            android:id="@+id/text_weekly_healthy"
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@{viewModel.healthyScore}"
-            app:layout_constraintStart_toEndOf="@+id/weekily_healthy"
-            app:layout_constraintTop_toTopOf="@+id/weekily_healthy"
+            app:layout_constraintStart_toEndOf="@+id/weekly_healthy"
+            app:layout_constraintTop_toTopOf="@+id/weekly_healthy"
             tools:text="20"/>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="16dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/weekly_healthy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

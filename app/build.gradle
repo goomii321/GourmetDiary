@@ -51,6 +51,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
 }
 
 dependencies {
@@ -92,5 +95,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.0'
 
     implementation 'com.google.android.libraries.places:places:2.3.0'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }

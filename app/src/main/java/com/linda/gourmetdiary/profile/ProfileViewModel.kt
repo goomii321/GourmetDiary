@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
+import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
@@ -41,6 +42,9 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     val storeCount = MutableLiveData<Int>()
     val weekulyCost = MutableLiveData<Int>()
     val healthyScore = MutableLiveData<String>()
+
+    var diarys4Days = mutableListOf<Diarys4Day>()
+    var diarys4DaysStatus = MutableLiveData<Boolean>().apply { value = false }
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -134,7 +138,7 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-                    Log.i("diary", "Result.Success diary = ${result.data}")
+//                    Log.i("diary", "Result.Success diary = ${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
@@ -160,21 +164,24 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     fun getCost(){
         var cost = 0
+        _status.value = LoadApiStatus.LOADING
         diary.value?.forEach {
             it.food?.price.let {
                 if (it != null) {
                     cost = cost + (it.toInt())
                 }
             }
-            Log.d("getCost","getCost = $cost ; ${it.food?.price}")
+//            Log.d("getCost","getCost = $cost ; ${it.food?.price}")
             weekulyCost.value = cost
         }
+        _status.value = LoadApiStatus.DONE
     }
 
     fun getHealthy(){
         var score = 0F
         var listSize = 1F
         var scoreAverage = 0F
+        _status.value = LoadApiStatus.LOADING
         diary.value?.forEach {
             it.food?.healthyScore.let {
                 if (it != null) {
@@ -185,6 +192,49 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         listSize = diary.value?.size?.toFloat() ?: 1F
         scoreAverage = score/listSize
         healthyScore.value = BigDecimal(scoreAverage.toString()).setScale(1, RoundingMode.HALF_DOWN).toString()
+        _status.value = LoadApiStatus.DONE
+    }
+
+    fun assignDiaryData(diarys: List<Diary>) {
+        diarys4DaysStatus.value = false
+        diarys.forEach { diary ->
+            diary.eatingTime?.let {
+                var converte = TimeConverters.timestampToDate(it, Locale.TAIWAN)
+                var condition = TimeConverters.dateToTimestamp(converte, Locale.TAIWAN)
+                val diarys4Day = Diarys4Day()
+
+                if (diarys4Days.none { it.dayTitle == condition }) { // if diarys4Days doesn't include day title of this day
+                    diarys4Day.dayTitle = condition
+                    diarys4Day.diarys.add(diary)
+                    diarys4Days.add(diarys4Day)
+                } else { // if diarys4Days include day title of this day
+                    diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
+                }
+            }
+//            diarys4Days.forEach {
+//                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
+//                it.diarys.forEach {
+//                    Log.d("diarys4Days", "diary = ${it} ")
+//                }
+//            }
+        }
+        diarys4DaysStatus.value = true
+//        getDailyCost()
+    }
+
+    fun getDailyCost(){
+        var money = 0
+        diarys4Days.forEach{
+            it.diarys.forEach {
+                money = money + (it.food?.price?.toInt() ?: 0)
+            }
+        }
+//        Log.d("money"," $$$ is $money")
+    }
+
+    fun onDataAssigned() {
+        _diary.value = null
+        diarys4Days.clear()
     }
 
     @InverseMethod("convertLongToString")
