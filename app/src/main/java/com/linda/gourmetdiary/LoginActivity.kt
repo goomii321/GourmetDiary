@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import app.appworks.school.stylish.ext.getVmFactory
+import com.crashlytics.android.Crashlytics
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -21,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -63,10 +65,11 @@ class LoginActivity : AppCompatActivity() {
         //printHashKey()
         callbackManager = CallbackManager.Factory.create()
 
-        privacy.setOnClickListener {
-            val url = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.synct.com.tw/privacy.html"))
-            startActivity(url)
-        }
+//        privacy.setOnClickListener {
+////            Crashlytics.getInstance().crash()
+////            val url = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.evernote.com/shard/s559/sh/19d93d02-748b-313f-5d08-755e73455c03/66621d22f0ff43db65ce51b5db54c0ac"))
+////            startActivity(url)
+//        }
     }
 
     override fun onStart() {
