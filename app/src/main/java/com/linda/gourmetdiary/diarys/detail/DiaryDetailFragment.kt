@@ -29,7 +29,6 @@ import com.linda.gourmetdiary.databinding.DetailDiaryFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
 import kotlinx.android.synthetic.main.detail_diary_fragment.*
 
-
 class DiaryDetailFragment : Fragment() {
 
     val viewModel by viewModels<DiaryDetailViewModel> { getVmFactory(DiaryDetailFragmentArgs.fromBundle(requireArguments()).diary) }
@@ -41,6 +40,7 @@ class DiaryDetailFragment : Fragment() {
 
     private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,11 +102,13 @@ class DiaryDetailFragment : Fragment() {
         return binding.root
     }
 
-    fun getClipboard(text: CharSequence){
-        var clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        var clip = ClipData.newPlainText("location", text)
-        clipboard.setPrimaryClip(clip)
-    }
+fun getClipboard(text: CharSequence){
+    var clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    var clip = ClipData.newPlainText("location", text)
+    clipboard.setPrimaryClip(clip)
+}
+
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -196,3 +198,4 @@ class DiaryDetailFragment : Fragment() {
         }
     }
 }
+

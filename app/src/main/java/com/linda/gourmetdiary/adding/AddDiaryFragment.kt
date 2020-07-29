@@ -39,7 +39,6 @@ import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.android.synthetic.main.add_diary_fragment.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -189,7 +188,6 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         val spinnerAdapter = ArrayAdapter(DiaryApplication.instance,android.R.layout.simple_spinner_dropdown_item, type)
         binding.foodType.adapter = spinnerAdapter
 
-
         binding.foodType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -208,7 +206,6 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     else -> viewModel.user.value?.type = type[position]
                 }
             }
-
         }
 
         //set checkbox

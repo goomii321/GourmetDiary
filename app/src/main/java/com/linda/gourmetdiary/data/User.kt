@@ -10,9 +10,10 @@ data class User(
     var userId: String? = "",
     var userName: String? = "",
     var userPhoto: String? = "",
-    var userEmail: String? = "",
-    var signUpDate: Long? = -1
+    var signUpDate: Long? = -1,
+    var userEmail: String? = ""
 ) : Parcelable
+
 
 @Parcelize
 data class Diary(
@@ -23,7 +24,7 @@ data class Diary(
     var type: String? = "早餐",
     val store: Store? = null,
     var food: Food? = null,
-    var eatingTime: Long? = null
+    var eatingTime: Long? = 0
 ) : Parcelable {
 
 }
@@ -31,6 +32,7 @@ data class Diary(
 @Parcelize
 data class Store(
     var updateTime: Long? = -1,
+    var storeId: String? = "",
     var storeName: String? = "",
     var storePhone: String? ="無",
     var storeBooking: Boolean? = false ,
