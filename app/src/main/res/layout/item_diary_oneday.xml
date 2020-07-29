@@ -51,7 +51,7 @@
             android:layout_marginBottom="4dp"
             android:layout_marginHorizontal="8dp"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:imageUrl="@{viewModel.mainImage}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/food_list"
