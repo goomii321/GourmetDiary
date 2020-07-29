@@ -23,6 +23,7 @@ import java.math.RoundingMode
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
+import kotlin.system.exitProcess
 
 class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
@@ -175,8 +176,12 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
             }
         }
         listSize = diary.value?.size?.toFloat() ?: 1F
-        scoreAverage = score/listSize
-        healthyScore.value = BigDecimal(scoreAverage.toString()).setScale(1, RoundingMode.HALF_DOWN).toString()
+        if ( listSize == 0F) {
+            null
+        } else {
+            scoreAverage = score/listSize
+            healthyScore.value = BigDecimal(scoreAverage.toString()).setScale(1, RoundingMode.HALF_DOWN).toString()
+        }
     }
 
     fun clearReminder(){
