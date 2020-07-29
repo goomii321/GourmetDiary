@@ -107,6 +107,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
+                    Log.i("getUsersResult","getUsersResult = ${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
