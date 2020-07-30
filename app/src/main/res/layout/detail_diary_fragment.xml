@@ -13,6 +13,10 @@
             name="diary"
             type="com.linda.gourmetdiary.data.Diary" />
 
+        <variable
+            name="image"
+            type="String" />
+
         <import type="android.view.View" />
     </data>
 
@@ -690,5 +694,28 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <View
+            android:id="@+id/enlarge_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/kachi"
+            android:alpha="0.6"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/enlarge_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:imageUrl="@{viewModel.enlargeImage}"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

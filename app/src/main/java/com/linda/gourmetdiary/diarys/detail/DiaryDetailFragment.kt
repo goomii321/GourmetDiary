@@ -51,7 +51,16 @@ class DiaryDetailFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.recyclerDetailGallery.adapter = DiaryGalleryAdapter()
+        binding.recyclerDetailGallery.adapter = DiaryGalleryAdapter(DiaryGalleryAdapter.OnClickListener{
+            binding.enlargeView.visibility = View.VISIBLE
+            binding.enlargeImage.visibility = View.VISIBLE
+            viewModel.enlargeImage.value = it
+        })
+
+        binding.enlargeView.setOnClickListener {
+            it.visibility = View.GONE
+            binding.enlargeImage.visibility = View.GONE
+        }
 
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.recyclerDetailGallery)
@@ -102,13 +111,11 @@ class DiaryDetailFragment : Fragment() {
         return binding.root
     }
 
-fun getClipboard(text: CharSequence){
+    fun getClipboard(text: CharSequence){
     var clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     var clip = ClipData.newPlainText("location", text)
     clipboard.setPrimaryClip(clip)
-}
-
-
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

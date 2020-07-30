@@ -16,11 +16,12 @@
         android:background="@drawable/corners_detail_background"
         tools:context=".profile.ProfileFragment">
 
-        <View
+        <ImageView
             android:id="@+id/view_profile"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:background="@color/kamenozoki"
+            android:src="@drawable/profile_view"
+            android:scaleType="centerCrop"
             android:alpha="0.7"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

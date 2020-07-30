@@ -24,6 +24,8 @@ class DiaryDetailViewModel(private val diaryRepository: DiaryRepository,
     val diary: LiveData<Diary>
         get() = _diary
 
+    val enlargeImage = MutableLiveData<String>()
+
     @InverseMethod("convertIntToString")
     fun convertStringToInt(value: String): Int {
         return try {

@@ -11,28 +11,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.databinding.ItemDetailGalleryBinding
 import com.linda.gourmetdiary.util.Logger.i
 import java.util.logging.Logger
 
-class DiaryGalleryAdapter(): ListAdapter<String,DiaryGalleryAdapter.ImageViewHolder>(DiffCallback) {
+class DiaryGalleryAdapter(private val onClickListener: OnClickListener): ListAdapter<String,DiaryGalleryAdapter.ImageViewHolder>(DiffCallback) {
     private lateinit var context: Context
     private lateinit var images: List<String>
 
+    class OnClickListener(val clickListener: (string: String) -> Unit) {
+        fun onClick(string: String) = clickListener(string)
+    }
+
     class ImageViewHolder(private var binding: ItemDetailGalleryBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(context: Context, imageUrl: String) {
+        fun bind(context: Context, imageUrl: String, onClickListener: OnClickListener) {
             binding.image = imageUrl
             val displayMetrics = DisplayMetrics()
             (context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
             binding.imageGallery.layoutParams = ConstraintLayout.LayoutParams(displayMetrics.widthPixels,
                 context.resources.getDimensionPixelSize(R.dimen.height_detail_gallery))
-
+            binding.root.setOnClickListener { onClickListener.onClick(imageUrl) }
             binding.executePendingBindings()
-
-//            imageUrl.let {
-//
-//            }
         }
     }
 
@@ -54,7 +55,7 @@ class DiaryGalleryAdapter(): ListAdapter<String,DiaryGalleryAdapter.ImageViewHol
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
 
         images?.let {
-            holder.bind(context, it[getRealPosition(position)])
+            holder.bind(context, it[getRealPosition(position)],onClickListener)
         }
     }
 
