@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.ProfileFragmentBinding
@@ -39,19 +40,35 @@ class ProfileFragment : Fragment() {
         val label: MutableList<String> = mutableListOf()
 
         viewModel.diary.observe(viewLifecycleOwner, Observer { diarys ->
-            Log.d("Linda", "viewModel.diary.observe, diarys=$diarys")
-            diarys?.let { diary ->
-                for (i in 0..diary.size.minus(1)!!) {
-                    Log.d("Linda", "diarys[$i].food?.price=${diarys[i].food?.price}")
-                    diarys[i].food?.price?.toFloat()?.let { price ->
-                        Log.d("Linda", "price=$price")
-                        BarEntry(i.toFloat(), price)
-                    }?.let { barEntry ->
-                        Log.d("Linda", "barEntry=$barEntry")
-                        entries.add(barEntry)
+            viewModel.assignDiaryData(diarys)
+        })
+
+        viewModel.diary4Day.observe(viewLifecycleOwner, Observer {
+            it?.let { diaries ->
+
+                val xTitle = mutableListOf<String>()
+
+                for ((index, diary) in diaries.withIndex()) {
+
+                    val title = TimeConverters.timestampToDate(diary.dayTitle!!, Locale.TAIWAN)
+
+                    xTitle.add(title)
+                    label.add(TimeConverters.timestampToDate(diary.dayTitle!!, Locale.TAIWAN))
+
+                    var totalPriceForDay = 0
+                    diary.diarys.forEach { item ->
+                        totalPriceForDay += (item.food?.price?.toInt() ?: 0)
                     }
+                    Log.d("Wayne","title=$title")
+                    Log.d("Wayne","totalPriceForDay=$totalPriceForDay}")
+                    Log.i("Wayne","----------------------------------------")
+
+                    entries.add(BarEntry(index.toFloat(), totalPriceForDay.toFloat()))
                 }
-//                Log.d("Linda","entries=$entries, entries.size=${entries.size}")
+                Log.d("xTitle","xTitle = $xTitle ; size = ${xTitle.size}")
+
+                /** 分隔線 **/
+
                 val dataSet = BarDataSet(entries, "每日花費")
                 dataSet.color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
                 dataSet.valueTextColor = ContextCompat.getColor(requireContext(), R.color.kachi)
@@ -76,6 +93,14 @@ class ProfileFragment : Fragment() {
                 val data = BarData(dataSet)
                 binding.chart.data = data
                 binding.chart.invalidate()
+                binding.chart.xAxis.apply {
+                    valueFormatter = IndexAxisValueFormatter(label)
+                    labelCount = xTitle.size
+                    setDrawLabels(true)
+                    setDrawGridLines(false)
+                }
+                binding.chart.description.text = ""
+                binding.chart.setDrawGridBackground(false)
             }
         })
 

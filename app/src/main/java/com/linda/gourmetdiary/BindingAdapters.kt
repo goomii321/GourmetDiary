@@ -56,8 +56,8 @@ fun bindStoreRecyclerView(recyclerView: RecyclerView, stores: List<Stores>?) {
 }
 
 @BindingAdapter("dataItems")
-fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, homeItems: List<DataItem>?) {
-    homeItems?.let {
+fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, dataItems: List<DataItem>?) {
+    dataItems?.let {
         recyclerView.adapter?.apply {
             when (this) {
                 is DiarysAdapter -> submitList(it)

@@ -44,6 +44,7 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     val healthyScore = MutableLiveData<String>()
 
     var diarys4Days = mutableListOf<Diarys4Day>()
+    val diary4Day = MutableLiveData<List<Diarys4Day>>()
     var diarys4DaysStatus = MutableLiveData<Boolean>().apply { value = false }
 
     private var viewModelJob = Job()
@@ -196,7 +197,6 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
             scoreAverage = score/listSize
             healthyScore.value = BigDecimal(scoreAverage.toString()).setScale(1, RoundingMode.HALF_DOWN).toString()
         }
-        Log.d("scoreAverage","scoreAverage = $scoreAverage ; listSize = $listSize ; score = $score")
         _status.value = LoadApiStatus.DONE
     }
 
@@ -216,13 +216,14 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
                     diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
                 }
             }
-//            diarys4Days.forEach {
-//                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
-//                it.diarys.forEach {
-//                    Log.d("diarys4Days", "diary = ${it} ")
-//                }
-//            }
+            diarys4Days.forEach {
+                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
+                it.diarys.forEach {
+                    Log.d("diarys4Days", "diary = ${it} ")
+                }
+            }
         }
+        diary4Day.value = diarys4Days
         diarys4DaysStatus.value = true
 //        getDailyCost()
     }

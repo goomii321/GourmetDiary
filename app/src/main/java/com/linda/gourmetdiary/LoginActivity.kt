@@ -142,7 +142,6 @@ class LoginActivity : AppCompatActivity() {
                     UserManager.userData = user
                     viewModel.getProfile(user)
                     moveMainPage(task.result?.user)
-                    Log.i("firebaseAuthWithGoogle","firebaseAuthWithGoogle = ${UserManager.userData}")
 
                 } else {
                     //Show the error message
@@ -171,7 +170,6 @@ class LoginActivity : AppCompatActivity() {
                     UserManager.userId = user.userId
                     UserManager.userData = user
                     viewModel.getProfile(user)
-                    Log.i("UserManager","UserManager = ${UserManager.userData}")
                     firebaseAuthWithGoogle(account)
                 }
             }
@@ -194,7 +192,6 @@ class LoginActivity : AppCompatActivity() {
                     UserManager.userData= user
                     viewModel.getProfile(user)
                     moveMainPage(task.result?.user)
-                    Log.i("firebaseAuthWithGoogle","firebaseAuthWithGoogle = ${UserManager.userData}")
                 } else {
                     //Show the error message
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
