@@ -77,6 +77,23 @@ class StoreDetailFragment : Fragment() {
             return@setOnLongClickListener true
         }
 
+        binding.phoneText.setOnLongClickListener {
+            getClipboard(phone_text.text.toString())
+            Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
+        }
+        
+        //add phone call
+        binding.phoneText.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(permissions, PERMISSION_CALL)
+            } else {
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = Uri.parse("tel:" + viewModel.store.value?.storePhone)
+                startActivity(callIntent)
+            }
+        }
+
         if (viewModel.store?.value?.storeMinOrder == "無" || viewModel.store?.value?.storeMinOrder == ""){
             binding.dollarMin.visibility = View.GONE
         }
@@ -92,17 +109,6 @@ class StoreDetailFragment : Fragment() {
             true -> binding.bookingText.text = "可訂位"
             false -> binding.bookingText.text = "不可訂位"
             else -> binding.bookingText.text = "無資料"
-        }
-
-        //add phone call
-        binding.phoneText.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-                requestPermissions(permissions, PERMISSION_CALL)
-            } else {
-                val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = Uri.parse("tel:" + viewModel.store.value?.storePhone)
-                startActivity(callIntent)
-            }
         }
 
         return binding.root

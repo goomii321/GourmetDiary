@@ -81,11 +81,26 @@ class HomeFragment : Fragment() {
         viewModel.helloStatus.observe(viewLifecycleOwner, Observer {
 //            Log.d("helloStatus","helloStatus = $it")
             when(it){
-                -1 -> binding.title.text = "早安:)，睡飽就該開吃囉！"
-                -2 -> binding.title.text = "生活不是吃，就是在找吃的。"
-                -3 -> binding.title.text = "點心是裝在另一個胃袋裡啦;)"
-                -4 -> binding.title.text = "今天辛苦啦~快吃頓好吃的晚餐犒勞自己吧！"
-                else -> binding.title.text = "晚安Zzz...要吃宵夜也要注意健康，\n才可以一直吃一直吃~"
+                -1 -> {
+                    binding.title.text = "早安:)，睡飽就該開吃囉！"
+                    binding.homeBackground.setImageResource(R.drawable.home_breakfast)
+                }
+                -2 -> {
+                    binding.title.text = "生活不是吃，就是在找吃的。"
+                    binding.homeBackground.setImageResource(R.drawable.home_lunch)
+                }
+                -3 -> {
+                    binding.title.text = "點心是裝在另一個胃袋裡啦;)"
+                    binding.homeBackground.setImageResource(R.drawable.home_dessert)
+                }
+                -4 -> {
+                    binding.title.text = "今天辛苦啦~快吃頓好吃的晚餐犒勞自己吧！"
+                    binding.homeBackground.setImageResource(R.drawable.home_dinner)
+                }
+                else -> {
+                    binding.title.text = "晚安Zzz...要吃宵夜也要注意健康，\n才可以一直吃一直吃~"
+                    binding.homeBackground.setImageResource(R.drawable.home_midnight)
+                }
             }
         })
 
