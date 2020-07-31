@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/corners_detail_background"
-        android:paddingHorizontal="8dp">
+        android:paddingHorizontal="4dp">
 
         <ImageView
             android:id="@+id/image_gallery"
