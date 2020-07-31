@@ -82,7 +82,7 @@ class StoreDetailFragment : Fragment() {
             Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
-        
+
         //add phone call
         binding.phoneText.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
