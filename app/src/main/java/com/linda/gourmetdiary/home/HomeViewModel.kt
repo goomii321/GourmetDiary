@@ -48,7 +48,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
         get() = _diaryDaily
 
     private var sameStore = mutableListOf<String>()
-    var sameStoreStatus = MutableLiveData<Boolean>().apply { value = false }
+    var sameStoreStatus = MutableLiveData<Boolean>()
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -60,7 +60,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     var listSize = 1F
     var scoreAverage = 0F
 
-    var count = MutableLiveData<Int>().apply { value = 3 }
+    var count = MutableLiveData<Int>().apply { value = 2 }
     var listStore =MutableLiveData<String>()
     var countText = MutableLiveData<String>()
     var listStoreText = MutableLiveData<String>()
@@ -154,7 +154,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-                    Log.i("getHomeList","getHomeList = ${result.data}")
+//                    Log.i("getHomeList","getHomeList = ${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
@@ -200,14 +200,13 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
             if (test.count() > count.value!!){
                 count.value = test.count()
                 midStore = test.first()
-                sameStoreStatus.value == true
-            } else {
-                sameStoreStatus.value == false
+                listStore.value = midStore
+                sameStoreStatus.value = true
             }
-            listStore.value = midStore
-//            Log.d("getSameStore","getSameStore = ${test.count()}; ${test}")
+            //listStore.value = midStore
+            Log.d("getSameStore","status = ${sameStoreStatus.value} ; getSameStore = ${test}; midStore = ${midStore}")
         }
-//        Log.d("getSameStore","listStore = $listStore")
+        Log.d("getSameStore","status = ${sameStoreStatus.value} ;listStore = ${listStore.value}")
     }
 
     fun getHealthy(){
