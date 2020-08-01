@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.linda.gourmetdiary.NavigationDirections
 
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.HomeFragmentBinding
@@ -42,7 +43,8 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         binding.dailyDiary.adapter = HomeAdapter(HomeAdapter.OnClickListener{
-
+            findNavController().navigate(NavigationDirections.navigateToDiaryDetail(it))
+            viewModel.onDetailNavigated()
         })
 
         binding.addFbtn.setOnClickListener {

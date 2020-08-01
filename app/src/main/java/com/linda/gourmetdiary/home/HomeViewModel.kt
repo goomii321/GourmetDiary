@@ -50,6 +50,10 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     private var sameStore = mutableListOf<String>()
     var sameStoreStatus = MutableLiveData<Boolean>()
 
+    private val _navigateToDetail = MutableLiveData<Diary>()
+    val navigateToDetail: LiveData<Diary>
+        get() = _navigateToDetail
+
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -235,4 +239,11 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
         healthyScoreText.value = null
     }
 
+    fun navigateToDetail(diary: Diary) {
+        _navigateToDetail.value = diary
+    }
+
+    fun onDetailNavigated() {
+        _navigateToDetail.value = null
+    }
 }
