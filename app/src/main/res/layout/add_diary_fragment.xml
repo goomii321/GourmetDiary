@@ -32,6 +32,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ProgressBar
+                    android:id="@+id/upload_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/add_diary_recycler"
+                    app:layout_constraintEnd_toEndOf="@+id/test_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/add_diary_recycler"
                     android:layout_width="0dp"

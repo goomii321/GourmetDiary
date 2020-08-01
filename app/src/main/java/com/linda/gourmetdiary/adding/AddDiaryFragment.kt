@@ -315,6 +315,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
         ref.putFile(saveUri!!)
             .addOnSuccessListener {
+                binding.uploadProgress.visibility = View.VISIBLE
                 ref.downloadUrl.addOnSuccessListener {
                     image.value = it.toString()
                     if (firstPhoto) {
@@ -330,6 +331,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     viewModel.images.value?.add(it.toString())
                     viewModel.images.value = viewModel.images.value
                     viewModel.user.value?.images = viewModel.images.value
+                    binding.uploadProgress.visibility = View.GONE
                 }
             }
     }

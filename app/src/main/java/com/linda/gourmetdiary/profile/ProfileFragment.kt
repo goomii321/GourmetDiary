@@ -80,7 +80,7 @@ class ProfileFragment : Fragment() {
                 //Customizing x axis value
                 val months = arrayOf("M", "T", "W", "T", "F", "S", "S", "A", "A", "A")
                 val formatter = IAxisValueFormatter { value, axis -> months[value.toInt()] }
-                xAxis.granularity = 1f // minimum axis-step (interval) is 1
+                xAxis.granularity = 2f // minimum axis-step (interval) is 1
 
                 // Controlling right side of y axis
                 val yAxisRight = binding.chart.axisRight

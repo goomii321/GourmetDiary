@@ -57,11 +57,11 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         viewModel.diary.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.assignData(it)
-                viewModel.onDataAssigned()
                 DiarysAdapter(viewModel, DiarysAdapter.OnClickListener {}).notifyDataSetChanged()
                 if(it.isEmpty()){
                     binding.noDiaryText.visibility = View.VISIBLE
-               }
+                }
+                viewModel.onDataAssigned()
             }
         })
 
