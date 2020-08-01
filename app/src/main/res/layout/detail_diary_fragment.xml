@@ -201,28 +201,76 @@
                         app:layout_constraintStart_toStartOf="@+id/food_combo_img"
                         app:layout_constraintTop_toBottomOf="@id/food_combo_img" />
 
-                    <TextView
-                        android:id="@+id/eating_time_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/experience_title"
-                        app:layout_constraintStart_toStartOf="@+id/price_img"
-                        app:layout_constraintTop_toBottomOf="@id/price_img" />
-
-                    <TextView
-                        android:id="@+id/content_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/memo_title"
-                        app:layout_constraintEnd_toEndOf="@+id/eating_time_img"
-                        app:layout_constraintStart_toStartOf="@+id/eating_time_img"
-                        app:layout_constraintTop_toBottomOf="@id/eating_time_img" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/eating_time_img"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/experience_title"
+                    app:layout_constraintStart_toStartOf="@+id/title_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+                <TextView
+                    android:id="@+id/content_img"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/memo_title"
+                    app:layout_constraintEnd_toEndOf="@+id/eating_time_img"
+                    app:layout_constraintStart_toStartOf="@+id/eating_time_img"
+                    app:layout_constraintTop_toBottomOf="@id/food_content_text" />
+
+                <TextView
+                    android:id="@+id/colon4"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/eating_time_img"
+                    app:layout_constraintTop_toTopOf="@+id/eating_time_img" />
+
+                <TextView
+                    android:id="@+id/colon5"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/colon_text"
+                    app:layout_constraintEnd_toEndOf="@+id/colon4"
+                    app:layout_constraintStart_toStartOf="@+id/colon4"
+                    app:layout_constraintTop_toBottomOf="@+id/food_content_text" />
+
+                <TextView
+                    android:id="@+id/food_content_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:singleLine="false"
+                    android:text="@{viewModel.diary.food.foodContent}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/colon4"
+                    app:layout_constraintTop_toTopOf="@+id/colon4"
+                    tools:text="好吃" />
+
+                <TextView
+                    android:id="@+id/remind_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.diary.food.nextTimeRemind}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/colon5"
+                    app:layout_constraintTop_toTopOf="@+id/colon5"
+                    tools:text="出餐很快很方便" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/colon_layout"
@@ -262,28 +310,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/colon2" />
-
-                    <TextView
-                        android:id="@+id/colon4"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon3" />
-
-                    <TextView
-                        android:id="@+id/colon5"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon4" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -345,32 +371,6 @@
                         app:layout_constraintTop_toTopOf="@+id/price_text"
                         tools:text="元" />
 
-                    <TextView
-                        android:id="@+id/food_content_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:maxLines="2"
-                        android:singleLine="false"
-                        android:text="@{viewModel.diary.food.foodContent}"
-                        app:layout_constraintStart_toStartOf="@+id/price_text"
-                        app:layout_constraintTop_toBottomOf="@+id/price_text"
-                        tools:text="好吃" />
-
-                    <TextView
-                        android:id="@+id/remind_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:maxLines="2"
-                        android:singleLine="false"
-                        android:text="@{viewModel.diary.food.nextTimeRemind}"
-                        app:layout_constraintStart_toStartOf="@+id/food_content_text"
-                        app:layout_constraintTop_toBottomOf="@+id/food_content_text"
-                        tools:text="出餐很快很方便" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -383,7 +383,7 @@
                     android:background="@color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/data_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/remind_text"
                     tools:layout_editor_absoluteX="6dp" />
 
                 <ImageView
@@ -526,7 +526,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:maxLines="2"
                         android:singleLine="false"
                         android:text="@{viewModel.diary.store.storeLocation}"
                         app:layout_constraintEnd_toEndOf="parent"

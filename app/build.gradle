@@ -28,10 +28,19 @@ android {
         applicationId "com.linda.gourmetdiary"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword 'linda119'
+            storeFile file('C:/Users/tom/Desktop/mock/linda.jks')
+            storePassword 'linda119'
+        }
     }
 
     buildTypes {
@@ -39,6 +48,7 @@ android {
             buildConfigField("Boolean", "LOGGER_VISIABLE", "false")
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             buildConfigField("Boolean", "LOGGER_VISIABLE", "false")
