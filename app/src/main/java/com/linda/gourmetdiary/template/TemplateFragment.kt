@@ -65,8 +65,11 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 else -> binding.foodType.setSelection(3)
             }
 
+            viewModel.editDiary.value?.mainImage = it.mainImage
+            viewModel.editDiary.value?.images = it.images
+
             viewModel.editDiary.observe(viewLifecycleOwner, Observer {
-                viewModel.recyclerViewStarus.value=false
+                viewModel.recyclerViewStatus.value=false
             })
         })
 
@@ -97,7 +100,7 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.recyclerViewStarus.value = true
+                viewModel.recyclerViewStatus.value = true
                 val searchText: String = binding.searchDiary.text.toString()
                 if (searchText != null || searchText != ""){
                     viewModel.searchTemplate(searchText)

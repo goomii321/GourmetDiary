@@ -43,6 +43,10 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     val diary: LiveData<List<Diary>>
         get() = _diary
 
+    private var _diaryDaily = MutableLiveData<List<Diary>>()
+    val diaryDaily: LiveData<List<Diary>>
+        get() = _diaryDaily
+
     private var sameStore = mutableListOf<String>()
     var sameStoreStatus = MutableLiveData<Boolean>().apply { value = false }
 
@@ -71,9 +75,14 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     var timeMidnight = LocalTime.parse("21:00:00.00")
     var helloStatus = MutableLiveData<Int>()
 
+    var dayTime :Long = TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN)
+
     init {
         helloWorld()
         getUsersResult(getStartTime(),getEndTime())
+        getHomeList(dayTime,getEndTime())
+        Log.i("getHomeList","time = $dayTime ; ${getEndTime()} ")
+        Log.i("getHomeList","human time = ${LocalDate.now()}; ${TimeConverters.timeStampToTime(getEndTime(), Locale.TAIWAN)} } ")
     }
 
     fun helloWorld(){
@@ -130,6 +139,40 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
             _refreshStatus.value = false
             getSameStore(diary.value!!)
             getHealthy()
+        }
+    }
+
+    private fun getHomeList(startTime: Long, endTime: Long) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            val result = repository.getUsersDiarys(startTime, endTime)
+
+            _diaryDaily.value = when (result) {
+                is Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    Log.i("getHomeList","getHomeList = ${result.data}")
+                    result.data
+                }
+                is Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
         }
     }
 

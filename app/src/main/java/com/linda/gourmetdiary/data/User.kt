@@ -25,9 +25,7 @@ data class Diary(
     val store: Store? = null,
     var food: Food? = null,
     var eatingTime: Long? = 0
-) : Parcelable {
-
-}
+) : Parcelable
 
 @Parcelize
 data class Store(

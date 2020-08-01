@@ -41,18 +41,25 @@ class HomeFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.dailyDiary.adapter = HomeAdapter(HomeAdapter.OnClickListener{
+
+        })
 
         binding.addFbtn.setOnClickListener {
             if (isOpen){
                 binding.template.startAnimation(fabClose)
                 binding.addDefault.startAnimation(fabClose)
-                binding.addFbtn.startAnimation(fabRotate)
+                binding.addFbtn.startAnimation(unfabRotate)
+                binding.templateText.startAnimation(fabClose)
+                binding.diaryText.startAnimation(fabClose)
 
                 isOpen = false
             } else {
                 binding.template.startAnimation(fabOpen)
                 binding.addDefault.startAnimation(fabOpen)
-                binding.addFbtn.startAnimation(unfabRotate)
+                binding.addFbtn.startAnimation(fabRotate)
+                binding.templateText.startAnimation(fabOpen)
+                binding.diaryText.startAnimation(fabOpen)
 
                 isOpen = true
             }
@@ -103,10 +110,6 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-
-//        if (viewModel.listStore.value == null) {
-//            binding.view2.visibility = View.GONE
-//        }
 
         if(viewModel.healthyScore.value == null){
             binding.view3.visibility = View.GONE

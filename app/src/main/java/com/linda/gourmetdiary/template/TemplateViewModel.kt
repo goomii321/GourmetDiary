@@ -46,7 +46,7 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
     val invalidCheckout: LiveData<Int>
         get() = _invalidCheckout
 
-    val recyclerViewStarus = MutableLiveData<Boolean>()
+    val recyclerViewStatus = MutableLiveData<Boolean>()
 
     private var _diary = MutableLiveData<List<Diary>>()
     val diary: LiveData<List<Diary>>

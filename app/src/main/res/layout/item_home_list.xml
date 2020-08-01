@@ -5,29 +5,38 @@
 
     <data>
         <variable
-            name="store"
-            type="com.linda.gourmetdiary.data.Stores" />
+            name="diary"
+            type="com.linda.gourmetdiary.data.Diary" />
         <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/corner_shape"
-        android:backgroundTint="@color/store_item"
+        android:backgroundTint="@color/transparent"
         android:elevation="4dp">
 
         <ImageView
-            android:id="@+id/store_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:imageUrl="@{store.storeImage}"
-            android:scaleType="centerCrop"
+            android:id="@+id/background_color"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/home_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="16dp"
+            app:imageUrl="@{diary.mainImage}"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_item_name"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/user_photo_illustration"/>
 
@@ -37,42 +46,53 @@
             android:layout_height="0dp"
             android:background="@drawable/corner_shape"
             android:backgroundTint="@color/kachi"
-            android:alpha="0.4"
+            android:alpha="0.2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/store_item_name"
+            android:id="@+id/home_item_name"
             style="@style/stores_title_style"
             android:textColor="@color/white_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@{store.storeName}"
-            app:layout_constraintBottom_toTopOf="@+id/store_item_branch"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:text="@{diary.food.foodName}"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/store_name" />
+            tools:text="巧克力蛋糕" />
 
         <TextView
-            android:id="@+id/store_item_branch"
+            android:id="@+id/home_item_content"
             style="@style/stores_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@{store.storeBranch}"
+            android:layout_marginTop="16dp"
+            android:text="@{diary.food.foodContent}"
             android:textSize="16dp"
             android:textColor="@color/white_normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/store_item_name"
-            app:layout_constraintStart_toStartOf="@+id/store_item_name"
-            app:layout_constraintTop_toBottomOf="@+id/store_item_name"
-            tools:text="@string/store_branch" />
+            app:layout_constraintEnd_toEndOf="@+id/home_item_name"
+            app:layout_constraintStart_toStartOf="@+id/home_item_name"
+            app:layout_constraintTop_toBottomOf="@+id/home_item_name"
+            tools:text="好吃" />
+
+        <TextView
+            android:id="@+id/home_item_price"
+            style="@style/stores_title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:displayPrice="@{diary.food.price}"
+            android:textSize="16dp"
+            android:textColor="@color/white_normal"
+            app:layout_constraintEnd_toEndOf="@+id/home_item_content"
+            app:layout_constraintStart_toStartOf="@+id/home_item_content"
+            app:layout_constraintTop_toBottomOf="@+id/home_item_content"
+            tools:text="$123" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -76,5 +76,7 @@
     <string name="no_store_data">目前沒有餐廳紀錄…</string>
     <string name="point">點擊地址或電話號碼，以開啟導航或通話功能，或是長按可複製到剪貼簿</string>
     <string name="privacy"><u><b><i>隱私權政策說明</i></b></u></string>
+    <string name="add_diary">添加新日記</string>
+    <string name="add_template">添加範本日記</string>
 
 </resources>

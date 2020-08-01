@@ -32,7 +32,8 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:alpha="0.8"
-            android:background="@drawable/corner_hello"
+            android:background="@drawable/corner_shape"
+            android:backgroundTint="@color/MASUHANA"
             app:layout_constraintBottom_toBottomOf="@+id/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +109,18 @@
             app:layout_constraintTop_toTopOf="@+id/view3"
             tools:text="最近的健康度只有..." />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/daily_diary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            app:diary="@{viewModel.diaryDaily}"
+            app:layout_constraintTop_toBottomOf="@+id/healthy_reminder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fbtn"
             android:layout_width="wrap_content"
@@ -115,7 +128,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:clickable="true"
-            android:src="@drawable/icons8_bento_50"
+            android:src="@drawable/ic_add_black_24dp"
             android:theme="@style/button_style"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -136,19 +149,49 @@
             app:layout_constraintStart_toStartOf="@+id/add_fbtn"
             tools:visibility="visible"/>
 
+        <TextView
+            android:id="@+id/template_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/add_template"
+            android:visibility="invisible"
+            android:textColor="@color/white_normal"
+            android:background="@drawable/corner_shape_translucent"
+            app:layout_constraintEnd_toStartOf="@+id/template"
+            app:layout_constraintTop_toTopOf="@+id/template"
+            app:layout_constraintBottom_toBottomOf="@+id/template"
+            tools:visibility="visible"/>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:src="@drawable/ic_add_black_24dp"
+            app:fabSize="mini"
+            android:src="@drawable/icons8_bento_50"
             android:theme="@style/button_style"
             android:visibility="invisible"
-            app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@+id/template"
             app:layout_constraintEnd_toEndOf="@+id/template"
             app:layout_constraintStart_toStartOf="@+id/template"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/diary_text"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/add_diary"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:textColor="@color/white_normal"
+            android:background="@drawable/corner_shape_translucent"
+            app:layout_constraintEnd_toStartOf="@+id/add_default"
+            app:layout_constraintTop_toTopOf="@+id/add_default"
+            app:layout_constraintBottom_toBottomOf="@+id/add_default"
             tools:visibility="visible"/>
 
         <ProgressBar

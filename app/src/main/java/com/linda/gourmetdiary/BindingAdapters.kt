@@ -24,6 +24,7 @@ import com.linda.gourmetdiary.diarys.DailyItemAdapter
 import com.linda.gourmetdiary.diarys.DataItem
 import com.linda.gourmetdiary.diarys.DiarysAdapter
 import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
+import com.linda.gourmetdiary.home.HomeAdapter
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.stores.StoresAdapter
 import com.linda.gourmetdiary.stores.detail.StoreDetailAdapter
@@ -39,6 +40,7 @@ fun bindRecyclerView(recyclerView: RecyclerView, diary: List<Diary>?) {
                 is DailyItemAdapter -> submitList(it)
                 is StoreDetailAdapter -> submitList(it)
                 is SearchAdapter -> submitList(it)
+                is HomeAdapter ->submitList(it)
             }
         }
     }
@@ -110,6 +112,12 @@ fun bindRecyclerViewWithImages(recyclerView: RecyclerView, images: List<String>?
 @BindingAdapter("timeToDisplayFormat")
 fun bindDisplayFormatTime(textView: TextView, time: Long?) {
     textView.text = time?.toDisplayFormat()
+}
+
+@RequiresApi(Build.VERSION_CODES.N)
+@BindingAdapter("displayPrice")
+fun bindDisplayPrice(textView: TextView, price: String?) {
+    textView.text = "$ $price"
 }
 
 @RequiresApi(Build.VERSION_CODES.N)
