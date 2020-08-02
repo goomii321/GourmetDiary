@@ -13,8 +13,10 @@
 .externalNativeBuild
 .cxx
 google-services.json
-<<<<<<< HEAD
 key_value.xml
-=======
->>>>>>> 26867fb62035fda6fdfb59a178d9a5e8e10ad53d
 key.xml
+/app/release
+app-release.aab
+app-release.apk
+output.json
+/app/release/

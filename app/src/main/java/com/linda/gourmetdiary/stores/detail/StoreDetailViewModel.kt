@@ -55,7 +55,7 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     
     init {
-        Log.d("checkBranch","store branch is ${_store.value?.storeBranch}")
+//        Log.d("checkBranch","store branch is ${_store.value?.storeBranch}")
         queryHistory("${_store.value?.storeName}","${_store.value?.storeBranch}")
     }
 

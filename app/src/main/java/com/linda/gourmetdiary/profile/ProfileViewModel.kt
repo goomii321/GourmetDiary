@@ -216,12 +216,12 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
                     diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
                 }
             }
-            diarys4Days.forEach {
-                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
-                it.diarys.forEach {
-                    Log.d("diarys4Days", "diary = ${it} ")
-                }
-            }
+//            diarys4Days.forEach {
+//                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
+//                it.diarys.forEach {
+//                    Log.d("diarys4Days", "diary = ${it} ")
+//                }
+//            }
         }
         diary4Day.value = diarys4Days
         diarys4DaysStatus.value = true

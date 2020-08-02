@@ -87,9 +87,9 @@ class LoginActivity : AppCompatActivity() {
                 Log.i("TAG", "printHashKey() Hash Key: $hashKey")
             }
         } catch (e: NoSuchAlgorithmException) {
-            Log.e("TAG", "printHashKey()", e)
+//            Log.e("TAG", "printHashKey()", e)
         } catch (e: Exception) {
-            Log.e("TAG", "printHashKey()", e)
+//            Log.e("TAG", "printHashKey()", e)
         }
 
     }

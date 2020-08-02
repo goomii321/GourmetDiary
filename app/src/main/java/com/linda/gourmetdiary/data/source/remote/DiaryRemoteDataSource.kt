@@ -43,7 +43,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
                     for (document in task.result!!) {
-                        Logger.i("getUsersDiarys: " + document.data)
+//                        Logger.i("getUsersDiarys: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }
@@ -61,7 +61,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .get().addOnSuccessListener {task2 ->
                 if (task2 != null){
                     UserManager.userData.signUpDate = task2.getLong("signUpDate")
-                    Logger.d("signUpDate = ${UserManager.userData.signUpDate}")
+//                    Logger.d("signUpDate = ${UserManager.userData.signUpDate}")
             }
         }
     }
@@ -80,19 +80,19 @@ object DiaryRemoteDataSource : DiaryDataSource {
             diarys.diaryId = document.id
             diarys.createdTime = Calendar.getInstance().timeInMillis
             diarys.store?.updateTime = Calendar.getInstance().timeInMillis
-            Logger.d("update time is ${diarys.store?.updateTime}")
+//            Logger.d("update time is ${diarys.store?.updateTime}")
 
             diarys.store?.let {
                 stores.whereEqualTo(KEY_STORES_NAME,"${it.storeName}").whereEqualTo(KEY_STORE_BRANCH,"${it.storeBranch}")
                     .get()
                     .addOnSuccessListener { task ->
-                        Logger.d("storeTask whereEqualTo = ${task.documents}; ${it.storeName}")
+//                        Logger.d("storeTask whereEqualTo = ${task.documents}; ${it.storeName}")
                         if (task.isEmpty) {
-                            Logger.d("whereEqualTo is Empty")
+//                            Logger.d("whereEqualTo is Empty")
                             stores.document("${it.storeName}").set(it)
                                 .addOnCompleteListener {task ->
                                 if (task.isSuccessful) {
-                                    Logger.i("store task : ${task.result}")
+//                                    Logger.i("store task : ${task.result}")
 //                                    continuation.resume(Result.Success(true))
                                 } else {
                                     task.exception?.let {
@@ -138,7 +138,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .orderBy(KEY_EATING_TIME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
-                Logger.i("addSnapshotListener detect")
+//                Logger.i("addSnapshotListener detect")
 
                 exception?.let {
                     Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
@@ -146,7 +146,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
                 val list = mutableListOf<Diary>()
                 for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
+//                    Logger.d(document.id + " => " + document.data)
 
                     val liveDiary = document.toObject(Diary::class.java)
                     list.add(liveDiary)
@@ -169,7 +169,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 if (task.isSuccessful) {
                     val list = mutableListOf<Stores>()
                     for (document in task.result!!) {
-                        Logger.d(document.id + "=>" + document.data)
+//                        Logger.d(document.id + "=>" + document.data)
 
                         val store = document.toObject(Stores::class.java)
                         list.add(store)
@@ -205,7 +205,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
                 val list = mutableListOf<Stores>()
                 for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
+//                    Logger.d(document.id + " => " + document.data)
 
                     val liveDiary = document.toObject(Stores::class.java)
                     list.add(liveDiary)
@@ -227,7 +227,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                     var count = 0
                     if (task.result?.count() != 0) {
                         count = task.result?.size()!!
-                        Logger.d("success $count, ${task.result}")
+//                        Logger.d("success $count, ${task.result}")
                     }
                     continuation.resume(Result.Success(count))
                 } else {
@@ -251,7 +251,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                     var count = 0
                     if (task.result?.count() != 0) {
                         count = task.result?.size()!!
-                        Logger.d("queryStoreCount success $count, ${task.result}")
+//                        Logger.d("queryStoreCount success $count, ${task.result}")
                     }
                     continuation.resume(Result.Success(count))
                 } else {
@@ -273,12 +273,12 @@ object DiaryRemoteDataSource : DiaryDataSource {
             userdata.whereEqualTo("userId",UserManager.userData.userId)
                 .get().addOnSuccessListener { task ->
                     if (task.isEmpty){
-                        Logger.i("task = $task")
+//                        Logger.i("task = $task")
                         user.signUpDate = Calendar.getInstance().timeInMillis
                         document.set(user)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    Logger.i("user: $user")
+//                                    Logger.i("user: $user")
                                     continuation.resume(Result.Success(true))
                                 } else {
                                     task.exception?.let {
@@ -311,7 +311,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
                     for (document in task.result!!) {
-                        Logger.i("queryStoreHistory: " + document.data)
+//                        Logger.i("queryStoreHistory: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }
@@ -335,7 +335,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
                     for (document in task.result!!) {
-                        Logger.d(document.id + "=>" + document.data)
+//                        Logger.d(document.id + "=>" + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }
@@ -361,7 +361,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 if (task.isSuccessful){
                     val list = mutableListOf<Diary>()
                     for (document in task.result!!) {
-                        Logger.i("searchTemplate: " + document.data)
+//                        Logger.i("searchTemplate: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }

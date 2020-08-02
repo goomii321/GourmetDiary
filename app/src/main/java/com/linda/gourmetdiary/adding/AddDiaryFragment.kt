@@ -135,7 +135,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         //set images
         viewModel.images.observe(viewLifecycleOwner, Observer {
-            Log.i("images", "images = $it")
+//            Log.i("images", "images = $it")
             it?.let {
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitList(it)
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).notifyDataSetChanged()
@@ -144,7 +144,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         //navigate to home after post
         viewModel.status.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
             if (it == LoadApiStatus.DONE) {
                 Handler().postDelayed({
                     findNavController().navigate(R.id.navigate_to_home)
@@ -162,16 +162,17 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         autocompleteFragment.view?.findViewById<EditText>(R.id.places_autocomplete_search_input)?.textSize = 16.0f
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener{
             override fun onPlaceSelected(place: Place) {
-                Log.d("autocompleteFragment","$place")
+//                Log.d("autocompleteFragment","$place")
                 viewModel.user.value?.store?.storeLocation = place.address
                 viewModel.user.value?.store?.storeName = place.name
                 viewModel.user.value?.store?.storeLocationId = place.id
                 binding.storeNameInput.setText(place.name)
+                binding.storeLocationInput.setText(place.address)
                 getPlacePhoto("${place.id}")
             }
 
             override fun onError(status: Status) {
-                Log.d("autocompleteFragment", " status = ${status.statusMessage}")
+//                Log.d("autocompleteFragment", " status = ${status.statusMessage}")
             }
         })
 
@@ -326,7 +327,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                         viewModel.user.value?.images =
                             listOf(listOf(image.value).toString())
                     }
-                    Logger.d("viewModel mainImage = ${viewModel.user.value?.mainImage}; images = ${viewModel.user.value?.images}")
+//                    Logger.d("viewModel mainImage = ${viewModel.user.value?.mainImage}; images = ${viewModel.user.value?.images}")
 
                     viewModel.images.value?.add(it.toString())
                     viewModel.images.value = viewModel.images.value
@@ -357,11 +358,11 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 // Get the photo metadata.
                 val metada = place.photoMetadatas
                 if (metada == null || metada.isEmpty()) {
-                    Log.w("placesClient", "No photo metadata.")
+//                    Log.w("placesClient", "No photo metadata.")
                     return@addOnSuccessListener
                 }
                 val photoMetadata = metada.first()
-                Log.d("photoMetadata","photoMetadata = ${metada}")
+//                Log.d("photoMetadata","photoMetadata = ${metada}")
 
                 // Get the attribution text.
                 val attributions = photoMetadata?.attributions

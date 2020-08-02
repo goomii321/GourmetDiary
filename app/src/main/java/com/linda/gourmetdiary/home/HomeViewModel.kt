@@ -85,8 +85,8 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
         helloWorld()
         getUsersResult(getStartTime(),getEndTime())
         getHomeList(dayTime,getEndTime())
-        Log.i("getHomeList","time = $dayTime ; ${getEndTime()} ")
-        Log.i("getHomeList","human time = ${LocalDate.now()}; ${TimeConverters.timeStampToTime(getEndTime(), Locale.TAIWAN)} } ")
+//        Log.i("getHomeList","time = $dayTime ; ${getEndTime()} ")
+//        Log.i("getHomeList","human time = ${LocalDate.now()}; ${TimeConverters.timeStampToTime(getEndTime(), Locale.TAIWAN)} } ")
     }
 
     fun helloWorld(){
@@ -121,7 +121,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-                    Log.i("getUsersResult","getUsersResult = ${result.data}")
+//                    Log.i("getUsersResult","getUsersResult = ${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
@@ -159,7 +159,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
 //                    Log.i("getHomeList","getHomeList = ${result.data}")
-                    result.data
+                    result.data.sortedByDescending { it.eatingTime }
                 }
                 is Result.Fail -> {
                     _error.value = result.error
@@ -208,9 +208,9 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                 sameStoreStatus.value = true
             }
             //listStore.value = midStore
-            Log.d("getSameStore","status = ${sameStoreStatus.value} ; getSameStore = ${test}; midStore = ${midStore}")
+//            Log.d("getSameStore","status = ${sameStoreStatus.value} ; getSameStore = ${test}; midStore = ${midStore}")
         }
-        Log.d("getSameStore","status = ${sameStoreStatus.value} ;listStore = ${listStore.value}")
+//        Log.d("getSameStore","status = ${sameStoreStatus.value} ;listStore = ${listStore.value}")
     }
 
     fun getHealthy(){

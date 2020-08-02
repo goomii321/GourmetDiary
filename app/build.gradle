@@ -34,21 +34,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {
-        release {
-            keyAlias 'key0'
-            keyPassword 'linda119'
-            storeFile file('C:/Users/tom/Desktop/mock/linda.jks')
-            storePassword 'linda119'
-        }
-    }
-
     buildTypes {
         release {
             buildConfigField("Boolean", "LOGGER_VISIABLE", "false")
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
         debug {
             buildConfigField("Boolean", "LOGGER_VISIABLE", "false")

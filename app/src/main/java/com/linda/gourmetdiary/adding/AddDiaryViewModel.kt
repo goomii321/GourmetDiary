@@ -80,9 +80,11 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     fun addData(diarys: Diary) {
 
+        Log.i("eatingTime","eatingTime = ${user.value?.eatingTime}; ${user.value?.eatingTime?.equals(0)!!}")
+
         when {
             user.value?.food?.foodName.isNullOrEmpty() -> _invalidCheckout.value = -1
-            user.value?.eatingTime == null -> _invalidCheckout.value = -2
+            user.value?.eatingTime?.toString() == "0" -> _invalidCheckout.value = -2
             user.value?.store?.storeName.isNullOrEmpty() -> _invalidCheckout.value = -3
             user.value?.mainImage == "" -> _invalidCheckout.value = -4
             updateImageStatus.value == false -> _invalidCheckout.value = -5

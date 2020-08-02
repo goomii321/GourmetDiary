@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
         userName.text = UserManager.userData.userName
         Glide.with(navigationView).load(UserManager.userData.userPhoto).into(ivHeaderPhoto)
-        Log.d("checkDrawer","name = ${userName.text}")
+//        Log.d("checkDrawer","name = ${userName.text}")
 
         setupDrawer()
         setupNavController()
