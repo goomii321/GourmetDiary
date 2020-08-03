@@ -115,6 +115,10 @@ class HomeFragment : Fragment() {
 
         if(viewModel.healthyScore.value == null){
             binding.view3.visibility = View.GONE
+            binding.healthyReminder.visibility = View.GONE
+        } else {
+            binding.view3.visibility = View.VISIBLE
+            binding.healthyReminder.visibility = View.VISIBLE
         }
 
         viewModel.sameStoreStatus.observe(viewLifecycleOwner, Observer {
@@ -124,13 +128,14 @@ class HomeFragment : Fragment() {
                 binding.view2.visibility = View.VISIBLE
                 binding.homeReminder.text = "最近七天你已吃過 ${viewModel.count.value} 次${viewModel.listStoreText.value}囉!!"
             }
-            Log.d("getSameStore"," $it ; 0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
+//            Log.d("getSameStore"," $it ; 0000listStore = ${viewModel.listStore.value}; count = ${viewModel.count.value}")
         })
 
         viewModel.healthyScore.observe(viewLifecycleOwner, Observer {
             viewModel.healthyScoreText.value = viewModel.healthyScore.value
             if (viewModel.scoreAverage <= 6.0){
                 binding.view3.visibility = View.VISIBLE
+                binding.healthyReminder.visibility = View.VISIBLE
                 binding.healthyReminder.text = "最近的健康度只有 ${viewModel.healthyScoreText.value} ，是不是該吃點蔬果啦~"
             }
         })

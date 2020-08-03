@@ -59,17 +59,12 @@ class LoginActivity : AppCompatActivity() {
         }
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("693996800991-6cup7r536d3h29256avpebd9m8j9gcb8.apps.googleusercontent.com")
-            .requestEmail()
+            .requestId()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         //printHashKey()
         callbackManager = CallbackManager.Factory.create()
 
-//        privacy.setOnClickListener {
-////            Crashlytics.getInstance().crash()
-////            val url = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.evernote.com/shard/s559/sh/19d93d02-748b-313f-5d08-755e73455c03/66621d22f0ff43db65ce51b5db54c0ac"))
-////            startActivity(url)
-//        }
     }
 
     override fun onStart() {
