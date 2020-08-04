@@ -4,6 +4,9 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="facebook_application_id">307121663756980</string>
+    <string name="facebook_app_id">307121663756980</string>
+    <string name="login_token_id">693996800991-6cup7r536d3h29256avpebd9m8j9gcb8.apps.googleusercontent.com</string>
 
     <!-- menu item -->
     <string name="menu_diarys">每週日記</string>
@@ -42,9 +45,6 @@
     <string name="signin_facebook">以 Facebook 帳戶登入</string>
     <string name="signin_google">以 Google 帳戶登入</string>
 
-    <string name="facebook_application_id">307121663756980</string>
-    <string name="facebook_app_id">307121663756980</string>
-
     <string name="log_out_question">請問確定要登出嗎?</string>
     <string name="yes">是</string>
     <string name="no">否</string>
@@ -79,4 +79,7 @@
     <string name="add_diary">添加新日記</string>
     <string name="add_template">添加範本日記</string>
 
+    <string name="enter_food_name">請輸入餐點名稱</string>
+    <string name="enter_food_time">請輸入用餐時間</string>
+    <string name="enter_store_name">請輸入餐廳名稱</string>
 </resources>

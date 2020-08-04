@@ -48,20 +48,21 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
-//        email_login_button.setOnClickListener {
-//            signinAndSignup()
-//        }
+
         google_sign_in_button.setOnClickListener {
             googleLogin()
         }
         facebook_login_button.setOnClickListener {
             facebookLogin()
         }
+
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("693996800991-6cup7r536d3h29256avpebd9m8j9gcb8.apps.googleusercontent.com")
+            .requestIdToken(getString(R.string.login_token_id))
             .requestId()
             .build()
+
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         //printHashKey()
         callbackManager = CallbackManager.Factory.create()
 
@@ -72,23 +73,6 @@ class LoginActivity : AppCompatActivity() {
         moveMainPage(auth?.currentUser)
     }
 
-    fun printHashKey() {
-        try {
-            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            for (signature in info.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val hashKey = String(Base64.encode(md.digest(), 0))
-                Log.i("TAG", "printHashKey() Hash Key: $hashKey")
-            }
-        } catch (e: NoSuchAlgorithmException) {
-//            Log.e("TAG", "printHashKey()", e)
-        } catch (e: Exception) {
-//            Log.e("TAG", "printHashKey()", e)
-        }
-
-    }
-
     fun googleLogin() {
         var signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
@@ -96,21 +80,18 @@ class LoginActivity : AppCompatActivity() {
 
     fun facebookLogin() {
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
+            .logInWithReadPermissions(this, listOf("public_profile", "email"))
 
         LoginManager.getInstance()
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult?) {
-                    //Second step
                     handleFacebookAccessToken(result?.accessToken)
                 }
 
                 override fun onCancel() {
-
                 }
 
                 override fun onError(error: FacebookException?) {
-
                 }
 
             })
@@ -124,9 +105,9 @@ class LoginActivity : AppCompatActivity() {
 
                 if (task.isSuccessful) {
                     moveMainPage(task.result?.user)
-                    Log.i(
-                        "fb", "success result = ${task.result?.user}"
-                    )
+//                    Log.i(
+//                        "fb", "success result = ${task.result?.user}"
+//                    )
                     var user = User(
                         userId = task.result?.user?.uid,
                         userPhoto = task.result?.user?.photoUrl.toString(),
@@ -135,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                     UserManager.userId = user.userId
                     UserManager.userData = user
-                    viewModel.getProfile(user)
+                    viewModel.pushProfile(user)
                     moveMainPage(task.result?.user)
 
                 } else {
@@ -164,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                     UserManager.userId = user.userId
                     UserManager.userData = user
-                    viewModel.getProfile(user)
+                    viewModel.pushProfile(user)
                     firebaseAuthWithGoogle(account)
                 }
             }
@@ -185,7 +166,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                     UserManager.userId = user.userId
                     UserManager.userData= user
-                    viewModel.getProfile(user)
+                    viewModel.pushProfile(user)
                     moveMainPage(task.result?.user)
                 } else {
                     //Show the error message
@@ -194,35 +175,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    //    fun signinAndSignup(){
-//        auth?.createUserWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
-//            ?.addOnCompleteListener {
-//                    task ->
-//                if(task.isSuccessful){
-//                    //Creating a user account
-//                    moveMainPage(task.result?.user)
-//                }else if(task.exception?.message.isNullOrEmpty()){
-//                    //Show the error message
-//                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
-//                }else{
-//                    //Login if you have account
-//                    signinEmail()
-//                }
-//            }
-//    }
-//    fun signinEmail(){
-//        auth?.signInWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
-//            ?.addOnCompleteListener {
-//                    task ->
-//                if(task.isSuccessful){
-//                    //Login
-//                    moveMainPage(task.result?.user)
-//                }else{
-//                    //Show the error message
-//                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
-//                }
-//            }
-//    }
     fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
             startActivity(Intent(this, MainActivity::class.java))

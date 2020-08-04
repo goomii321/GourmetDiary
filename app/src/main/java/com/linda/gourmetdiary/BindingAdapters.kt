@@ -68,17 +68,6 @@ fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, dataItems: List<Da
     }
 }
 
-//@BindingAdapter("diarys4Days")
-//fun bindDiarys4DaysRecyclerView(recyclerView: RecyclerView, stores: List<Diarys4Day>?) {
-//    stores?.let {
-//        recyclerView.adapter?.apply {
-//            when (this) {
-//                is DiarysAdapter -> submitList(it)
-//            }
-//        }
-//    }
-//}
-
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
@@ -136,10 +125,6 @@ fun Long.toDisplayDateFormat(): String {
     return SimpleDateFormat("yyyy.MM.dd").format(this)
 }
 
-
-/**
- * According to [LoadApiStatus] to decide the visibility of [ProgressBar]
- */
 @BindingAdapter("setupApiStatus")
 fun bindApiStatus(view: ProgressBar, status: LoadApiStatus?) {
     when (status) {
@@ -148,9 +133,6 @@ fun bindApiStatus(view: ProgressBar, status: LoadApiStatus?) {
     }
 }
 
-/**
- * According to [message] to decide the visibility of [ProgressBar]
- */
 @BindingAdapter("setupApiErrorMessage")
 fun bindApiErrorMessage(view: TextView, message: String?) {
     when (message) {

@@ -1,6 +1,5 @@
 package com.linda.gourmetdiary.template
 
-import android.util.Log
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,11 +19,11 @@ import kotlinx.coroutines.launch
 
 class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
 
-    var year = 0
-    var month = 0
-    var day = 0
-    var hour = 0
-    var minute = 0
+    var calendarYear = 0
+    var calendarMonth = 0
+    var calendarDay = 0
+    var calendarHour = 0
+    var calendarMinute = 0
 
     var saveYear = MutableLiveData<Int>()
     var saveMonth = MutableLiveData<Int>()
@@ -51,10 +50,6 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
     private var _diary = MutableLiveData<List<Diary>>()
     val diary: LiveData<List<Diary>>
         get() = _diary
-
-    private var _searchDiary = MutableLiveData<Diary>()
-    val searchDiary: LiveData<Diary>
-        get() = _searchDiary
 
     private val _editDiary = MutableLiveData<Diary>().apply {
         value = Diary( food = Food(), store = Store())

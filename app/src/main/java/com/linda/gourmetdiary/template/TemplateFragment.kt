@@ -17,59 +17,34 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.databinding.TemplateFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.network.LoadApiStatus
-import com.linda.gourmetdiary.util.TimeConverters
+import com.linda.gourmetdiary.util.*
 import java.util.*
 
 class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
 
     val viewModel by viewModels<TemplateViewModel> { getVmFactory() }
+    lateinit var binding: TemplateFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = TemplateFragmentBinding.inflate(inflater,container,false)
+        binding = TemplateFragmentBinding.inflate(inflater,container,false)
+
         val autoAdapter = SearchAdapter(SearchAdapter.OnClickListener{
-            Log.d("SearchAdapter","click item data is : $it")
 
-            //set EditText input
-            binding.temFoodNameText.setText("${it.food?.foodName}")
-            binding.temFoodComboText.setText("${it.food?.foodCombo}")
-            binding.temFoodPriceText.setText("${it.food?.price}")
-            binding.temRatingText.setText("${it.food?.foodRate}")
-            binding.temHealthyText.setText("${it.food?.healthyScore}")
-
-            binding.temStoreNameText.setText("${it.store?.storeName}")
-            binding.temStoreBranchText.setText("${it.store?.storeBranch}")
-            binding.temStorePhoneText.setText("${it.store?.storePhone}")
-
-            when (it.store?.storeBooking) {
-                true -> binding.temStoreBookingText.setText(R.string.can_booking)
-                false -> binding.temStoreBookingText.setText(R.string.cannot_booking)
-                else -> binding.temStoreBookingText.setText(R.string.no_data)
-            }
-
-            binding.temStoreMinOrderText.setText("${it.store?.storeMinOrder}")
-            binding.temStoreOpenTimeText.setText("${it.store?.storeOpenTime}")
-            binding.temContentText.setText("${it.food?.foodContent}")
-            binding.temNextTimeMemoText.setText("${it.food?.nextTimeRemind}")
-
-            when(it.type) {
-                "早餐" -> binding.foodType.setSelection(0)
-                "午餐" -> binding.foodType.setSelection(1)
-                "晚餐" -> binding.foodType.setSelection(2)
-                else -> binding.foodType.setSelection(3)
-            }
+            setEditText(it)
 
             viewModel.editDiary.value?.mainImage = it.mainImage
             viewModel.editDiary.value?.images = it.images
 
             viewModel.editDiary.observe(viewLifecycleOwner, Observer {
-                viewModel.recyclerViewStatus.value=false
+                viewModel.recyclerViewStatus.value = false
             })
         })
 
@@ -87,13 +62,12 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 "${viewModel.saveYear.value}/${viewModel.saveMonth.value}/${viewModel.saveDay.value} " +
                         "${viewModel.saveHour.value}:${viewModel.saveMinute.value}"
             binding.temEatingTimeText.setText(nowTime)
-            var test = TimeConverters.timeToTimestamp(nowTime, Locale.TAIWAN)
-//            Log.i("eatingTimeCheck", "time is = $test ")
-            viewModel.editDiary.value?.eatingTime = test
+
+            viewModel.editDiary.value?.eatingTime = TimeConverters.timeToTimestamp(nowTime, Locale.TAIWAN)
         })
 
         //Search EditText setting
-        binding.searchDiary.addTextChangedListener(object :TextWatcher{
+        binding.searchDiaryEdit.addTextChangedListener(object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -101,7 +75,7 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.recyclerViewStatus.value = true
-                val searchText: String = binding.searchDiary.text.toString()
+                val searchText: String = binding.searchDiaryEdit.text.toString()
                 if (searchText != null || searchText != ""){
                     viewModel.searchTemplate(searchText)
                 }
@@ -109,13 +83,12 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         })
 
         //set Spinner
-        val type = arrayListOf("早餐","午餐","晚餐","點心/宵夜")
+        val type = arrayListOf(BREAKFAST, LUNCH, DINNER, DESSERT)
         val spinnerAdapter = ArrayAdapter(DiaryApplication.instance,android.R.layout.simple_spinner_dropdown_item, type)
         binding.foodType.adapter = spinnerAdapter
 
         binding.foodType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
 
             override fun onItemSelected(
@@ -135,15 +108,15 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
 
         viewModel.diary.observe(viewLifecycleOwner, Observer {
-            Log.d("search","search $it")
+//            Log.d("search","search $it")
             autoAdapter?.notifyDataSetChanged()
         })
 
         viewModel.invalidCheckout.observe(viewLifecycleOwner, Observer {
             when(it){
-                -1 -> Toast.makeText(context,"請輸入餐點名稱", Toast.LENGTH_SHORT).show()
-                -2 -> Toast.makeText(context,"請輸入用餐時間", Toast.LENGTH_SHORT).show()
-                -3 -> Toast.makeText(context,"請輸入餐廳名稱", Toast.LENGTH_SHORT).show()
+                -1 -> Toast.makeText(context,getString(R.string.enter_food_name), Toast.LENGTH_SHORT).show()
+                -2 -> Toast.makeText(context,getString(R.string.enter_food_time), Toast.LENGTH_SHORT).show()
+                -3 -> Toast.makeText(context,getString(R.string.enter_store_name), Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -158,14 +131,13 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         return binding.root
     }
 
-
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.saveDay.value = dayOfMonth
         viewModel.saveMonth.value = month + 1
         viewModel.saveYear.value = year
 
         getDateTimeCalendar()
-        TimePickerDialog(activity, this, viewModel.hour, viewModel.minute, true).show()
+        TimePickerDialog(activity, this, viewModel.calendarHour, viewModel.calendarMinute, true).show()
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
@@ -175,11 +147,11 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     private fun getDateTimeCalendar() {
         val calendar = Calendar.getInstance()
-        viewModel.day = calendar.get(Calendar.DAY_OF_MONTH)
-        viewModel.month = calendar.get(Calendar.MONTH)
-        viewModel.year = calendar.get(Calendar.YEAR)
-        viewModel.hour = calendar.get(Calendar.HOUR)
-        viewModel.minute = calendar.get(Calendar.MINUTE)
+        viewModel.calendarDay = calendar.get(Calendar.DAY_OF_MONTH)
+        viewModel.calendarMonth = calendar.get(Calendar.MONTH)
+        viewModel.calendarYear = calendar.get(Calendar.YEAR)
+        viewModel.calendarHour = calendar.get(Calendar.HOUR)
+        viewModel.calendarMinute = calendar.get(Calendar.MINUTE)
     }
 
     private fun getDate() {
@@ -188,11 +160,40 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             DatePickerDialog(
                 it,
                 this,
-                viewModel.year,
-                viewModel.month,
-                viewModel.day
+                viewModel.calendarYear,
+                viewModel.calendarMonth,
+                viewModel.calendarDay
             ).show()
         }
     }
 
+    private fun setEditText (diary: Diary) {
+        diary.let {
+            binding.temFoodNameText.setText("${it.food?.foodName}")
+            binding.temFoodComboText.setText("${it.food?.foodCombo}")
+            binding.temFoodPriceText.setText("${it.food?.price}")
+            binding.temRatingText.setText("${it.food?.foodRate}")
+            binding.temHealthyText.setText("${it.food?.healthyScore}")
+            binding.temStoreNameText.setText("${it.store?.storeName}")
+            binding.temStoreBranchText.setText("${it.store?.storeBranch}")
+            binding.temStorePhoneText.setText("${it.store?.storePhone}")
+            binding.temStoreMinOrderText.setText("${it.store?.storeMinOrder}")
+            binding.temStoreOpenTimeText.setText("${it.store?.storeOpenTime}")
+            binding.temContentText.setText("${it.food?.foodContent}")
+            binding.temNextTimeMemoText.setText("${it.food?.nextTimeRemind}")
+
+            when (it.store?.storeBooking) {
+                true -> binding.temStoreBookingText.setText(R.string.can_booking)
+                false -> binding.temStoreBookingText.setText(R.string.cannot_booking)
+                else -> binding.temStoreBookingText.setText(R.string.no_data)
+            }
+
+            when(it.type) {
+                BREAKFAST -> binding.foodType.setSelection(0)
+                LUNCH -> binding.foodType.setSelection(1)
+                DINNER -> binding.foodType.setSelection(2)
+                else -> binding.foodType.setSelection(3)
+            }
+        }
+    }
 }

@@ -66,12 +66,12 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
-
         val navigationView = findViewById<View>(R.id.drawerNavView) as NavigationView
         val headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main)
         var ivHeaderPhoto: ImageView = headerLayout.findViewById(R.id.user_image)
         var userName: TextView = headerLayout.findViewById(R.id.user_name)
+
+        binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         UserManager.userData.userName = FirebaseAuth.getInstance().currentUser?.displayName
         UserManager.userData.userPhoto = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
@@ -85,7 +85,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavController() {
-        findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener { navController: NavController, _: NavDestination, _: Bundle? ->
+        findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener {
+                navController: NavController, _: NavDestination, _: Bundle? ->
             viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
                 R.id.homeFragment -> CurrentFragmentType.HOME
                 R.id.diarysFragment -> CurrentFragmentType.DIARY
