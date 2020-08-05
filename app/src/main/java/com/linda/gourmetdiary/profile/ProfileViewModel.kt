@@ -1,6 +1,5 @@
 package com.linda.gourmetdiary.profile
 
-import android.util.Log
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +12,8 @@ import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.TimeConverters
+import com.linda.gourmetdiary.util.timastampOfDay
+import com.linda.gourmetdiary.util.timastampOfWeek
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,8 +22,6 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
 import java.util.*
-import java.util.logging.Logger
-import kotlin.math.cos
 
 class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
 
@@ -34,13 +33,13 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    private var _diary = MutableLiveData<List<Diary>>()
-    val diary: LiveData<List<Diary>>
-        get() = _diary
+    private var _diaryList = MutableLiveData<List<Diary>>()
+    val diaryList: LiveData<List<Diary>>
+        get() = _diaryList
 
     val diaryCount = MutableLiveData<Int>()
     val storeCount = MutableLiveData<Int>()
-    val weekulyCost = MutableLiveData<Int>()
+    val weeklyCost = MutableLiveData<Int>()
     val healthyScore = MutableLiveData<String>()
 
     var diarys4Days = mutableListOf<Diarys4Day>()
@@ -51,19 +50,19 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
-        getUsersResult(getTodayStartTime(), getTodayEndTime())
+        getDiaryResult(getTodayStartTime(), getTodayEndTime())
         queryDiaryCount()
         queryStoreCount()
     }
 
-    fun getTodayStartTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(518348572)
+    private fun getTodayStartTime(): Long =
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timastampOfWeek)
 
     //get LocaleDate's 00:00 and plus into 23:59
-    fun getTodayEndTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(86391428)
+    private fun getTodayEndTime(): Long =
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timastampOfDay)
 
-    fun queryDiaryCount() {
+    private fun queryDiaryCount() {
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
@@ -95,7 +94,7 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
     }
 
-    fun queryStoreCount() {
+    private fun queryStoreCount() {
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
@@ -127,15 +126,15 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
     }
 
-    private fun getUsersResult(startTime: Long, endTime: Long) {
+    private fun getDiaryResult(startTime: Long, endTime: Long) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getUsersDiarys(startTime, endTime)
+            val result = repository.getDiarys(startTime, endTime)
 
-            _diary.value = when (result) {
+            _diaryList.value = when (result) {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -163,49 +162,50 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
     }
 
-    fun getCost(){
+    private fun getCost(){
         var cost = 0
         _status.value = LoadApiStatus.LOADING
-        diary.value?.forEach {
-            it.food?.price.let {
-                if (it != null) {
-                    cost = cost + (it.toInt())
+
+        diaryList.value?.forEach {
+            it.food?.price.let {price ->
+                if (price != null) {
+                    cost += (price.toInt())
                 }
             }
-//            Log.d("getCost","getCost = $cost ; ${it.food?.price}")
-            weekulyCost.value = cost
+            weeklyCost.value = cost
         }
         _status.value = LoadApiStatus.DONE
     }
 
-    fun getHealthy(){
+    private fun getHealthy(){
         var score = 0F
         var listSize = 1F
         var scoreAverage = 0F
         _status.value = LoadApiStatus.LOADING
-        diary.value?.forEach {
-            it.food?.healthyScore.let {
+
+        diaryList.value?.forEach {diary ->
+            diary.food?.healthyScore.let {
                 if (it != null) {
-                    score = score + (it.toInt())
+                    score += (it.toInt())
                 }
             }
         }
-        listSize = diary.value?.size?.toFloat() ?: 1F
-        if ( listSize == 0F) {
-            null
-        } else {
+        listSize = diaryList.value?.size?.toFloat() ?: 1F
+
+        if ( listSize != 0F) {
             scoreAverage = score/listSize
             healthyScore.value = BigDecimal(scoreAverage.toString()).setScale(1, RoundingMode.HALF_DOWN).toString()
         }
         _status.value = LoadApiStatus.DONE
     }
 
-    fun assignDiaryData(diarys: List<Diary>) {
+    fun assignDiaryData(diaryList: List<Diary>) {
         diarys4DaysStatus.value = false
-        diarys.forEach { diary ->
-            diary.eatingTime?.let {
-                var converte = TimeConverters.timestampToDate(it, Locale.TAIWAN)
-                var condition = TimeConverters.dateToTimestamp(converte, Locale.TAIWAN)
+
+        diaryList.forEach { diary ->
+            diary.eatingTime?.let { eatingTime ->
+                val converter = TimeConverters.timestampToDate(eatingTime, Locale.TAIWAN)
+                val condition = TimeConverters.dateToTimestamp(converter, Locale.TAIWAN)
                 val diarys4Day = Diarys4Day()
 
                 if (diarys4Days.none { it.dayTitle == condition }) { // if diarys4Days doesn't include day title of this day
@@ -225,22 +225,6 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
         diary4Day.value = diarys4Days
         diarys4DaysStatus.value = true
-//        getDailyCost()
-    }
-
-    fun getDailyCost(){
-        var money = 0
-        diarys4Days.forEach{
-            it.diarys.forEach {
-                money = money + (it.food?.price?.toInt() ?: 0)
-            }
-        }
-//        Log.d("money"," $$$ is $money")
-    }
-
-    fun onDataAssigned() {
-        _diary.value = null
-        diarys4Days.clear()
     }
 
     @InverseMethod("convertLongToString")

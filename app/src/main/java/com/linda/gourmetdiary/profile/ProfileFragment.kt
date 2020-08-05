@@ -39,7 +39,7 @@ class ProfileFragment : Fragment() {
         val entries: MutableList<BarEntry> = ArrayList()
         val label: MutableList<String> = mutableListOf()
 
-        viewModel.diary.observe(viewLifecycleOwner, Observer { diarys ->
+        viewModel.diaryList.observe(viewLifecycleOwner, Observer { diarys ->
             viewModel.assignDiaryData(diarys)
         })
 

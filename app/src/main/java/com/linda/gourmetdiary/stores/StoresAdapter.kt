@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.data.Stores
 import com.linda.gourmetdiary.databinding.ItemStoresListBinding
+import com.linda.gourmetdiary.util.NONE
 
 class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<Stores, RecyclerView.ViewHolder>(DiffCallback) {
 
@@ -22,7 +23,7 @@ class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<S
 
             binding.store = store
             binding.root.setOnClickListener { onClickListener.onClick(store) }
-            if (store.storeBranch == "無"){
+            if (store.storeBranch == NONE){
                 binding.storeItemBranch.visibility = View.GONE
             }
 

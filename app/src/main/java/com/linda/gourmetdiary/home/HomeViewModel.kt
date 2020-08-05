@@ -1,17 +1,14 @@
 package com.linda.gourmetdiary.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.network.LoadApiStatus
-import com.google.firebase.firestore.FirebaseFirestore
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
-import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.TimeConverters
 import com.linda.gourmetdiary.util.UserManager
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +20,6 @@ import java.math.RoundingMode
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
-import kotlin.system.exitProcess
 
 class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
@@ -115,7 +111,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getUsersDiarys(startTime, endTime)
+            val result = repository.getDiarys(startTime, endTime)
 
             _diary.value = when (result) {
                 is Result.Success -> {
@@ -152,7 +148,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getUsersDiarys(startTime, endTime)
+            val result = repository.getDiarys(startTime, endTime)
 
             _diaryDaily.value = when (result) {
                 is Result.Success -> {

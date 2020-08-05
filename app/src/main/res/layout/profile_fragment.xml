@@ -38,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:src="@drawable/food_nav_drawer"/>
+            tools:src="@drawable/user_photo_illustration"/>
 
         <TextView
             android:id="@+id/user_name"
@@ -138,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@{viewModel.convertLongToString(viewModel.weekulyCost)}"
+            android:text="@{viewModel.convertLongToString(viewModel.weeklyCost)}"
             app:layout_constraintStart_toEndOf="@+id/weekily_cost"
             app:layout_constraintTop_toTopOf="@+id/weekily_cost"
             tools:text="20"/>

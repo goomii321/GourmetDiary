@@ -82,7 +82,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getUsersDiarys(startTime, endTime)
+            val result = repository.getDiarys(startTime, endTime)
 
             _diary.value = when (result) {
                 is Result.Success -> {

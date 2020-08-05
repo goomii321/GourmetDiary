@@ -20,7 +20,6 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val PATH_USERS = "Users"
     private const val PATH_STORES = "Stores"
     private const val PATH_DIARYS = "diarys"
-    private const val KEY_CREATED_TIME = "createdTime"
     private const val KEY_EATING_TIME = "eatingTime"
     private const val KEY_STORE_NAME = "store.storeName"
     private const val KEY_OF_STORE_BRANCH = "store.storeBranch"
@@ -29,7 +28,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
     private const val KEY_STORE_BRANCH = "storeBranch"
 
     //week offset: 6,604,740,000
-    override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
+    override suspend fun getDiarys(startTime:Long, endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
@@ -58,9 +57,9 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .get().addOnSuccessListener {task2 ->
-                if (task2 != null){
-                    UserManager.userData.signUpDate = task2.getLong("signUpDate")
+            .get().addOnSuccessListener {signUpDate ->
+                if (signUpDate != null){
+                    UserManager.userData.signUpDate = signUpDate.getLong("signUpDate")
 //                    Logger.d("signUpDate = ${UserManager.userData.signUpDate}")
             }
         }
