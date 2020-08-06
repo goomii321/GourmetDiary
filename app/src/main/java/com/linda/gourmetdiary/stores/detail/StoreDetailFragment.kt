@@ -25,11 +25,9 @@ import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.R
-import com.linda.gourmetdiary.databinding.DetailDiaryFragmentBinding
 import com.linda.gourmetdiary.databinding.DetailStoreFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
 
-import com.linda.gourmetdiary.databinding.StoresFragmentBinding
 import kotlinx.android.synthetic.main.detail_store_fragment.*
 
 class StoreDetailFragment : Fragment() {
@@ -37,8 +35,8 @@ class StoreDetailFragment : Fragment() {
     val viewModel by viewModels<StoreDetailViewModel> { getVmFactory(StoreDetailFragmentArgs.fromBundle(requireArguments()).store) }
 
     companion object {
-        private val PERMISSION_REQUEST2 = 10
-        private val PERMISSION_CALL = 11
+        private const val PERMISSION_REQUEST = 10
+        private const val PERMISSION_CALL = 11
     }
 
     private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
@@ -66,7 +64,7 @@ class StoreDetailFragment : Fragment() {
                 if (checkPermission(permissions)) {
                     getLocation()
                 } else {
-                    requestPermissions(permissions, PERMISSION_REQUEST2)
+                    requestPermissions(permissions, PERMISSION_REQUEST)
                 }
             } else {
                 getLocation()

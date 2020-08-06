@@ -4,6 +4,7 @@ import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.mikephil.charting.data.BarEntry
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
@@ -45,6 +46,10 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     var diaries4Days = mutableListOf<Diaries4Day>()
     val diary4Day = MutableLiveData<List<Diaries4Day>>()
     var diaries4DaysStatus = MutableLiveData<Boolean>().apply { value = false }
+
+    val xTitle = mutableListOf<String>()
+    val entries: MutableList<BarEntry> = ArrayList()
+    val label: MutableList<String> = mutableListOf()
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -225,6 +230,28 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
         diary4Day.value = diaries4Days
         diaries4DaysStatus.value = true
+    }
+
+    fun assignChartData(diaries: List<Diaries4Day>) {
+        _status.value = LoadApiStatus.LOADING
+        for ((index, diary) in diaries.withIndex()) {
+
+            var totalPriceForDay = 0
+            val title = diary.dayTitle?.let {
+                TimeConverters.timestampToDate(it, Locale.TAIWAN) }
+
+            if (title != null) {
+                xTitle.add(title)
+                label.add(title)
+            }
+
+            diary.diaries.forEach { item ->
+                totalPriceForDay += (item.food?.price?.toInt() ?: 0)
+            }
+
+            entries.add(BarEntry(index.toFloat(), totalPriceForDay.toFloat()))
+        }
+        _status.value = LoadApiStatus.DONE
     }
 
     @InverseMethod("convertLongToString")
