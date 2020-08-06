@@ -55,7 +55,6 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     
     init {
-//        Log.d("checkBranch","store branch is ${_store.value?.storeBranch}")
         queryHistory("${_store.value?.storeName}","${_store.value?.storeBranch}")
     }
 
@@ -118,7 +117,7 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         _navigateToDiary.value = null
     }
 
-    fun calculateHealthy() {
+    private fun calculateHealthy() {
         var score = 0F
         var listSize = 1F
         var scoreAverage = 1F
@@ -133,13 +132,15 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         healthyText.value = BigDecimal(scoreAverage.toString()).setScale(1,RoundingMode.HALF_DOWN).toString()
     }
 
-    fun calculateRate()  {
+    private fun calculateRate()  {
         var score = 0F
         var listSize = 1F
         var scoreAverage = 1F
         history.value?.forEach { number ->
-            number.food?.foodRate.let {
-                score = score.plus(it?.toFloat()!!)
+            number.food?.foodRate.let { rateValue ->
+                rateValue?.let {
+                    score = score.plus(rateValue.toFloat())
+                }
             }
         }
         listSize = history.value?.size?.toFloat() ?: 1F

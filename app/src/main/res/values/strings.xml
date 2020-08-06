@@ -71,6 +71,8 @@
     <string name="can_booking">可訂位</string>
     <string name="cannot_booking">不可訂位</string>
     <string name="no_data">無資料</string>
+    <string name="no_internet_no_gps">未開啟定位或網路功能</string>
+
     <string name="check_day">選擇其他日期</string>
     <string name="no_diary_data">這段時間都沒有日記紀錄…</string>
     <string name="no_store_data">目前沒有餐廳紀錄…</string>
@@ -82,4 +84,10 @@
     <string name="enter_food_name">請輸入餐點名稱</string>
     <string name="enter_food_time">請輸入用餐時間</string>
     <string name="enter_store_name">請輸入餐廳名稱</string>
+    <string name="clipboard_text">複製到剪貼簿</string>
+
+    <string name="tel_uri_text">tel</string>
+    <string name="intent_map_navigate">google.navigation:q=</string>
+    <string name="set_map_package">com.google.android.apps.maps</string>
+
 </resources>

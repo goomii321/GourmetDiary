@@ -319,21 +319,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="@{viewModel.store.storeMinOrder}"
+                        app:displayDollar="@{viewModel.store.storeMinOrder}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/time_text"
                         tools:text="50" />
-
-                    <TextView
-                        android:id="@+id/dollar_min"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/dollar"
-                        app:layout_constraintBottom_toBottomOf="@+id/min_order_text"
-                        app:layout_constraintStart_toEndOf="@+id/min_order_text"
-                        app:layout_constraintTop_toTopOf="@+id/min_order_text" />
 
                     <TextView
                         android:id="@+id/booking_text"
@@ -346,28 +335,6 @@
                         tools:text="可外送" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/store_web"-->
-                <!--                    style="@style/text_style"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    android:text="@string/store_web"-->
-                <!--                    app:layout_constraintStart_toStartOf="@+id/store_booking"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@id/store_booking" />-->
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/web_text"-->
-                <!--                    style="@style/text_style"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginStart="4dp"-->
-                <!--                    android:text="@{viewModel.store.storeHtml}"-->
-                <!--                    app:layout_constraintBottom_toBottomOf="@+id/store_web"-->
-                <!--                    app:layout_constraintStart_toEndOf="@id/store_web"-->
-                <!--                    app:layout_constraintTop_toTopOf="@id/store_web"-->
-                <!--                    tools:text="www.tea.com" />-->
 
                 <View
                     android:id="@+id/divider_store"
@@ -420,22 +387,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{viewModel.allCost}"
+                    app:displayDollar="@{viewModel.allCost}"
                     app:layout_constraintBottom_toBottomOf="@+id/all_cost"
                     app:layout_constraintStart_toEndOf="@+id/all_cost"
                     app:layout_constraintTop_toTopOf="@id/all_cost"
                     tools:text="9999999" />
-
-                <TextView
-                    android:id="@+id/dollar"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@string/dollar"
-                    app:layout_constraintBottom_toBottomOf="@+id/cost_text"
-                    app:layout_constraintStart_toEndOf="@+id/cost_text"
-                    app:layout_constraintTop_toTopOf="@+id/cost_text" />
 
                 <TextView
                     android:id="@+id/visiting_count"
@@ -453,22 +409,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{viewModel.vistitTimes}"
+                    app:displayCount="@{viewModel.vistitTimes}"
                     app:layout_constraintBottom_toBottomOf="@+id/visiting_count"
                     app:layout_constraintStart_toEndOf="@+id/visiting_count"
                     app:layout_constraintTop_toTopOf="@id/visiting_count"
                     tools:text="9999999" />
-
-                <TextView
-                    android:id="@+id/times"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@string/visiting_times"
-                    app:layout_constraintBottom_toBottomOf="@+id/visiting_count_text"
-                    app:layout_constraintStart_toEndOf="@+id/visiting_count_text"
-                    app:layout_constraintTop_toTopOf="@+id/visiting_count_text" />
 
                 <TextView
                     android:id="@+id/healthy_average"

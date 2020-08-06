@@ -36,7 +36,7 @@ data class Store(
     var storeBranch: String? = "無",
     var storeHtml: String? = "無",
     var storeLocation: String? = "無",
-    var storeMinOrder: String? = "無",
+    var storeMinOrder: String? = "0",
     var storeOpenTime: String? = "無",
     var storeLocationId: String? = "",
     var storeImage: String? = ""

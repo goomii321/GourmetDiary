@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary
 
+import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.view.View
@@ -102,10 +103,25 @@ fun bindDisplayFormatTime(textView: TextView, time: Long?) {
     textView.text = time?.toDisplayFormat()
 }
 
+@SuppressLint("SetTextI18n")
 @RequiresApi(Build.VERSION_CODES.N)
 @BindingAdapter("displayPrice")
 fun bindDisplayPrice(textView: TextView, price: String?) {
     textView.text = "$ $price"
+}
+
+@SuppressLint("SetTextI18n")
+@RequiresApi(Build.VERSION_CODES.N)
+@BindingAdapter("displayDollar")
+fun bindDisplayDollar(textView: TextView, price: String?) {
+    textView.text = "$price 元"
+}
+
+@SuppressLint("SetTextI18n")
+@RequiresApi(Build.VERSION_CODES.N)
+@BindingAdapter("displayCount")
+fun bindDisplayCount(textView: TextView, count: String?) {
+    textView.text = "$count 次"
 }
 
 @RequiresApi(Build.VERSION_CODES.N)

@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.databinding.ItemStoreOrderFoodBinding
 
-class StoreDetailAdapter(private val onClickListener: OnClickListener): androidx.recyclerview.widget.ListAdapter<Diary, RecyclerView.ViewHolder>(DiffCallback) {
+class StoreDetailAdapter(private val onClickListener: OnClickListener):
+    androidx.recyclerview.widget.ListAdapter<Diary, RecyclerView.ViewHolder>(DiffCallback) {
 
     class OnClickListener(val clickListener: (diary: Diary) -> Unit) {
         fun onClick(diary: Diary) = clickListener(diary)

@@ -101,7 +101,7 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
 
         when {
             editDiary.value?.food?.foodName.isNullOrEmpty() -> _invalidCheckout.value = -1
-            editDiary.value?.eatingTime == null -> _invalidCheckout.value = -2
+            editDiary.value?.eatingTime.toString() == "0" -> _invalidCheckout.value = -2
             editDiary.value?.store?.storeName.isNullOrEmpty() -> _invalidCheckout.value = -3
             else -> coroutineScope.launch {
 
@@ -179,7 +179,8 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
     private fun calculateNowTime(): String {
         val time = "${saveYear.value}/${saveMonth.value}/${saveDay.value} " +
                 "${saveHour.value}:${saveMinute.value}"
-        if ( saveYear.value != null && saveMonth.value != null && saveDay.value != null && saveHour.value !=null && saveMinute.value !=null ){
+        if ( saveYear.value != null && saveMonth.value != null && saveDay.value != null &&
+            saveHour.value !=null && saveMinute.value !=null ){
             editDiary.value?.eatingTime = TimeConverters.timeToTimestamp(time, Locale.TAIWAN)
         }
         return time

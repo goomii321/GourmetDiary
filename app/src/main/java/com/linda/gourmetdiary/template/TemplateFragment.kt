@@ -77,7 +77,7 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.recyclerViewStatus.value = true
                 val searchText: String = binding.searchDiaryEdit.text.toString()
-                if (searchText != null || searchText != ""){
+                if (searchText != ""){
                     viewModel.searchTemplate(searchText)
                 }
             }
@@ -108,24 +108,29 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         }
 
-        viewModel.diary.observe(viewLifecycleOwner, Observer {
-//            Log.d("search","search $it")
-            autoAdapter?.notifyDataSetChanged()
-        })
-
-        viewModel.invalidCheckout.observe(viewLifecycleOwner, Observer {
-            when(it){
-                -1 -> Toast.makeText(context,getString(R.string.enter_food_name), Toast.LENGTH_SHORT).show()
-                -2 -> Toast.makeText(context,getString(R.string.enter_food_time), Toast.LENGTH_SHORT).show()
-                -3 -> Toast.makeText(context,getString(R.string.enter_store_name), Toast.LENGTH_SHORT).show()
+        viewModel.diary.observe(viewLifecycleOwner, Observer { diaryList ->
+            diaryList?.let {
+                autoAdapter.notifyDataSetChanged()
             }
         })
 
-        viewModel.navigate2Home.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                Handler().postDelayed({
-                    findNavController().navigate(R.id.navigate_to_home)
-                }, 1000)
+        viewModel.invalidCheckout.observe(viewLifecycleOwner, Observer {checkValue ->
+            checkValue?.let {
+                when(it){
+                    -1 -> Toast.makeText(context,getString(R.string.enter_food_name), Toast.LENGTH_SHORT).show()
+                    -2 -> Toast.makeText(context,getString(R.string.enter_food_time), Toast.LENGTH_SHORT).show()
+                    -3 -> Toast.makeText(context,getString(R.string.enter_store_name), Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        viewModel.navigate2Home.observe(viewLifecycleOwner, Observer {navigateValue ->
+            navigateValue?.let {
+                if (it) {
+                    Handler().postDelayed({
+                        findNavController().navigate(R.id.navigate_to_home)
+                    }, 1000)
+                }
             }
         })
 

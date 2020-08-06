@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.NavigationDirections
+import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.DetailDiaryFragmentBinding
 import com.linda.gourmetdiary.databinding.DetailStoreFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
@@ -45,11 +46,14 @@ class StoreDetailFragment : Fragment() {
     private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE)
 
+    private lateinit var binding: DetailStoreFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DetailStoreFragmentBinding.inflate(inflater,container,false)
+        binding = DetailStoreFragmentBinding.inflate(inflater,container,false)
+
         val adapter = StoreDetailAdapter(StoreDetailAdapter.OnClickListener{
             viewModel.navigateToDiary(it)
         })
@@ -58,7 +62,7 @@ class StoreDetailFragment : Fragment() {
         binding.viewModel = viewModel
         binding.foodOrderHistory.adapter = adapter
 
-        //connect google map
+        //intent google map
         binding.locationText.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkPermission(permissions)) {
@@ -73,29 +77,26 @@ class StoreDetailFragment : Fragment() {
 
         binding.locationText.setOnLongClickListener {
             getClipboard(location_text.text.toString())
-            Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
 
         binding.phoneText.setOnLongClickListener {
             getClipboard(phone_text.text.toString())
-            Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
 
-        //add phone call
+        //intent phone call
         binding.phoneText.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED){
                 requestPermissions(permissions, PERMISSION_CALL)
             } else {
                 val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = Uri.parse("tel:" + viewModel.store.value?.storePhone)
+                callIntent.data = Uri.parse(getString(R.string.tel_uri_text) + viewModel.store.value?.storePhone)
                 startActivity(callIntent)
             }
-        }
-
-        if (viewModel.store?.value?.storeMinOrder == "無" || viewModel.store?.value?.storeMinOrder == ""){
-            binding.dollarMin.visibility = View.GONE
         }
 
         viewModel.navigateToDiary.observe(viewLifecycleOwner, Observer {
@@ -105,11 +106,7 @@ class StoreDetailFragment : Fragment() {
             }
         })
 
-        when (viewModel.store.value?.storeBooking){
-            true -> binding.bookingText.text = "可訂位"
-            false -> binding.bookingText.text = "不可訂位"
-            else -> binding.bookingText.text = "無資料"
-        }
+        setBookingText()
 
         return binding.root
     }
@@ -117,7 +114,8 @@ class StoreDetailFragment : Fragment() {
     private fun checkPermission(permissionArray: Array<String>): Boolean {
         var allSuccess = true
         for (i in permissionArray.indices) {
-            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,permissionArray[i]) == PackageManager.PERMISSION_DENIED)
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
+                    permissionArray[i]) == PackageManager.PERMISSION_DENIED)
                 allSuccess = false
         }
         return allSuccess
@@ -128,15 +126,16 @@ class StoreDetailFragment : Fragment() {
         var locationGps: Location? = null
         var locationNetwork: Location? = null
         // Create a Uri from an intent string. Use the result to create an Intent."google.streetview:cbll=46.414382,10.013988"
-        val gmmIntentUri = Uri.parse("google.navigation:q="+ viewModel.store.value?.storeLocation)
+        val gmmIntentUri = Uri.parse(getString(R.string.intent_map_navigate)+ viewModel.store.value?.storeLocation)
         // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         // Make the Intent explicit by setting the Google Maps package
 
-        var locationManager: LocationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var hasGps :Boolean = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        var hasNetwork: Boolean = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        mapIntent.setPackage("com.google.android.apps.maps")
+        val locationManager: LocationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val hasGps :Boolean = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val hasNetwork: Boolean = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        mapIntent.setPackage(getString(R.string.set_map_package))
 
         if (hasGps && hasNetwork) {
             locationManager.requestLocationUpdates(
@@ -145,10 +144,6 @@ class StoreDetailFragment : Fragment() {
                     override fun onLocationChanged(location: Location?) {
                         if (location != null) {
                             locationGps = location
-                            Log.d(
-                                "locationGps",
-                                "locationGps = ${locationGps?.latitude} ; ${locationGps?.longitude}"
-                            )
                         }
                     }
 
@@ -156,11 +151,9 @@ class StoreDetailFragment : Fragment() {
                     }
 
                     override fun onProviderEnabled(provider: String?) {
-
                     }
 
                     override fun onProviderDisabled(provider: String?) {
-
                     }
 
                 })
@@ -171,14 +164,22 @@ class StoreDetailFragment : Fragment() {
             }
             startActivity(mapIntent)
         } else {
-            Toast.makeText(context, "未開啟定位或網路功能", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.no_internet_no_gps), Toast.LENGTH_LONG).show()
         }
     }
 
-    fun getClipboard(text: CharSequence){
-        var clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        var clip = ClipData.newPlainText("location", text)
+    private fun getClipboard(text: CharSequence){
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("location", text)
         clipboard.setPrimaryClip(clip)
+    }
+
+    private fun setBookingText() {
+        when (viewModel.store.value?.storeBooking){
+            true -> binding.bookingText.text = getString(R.string.can_booking)
+            false -> binding.bookingText.text = getString(R.string.cannot_booking)
+            else -> binding.bookingText.text = getString(R.string.no_data)
+        }
     }
 
 }
