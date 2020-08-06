@@ -1,4 +1,4 @@
-package com.linda.gourmetdiary.diarys.detail
+package com.linda.gourmetdiary.diaries.detail
 
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData

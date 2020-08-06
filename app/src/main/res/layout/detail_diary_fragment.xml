@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.linda.gourmetdiary.diarys.detail.DiaryDetailViewModel" />
+            type="com.linda.gourmetdiary.diaries.detail.DiaryDetailViewModel" />
 
         <variable
             name="diary"

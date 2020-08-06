@@ -1,9 +1,8 @@
-package com.linda.gourmetdiary.diarys.detail
+package com.linda.gourmetdiary.diaries.detail
 
 import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,10 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.R
-import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.databinding.ItemDetailGalleryBinding
-import com.linda.gourmetdiary.util.Logger.i
-import java.util.logging.Logger
 
 class DiaryGalleryAdapter(private val onClickListener: OnClickListener): ListAdapter<String,DiaryGalleryAdapter.ImageViewHolder>(DiffCallback) {
     private lateinit var context: Context

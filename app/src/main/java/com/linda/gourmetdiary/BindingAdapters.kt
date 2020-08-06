@@ -16,20 +16,17 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.database.DatabaseReference
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.data.Store
-import com.linda.gourmetdiary.diarys.DailyItemAdapter
-import com.linda.gourmetdiary.diarys.DataItem
-import com.linda.gourmetdiary.diarys.DiarysAdapter
-import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
+import com.linda.gourmetdiary.diaries.DailyItemAdapter
+import com.linda.gourmetdiary.diaries.DataItem
+import com.linda.gourmetdiary.diaries.DiariesAdapter
+import com.linda.gourmetdiary.diaries.detail.DiaryGalleryAdapter
 import com.linda.gourmetdiary.home.HomeAdapter
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.stores.StoresAdapter
 import com.linda.gourmetdiary.stores.detail.StoreDetailAdapter
 import com.linda.gourmetdiary.template.SearchAdapter
-import java.util.*
 
 
 @BindingAdapter("diary")
@@ -62,7 +59,7 @@ fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, dataItems: List<Da
     dataItems?.let {
         recyclerView.adapter?.apply {
             when (this) {
-                is DiarysAdapter -> submitList(it)
+                is DiariesAdapter -> submitList(it)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.linda.gourmetdiary.diarys
+package com.linda.gourmetdiary.diaries
 
 import android.app.DatePickerDialog
 import android.os.Build
@@ -16,14 +16,14 @@ import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.MainViewModel
 import com.linda.gourmetdiary.NavigationDirections
+import com.linda.gourmetdiary.databinding.DiariesFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
-import com.linda.gourmetdiary.databinding.DiarysFragmentBinding
 import com.linda.gourmetdiary.util.TimeConverters
 import java.util.*
 
-class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
+class DiariesFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
-    val viewModel by viewModels<DiarysViewModel> { getVmFactory() }
+    val viewModel by viewModels<DiariesViewModel> { getVmFactory() }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -31,13 +31,13 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = DiarysFragmentBinding.inflate(inflater,container,false)
+        val binding = DiariesFragmentBinding.inflate(inflater,container,false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.isLiveDataDesign = DiaryApplication.instance.isLiveDataDesign()
         binding.viewModel = viewModel
 
-        binding.recyclerDiary.adapter = DiarysAdapter(viewModel, DiarysAdapter.OnClickListener{
+        binding.recyclerDiary.adapter = DiariesAdapter(viewModel, DiariesAdapter.OnClickListener{
             getDate()
         })
 
@@ -54,7 +54,7 @@ class DiarysFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         viewModel.diary.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.assignData(it)
-                DiarysAdapter(viewModel, DiarysAdapter.OnClickListener {}).notifyDataSetChanged()
+                DiariesAdapter(viewModel, DiariesAdapter.OnClickListener {}).notifyDataSetChanged()
                 if(it.isEmpty()){
                     binding.noDiaryText.visibility = View.VISIBLE
                 }

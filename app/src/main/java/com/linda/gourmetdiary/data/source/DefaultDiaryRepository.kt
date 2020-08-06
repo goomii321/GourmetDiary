@@ -11,12 +11,12 @@ import com.linda.gourmetdiary.data.*
 class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
                              private val localDataSource: DiaryDataSource
 ) : DiaryRepository {
-    override suspend fun getDiarys(startTime:Long, endTime: Long): Result<List<Diary>> {
-        return diaryRemoteDataSource.getDiarys(startTime, endTime)
+    override suspend fun getDiaries(startTime:Long, endTime: Long): Result<List<Diary>> {
+        return diaryRemoteDataSource.getDiaries(startTime, endTime)
     }
 
-    override suspend fun postDiary(diarys: Diary): Result<Boolean> {
-        return diaryRemoteDataSource.postDiary(diarys)
+    override suspend fun postDiary(diaries: Diary): Result<Boolean> {
+        return diaryRemoteDataSource.postDiary(diaries)
     }
 
     override fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>> {

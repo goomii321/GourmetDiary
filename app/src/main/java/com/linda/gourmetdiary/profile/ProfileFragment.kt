@@ -1,6 +1,5 @@
 package com.linda.gourmetdiary.profile
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,7 +17,6 @@ import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.databinding.ProfileFragmentBinding
 import com.linda.gourmetdiary.util.TimeConverters
-import kotlinx.android.synthetic.main.profile_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,8 +37,10 @@ class ProfileFragment : Fragment() {
         val entries: MutableList<BarEntry> = ArrayList()
         val label: MutableList<String> = mutableListOf()
 
-        viewModel.diaryList.observe(viewLifecycleOwner, Observer { diarys ->
-            viewModel.assignDiaryData(diarys)
+        viewModel.diaryList.observe(viewLifecycleOwner, Observer { diary ->
+            diary?.let {
+                viewModel.assignDiaryData(diary)
+            }
         })
 
         viewModel.diary4Day.observe(viewLifecycleOwner, Observer {
@@ -56,7 +56,7 @@ class ProfileFragment : Fragment() {
                     label.add(TimeConverters.timestampToDate(diary.dayTitle!!, Locale.TAIWAN))
 
                     var totalPriceForDay = 0
-                    diary.diarys.forEach { item ->
+                    diary.diaries.forEach { item ->
                         totalPriceForDay += (item.food?.price?.toInt() ?: 0)
                     }
                     Log.d("Wayne","title=$title")

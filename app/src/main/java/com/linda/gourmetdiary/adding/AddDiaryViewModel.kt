@@ -1,13 +1,10 @@
 package com.linda.gourmetdiary.adding
 
-import android.util.Log
-import android.widget.Toast
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.network.LoadApiStatus
-import com.google.firebase.firestore.FirebaseFirestore
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
@@ -16,7 +13,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.*
 
 class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
 
@@ -78,7 +74,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
         storeStatus.value = !storeStatus.value!!
     }
 
-    fun addData(diarys: Diary) {
+    fun addData(diaries: Diary) {
 
         when {
             user.value?.food?.foodName.isNullOrEmpty() -> _invalidCheckout.value = -1
@@ -90,7 +86,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
 
                 _status.value = LoadApiStatus.LOADING
 
-                when (val result = repository.postDiary(diarys)) {
+                when (val result = repository.postDiary(diaries)) {
                     is Result.Success -> {
                         _error.value = null
                         _status.value = LoadApiStatus.DONE

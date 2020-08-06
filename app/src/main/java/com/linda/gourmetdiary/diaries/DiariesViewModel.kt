@@ -1,6 +1,5 @@
-package com.linda.gourmetdiary.diarys
+package com.linda.gourmetdiary.diaries
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +18,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
-class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
+class DiariesViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     var calendarYear = 0
     var calendarMonth = 0
@@ -46,7 +45,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     val diary: LiveData<List<Diary>>
         get() = _diary
 
-    var diarys4Days = mutableListOf<Diarys4Day>()
+    var diaries4Days = mutableListOf<Diaries4Day>()
 
     private var _dataItems = MutableLiveData<List<DataItem>>()
     val dataItems: LiveData<List<DataItem>>
@@ -82,7 +81,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getDiarys(startTime, endTime)
+            val result = repository.getDiaries(startTime, endTime)
 
             _diary.value = when (result) {
                 is Result.Success -> {
@@ -132,36 +131,36 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
         _navigateToDetail.value = null
     }
 
-    fun assignData(diarys: List<Diary>) {
+    fun assignData(diaries: List<Diary>) {
 
-        diarys.forEach { diary ->
+        diaries.forEach { diary ->
             diary.eatingTime?.let {
                 var converte = TimeConverters.timestampToDate(it, Locale.TAIWAN)
                 var condition = TimeConverters.dateToTimestamp(converte, Locale.TAIWAN)
-                val diarys4Day = Diarys4Day()
+                val diaries4Day = Diaries4Day()
 
-                if (diarys4Days.none { it.dayTitle == condition }) { // if diarys4Days doesn't include day title of this day
-                    diarys4Day.dayTitle = condition
-                    diarys4Day.diarys.add(diary)
-                    diarys4Days.add(diarys4Day)
+                if (diaries4Days.none { it.dayTitle == condition }) { // if diarys4Days doesn't include day title of this day
+                    diaries4Day.dayTitle = condition
+                    diaries4Day.diaries.add(diary)
+                    diaries4Days.add(diaries4Day)
 
                 } else { // if diarys4Days include day title of this day
-                    diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
+                    diaries4Days.find { it.dayTitle == condition }?.diaries?.add(diary)
 
                 }
             }
         }
 
-        _dataItems.value = diarysToDataItems(diarys4Days = diarys4Days)
+        _dataItems.value = diariesToDataItems(diaries4Days = diaries4Days)
     }
 
-    fun diarysToDataItems(title: String = "選擇其他日期", diarys4Days: MutableList<Diarys4Day>): List<DataItem> {
+    fun diariesToDataItems(title: String = "選擇其他日期", diaries4Days: MutableList<Diaries4Day>): List<DataItem> {
         val dataList = mutableListOf<DataItem>()
 
         dataList.add(DataItem.Title(title))
-        diarys4Days.forEach { diaryList ->
-            diaryList.diarys.sortBy { it.eatingTime }
-            dataList.add(DataItem.Diarys(diaryList))
+        diaries4Days.forEach { diaryList ->
+            diaryList.diaries.sortBy { it.eatingTime }
+            dataList.add(DataItem.Diaries(diaryList))
         }
 
         return dataList
@@ -169,6 +168,6 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     fun onDataAssigned() {
         _diary.value = null
-        diarys4Days.clear()
+        diaries4Days.clear()
     }
 }

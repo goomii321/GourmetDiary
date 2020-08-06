@@ -19,21 +19,26 @@ object DiaryRemoteDataSource : DiaryDataSource {
 
     private const val PATH_USERS = "Users"
     private const val PATH_STORES = "Stores"
-    private const val PATH_DIARYS = "diarys"
+    private const val PATH_DIARIES = "diarys"
     private const val KEY_EATING_TIME = "eatingTime"
     private const val KEY_STORE_NAME = "store.storeName"
     private const val KEY_OF_STORE_BRANCH = "store.storeBranch"
     private const val KEY_FOOD_NAME = "food.foodName"
     private const val KEY_STORES_NAME = "storeName"
     private const val KEY_STORE_BRANCH = "storeBranch"
+    private const val SIGN_UP_DATE = "signUpDate"
+    private const val UPDATE_TIME = "updateTime"
+    private const val STORE_IMAGE = "storeImage"
+    private const val STORE_LOCATION_ID = "storeLocationId"
+    private const val USER_ID = "userId"
 
     //week offset: 6,604,740,000
-    override suspend fun getDiarys(startTime:Long, endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
+    override suspend fun getDiaries(startTime:Long, endTime: Long): Result<List<Diary>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_DIARYS)
+            .collection(PATH_DIARIES)
             .whereGreaterThanOrEqualTo(KEY_EATING_TIME,startTime)
             .whereLessThanOrEqualTo(KEY_EATING_TIME,endTime)
             .orderBy(KEY_EATING_TIME,Query.Direction.DESCENDING)
@@ -59,29 +64,29 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .document(UserManager.userId ?: "")
             .get().addOnSuccessListener {signUpDate ->
                 if (signUpDate != null){
-                    UserManager.userData.signUpDate = signUpDate.getLong("signUpDate")
+                    UserManager.userData.signUpDate = signUpDate.getLong(SIGN_UP_DATE)
 //                    Logger.d("signUpDate = ${UserManager.userData.signUpDate}")
             }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    override suspend fun postDiary(diarys: Diary): Result<Boolean> =
+    override suspend fun postDiary(diaries: Diary): Result<Boolean> =
         suspendCoroutine { continuation ->
             val diary = FirebaseFirestore.getInstance().collection(PATH_USERS)
                 .document(UserManager.userId ?: "")
-                .collection(PATH_DIARYS)
+                .collection(PATH_DIARIES)
             val stores = FirebaseFirestore.getInstance().collection(PATH_USERS)
                 .document(UserManager.userId ?: "").collection(PATH_STORES)
 
             val document = diary.document()
 
-            diarys.diaryId = document.id
-            diarys.createdTime = Calendar.getInstance().timeInMillis
-            diarys.store?.updateTime = Calendar.getInstance().timeInMillis
+            diaries.diaryId = document.id
+            diaries.createdTime = Calendar.getInstance().timeInMillis
+            diaries.store?.updateTime = Calendar.getInstance().timeInMillis
 //            Logger.d("update time is ${diarys.store?.updateTime}")
 
-            diarys.store?.let {
+            diaries.store?.let {
                 stores.whereEqualTo(KEY_STORES_NAME,"${it.storeName}").whereEqualTo(KEY_STORE_BRANCH,"${it.storeBranch}")
                     .get()
                     .addOnSuccessListener { task ->
@@ -104,11 +109,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
                             }
 
                         } else {
-                            document.update("updateTime",it.updateTime, "storeImage",it.storeImage, "storeLocationId",it.storeLocationId)
+                            document.update(UPDATE_TIME,it.updateTime, STORE_IMAGE,it.storeImage, STORE_LOCATION_ID,it.storeLocationId)
                         }
                     }
             }
-            document.set(diarys)
+            document.set(diaries)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 //                        Logger.i("diary: $diarys")
@@ -131,7 +136,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_DIARYS)
+            .collection(PATH_DIARIES)
             .whereGreaterThanOrEqualTo(KEY_EATING_TIME,startTime)
             .whereLessThanOrEqualTo(KEY_EATING_TIME,endTime)
             .orderBy(KEY_EATING_TIME, Query.Direction.DESCENDING)
@@ -162,7 +167,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
             .collection(PATH_STORES)
-            .orderBy("updateTime",Query.Direction.DESCENDING)
+            .orderBy(UPDATE_TIME,Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -194,10 +199,10 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
             .collection(PATH_STORES)
-            .orderBy("updateTime",Query.Direction.DESCENDING)
+            .orderBy(UPDATE_TIME,Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
-                Logger.i("addSnapshotListener detect, $snapshot")
+//                Logger.i("addSnapshotListener detect, $snapshot")
 
                 exception?.let {
                     Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
@@ -221,7 +226,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_DIARYS)
+            .collection(PATH_DIARIES)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     var count = 0
@@ -270,7 +275,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             val userdata = FirebaseFirestore.getInstance().collection(PATH_USERS)
             var document = userdata.document("${UserManager.userData.userId}")
 
-            userdata.whereEqualTo("userId",UserManager.userData.userId)
+            userdata.whereEqualTo(USER_ID,UserManager.userData.userId)
                 .get().addOnSuccessListener { task ->
                     if (task.isEmpty){
 //                        Logger.i("task = $task")
@@ -291,7 +296,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                                 }
                             }
                     } else {
-                        document.update("userId",UserManager.userData.userId)
+                        document.update(USER_ID,UserManager.userData.userId)
                     }
                 }
 
@@ -303,7 +308,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_DIARYS)
+            .collection(PATH_DIARIES)
             .whereEqualTo(KEY_STORE_NAME,storeName)
             .whereEqualTo( KEY_OF_STORE_BRANCH,storeBranch)
             .get()
@@ -329,7 +334,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_DIARYS)
+            .collection(PATH_DIARIES)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -355,7 +360,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
             .document(UserManager.userId ?: "")
-            .collection(PATH_DIARYS).orderBy(KEY_FOOD_NAME)
+            .collection(PATH_DIARIES).orderBy(KEY_FOOD_NAME)
             .startAt(searchWord).get()
             .addOnCompleteListener {task ->
                 if (task.isSuccessful){

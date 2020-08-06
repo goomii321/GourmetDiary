@@ -1,15 +1,15 @@
-package com.linda.gourmetdiary.diarys
+package com.linda.gourmetdiary.diaries
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.linda.gourmetdiary.data.Diarys4Day
+import com.linda.gourmetdiary.data.Diaries4Day
 import com.linda.gourmetdiary.databinding.ItemDiaryCheckDayBinding
 import com.linda.gourmetdiary.databinding.ItemDiarylistBinding
 
-class DiarysAdapter( val viewModel: DiarysViewModel, private val onClickListener: OnClickListener) :
+class DiariesAdapter(val viewModel: DiariesViewModel, private val onClickListener: OnClickListener) :
     ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     class OnClickListener(val clickListener: (data: String) -> Unit) {
@@ -43,8 +43,8 @@ class DiarysAdapter( val viewModel: DiarysViewModel, private val onClickListener
     class DiaryViewHolder(private var binding: ItemDiarylistBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(diarys4Day: Diarys4Day, viewModel: DiarysViewModel) {
-            binding.diarys = diarys4Day
+        fun bind(diaries4Day: Diaries4Day, viewModel: DiariesViewModel) {
+            binding.diaries = diaries4Day
             binding.viewModel = viewModel
             binding.recyclerDiary.adapter = DailyItemAdapter(DailyItemAdapter.OnClickListener{
                 viewModel.navigateToDetail(it)
@@ -76,7 +76,7 @@ class DiarysAdapter( val viewModel: DiarysViewModel, private val onClickListener
                 holder.bind((getItem(position) as DataItem.Title).title,onClickListener)
             }
             is DiaryViewHolder -> {
-                holder.bind((getItem(position) as DataItem.Diarys).diarys4Day, viewModel)
+                holder.bind((getItem(position) as DataItem.Diaries).diaries4Day, viewModel)
             }
         }
     }
@@ -84,7 +84,7 @@ class DiarysAdapter( val viewModel: DiarysViewModel, private val onClickListener
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)){
             is DataItem.Title -> ITEM_VIEW_HEADER
-            is DataItem.Diarys -> ITEM_VIEW_DIARY_LIST
+            is DataItem.Diaries -> ITEM_VIEW_DIARY_LIST
         }
     }
 }
@@ -96,7 +96,7 @@ sealed class DataItem {
     data class Title(val title: String): DataItem() {
         override val id: Long = -1
     }
-    data class Diarys(val diarys4Day: Diarys4Day): DataItem() {
+    data class Diaries(val diaries4Day: Diaries4Day): DataItem() {
         override val id: Long = -2
     }
 }

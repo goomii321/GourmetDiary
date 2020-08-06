@@ -12,9 +12,9 @@ import com.linda.gourmetdiary.data.*
  */
 interface DiaryRepository {
 
-    suspend fun getDiarys(startTime:Long, endTime: Long): Result<List<Diary>>
+    suspend fun getDiaries(startTime:Long, endTime: Long): Result<List<Diary>>
 
-    suspend fun postDiary(diarys: Diary): Result<Boolean>
+    suspend fun postDiary(diaries: Diary): Result<Boolean>
 
     fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>>
 

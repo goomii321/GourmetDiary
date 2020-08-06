@@ -111,7 +111,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getDiarys(startTime, endTime)
+            val result = repository.getDiaries(startTime, endTime)
 
             _diary.value = when (result) {
                 is Result.Success -> {
@@ -148,7 +148,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getDiarys(startTime, endTime)
+            val result = repository.getDiaries(startTime, endTime)
 
             _diaryDaily.value = when (result) {
                 is Result.Success -> {
@@ -183,11 +183,11 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     fun getEndTime(): Long =
         TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(86391428)
 
-    fun getSameStore(diarys: List<Diary>){
+    fun getSameStore(diaries: List<Diary>){
 
         var midStore = ""
 
-        diarys.forEach { item ->
+        diaries.forEach { item ->
             item.store?.storeName.let {
                 if (it != null) {
                     sameStore.add(it)

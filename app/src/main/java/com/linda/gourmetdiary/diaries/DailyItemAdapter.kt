@@ -1,4 +1,4 @@
-package com.linda.gourmetdiary.diarys
+package com.linda.gourmetdiary.diaries
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -13,7 +13,6 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +30,6 @@ import com.linda.gourmetdiary.databinding.DetailStoreFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
 
 import com.linda.gourmetdiary.databinding.StoresFragmentBinding
-import com.linda.gourmetdiary.diarys.detail.DiaryDetailFragment
 import kotlinx.android.synthetic.main.detail_store_fragment.*
 
 class StoreDetailFragment : Fragment() {

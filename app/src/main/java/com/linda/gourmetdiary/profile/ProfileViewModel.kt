@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Diarys4Day
+import com.linda.gourmetdiary.data.Diaries4Day
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
@@ -42,9 +42,9 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     val weeklyCost = MutableLiveData<Int>()
     val healthyScore = MutableLiveData<String>()
 
-    var diarys4Days = mutableListOf<Diarys4Day>()
-    val diary4Day = MutableLiveData<List<Diarys4Day>>()
-    var diarys4DaysStatus = MutableLiveData<Boolean>().apply { value = false }
+    var diaries4Days = mutableListOf<Diaries4Day>()
+    val diary4Day = MutableLiveData<List<Diaries4Day>>()
+    var diaries4DaysStatus = MutableLiveData<Boolean>().apply { value = false }
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -132,7 +132,7 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = repository.getDiarys(startTime, endTime)
+            val result = repository.getDiaries(startTime, endTime)
 
             _diaryList.value = when (result) {
                 is Result.Success -> {
@@ -200,20 +200,20 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     }
 
     fun assignDiaryData(diaryList: List<Diary>) {
-        diarys4DaysStatus.value = false
+        diaries4DaysStatus.value = false
 
         diaryList.forEach { diary ->
             diary.eatingTime?.let { eatingTime ->
                 val converter = TimeConverters.timestampToDate(eatingTime, Locale.TAIWAN)
                 val condition = TimeConverters.dateToTimestamp(converter, Locale.TAIWAN)
-                val diarys4Day = Diarys4Day()
+                val diaries4Day = Diaries4Day()
 
-                if (diarys4Days.none { it.dayTitle == condition }) { // if diarys4Days doesn't include day title of this day
-                    diarys4Day.dayTitle = condition
-                    diarys4Day.diarys.add(diary)
-                    diarys4Days.add(diarys4Day)
+                if (diaries4Days.none { it.dayTitle == condition }) { // if diarys4Days doesn't include day title of this day
+                    diaries4Day.dayTitle = condition
+                    diaries4Day.diaries.add(diary)
+                    diaries4Days.add(diaries4Day)
                 } else { // if diarys4Days include day title of this day
-                    diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
+                    diaries4Days.find { it.dayTitle == condition }?.diaries?.add(diary)
                 }
             }
 //            diarys4Days.forEach {
@@ -223,8 +223,8 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
 //                }
 //            }
         }
-        diary4Day.value = diarys4Days
-        diarys4DaysStatus.value = true
+        diary4Day.value = diaries4Days
+        diaries4DaysStatus.value = true
     }
 
     @InverseMethod("convertLongToString")

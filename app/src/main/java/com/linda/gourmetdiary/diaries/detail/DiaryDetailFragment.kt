@@ -1,4 +1,4 @@
-package com.linda.gourmetdiary.diarys.detail
+package com.linda.gourmetdiary.diaries.detail
 
 import android.Manifest
 import android.annotation.SuppressLint

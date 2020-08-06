@@ -9,8 +9,8 @@
             android:id="@+id/homeFragment"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/diarysFragment"
-            android:title="@string/menu_diarys" />
+            android:id="@+id/diariesFragment"
+            android:title="@string/menu_diaries" />
         <item
             android:id="@+id/storesFragment"
             android:title="@string/menu_stores" />

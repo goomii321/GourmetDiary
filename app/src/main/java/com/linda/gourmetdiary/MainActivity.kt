@@ -1,7 +1,6 @@
 package com.linda.gourmetdiary
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -39,8 +38,8 @@ class MainActivity : AppCompatActivity() {
                     findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_home)
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.diarysFragment -> {
-                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_diarys)
+                R.id.diariesFragment -> {
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_diaries)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.storesFragment -> {
@@ -89,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 navController: NavController, _: NavDestination, _: Bundle? ->
             viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
                 R.id.homeFragment -> CurrentFragmentType.HOME
-                R.id.diarysFragment -> CurrentFragmentType.DIARY
+                R.id.diariesFragment -> CurrentFragmentType.DIARY
                 R.id.storesFragment -> CurrentFragmentType.STORES
                 R.id.profileFragment -> CurrentFragmentType.PROFILE
                 R.id.addDiaryFragment -> CurrentFragmentType.ADD

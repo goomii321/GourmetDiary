@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.linda.gourmetdiary.diarys.DiarysViewModel" />
+            type="com.linda.gourmetdiary.diaries.DiariesViewModel" />
         <variable
             name="isLiveDataDesign"
             type="Boolean"/>

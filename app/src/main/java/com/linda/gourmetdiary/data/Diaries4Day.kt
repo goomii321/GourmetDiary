@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Diarys4Day(
+data class Diaries4Day(
     var dayTitle: Long? = -1L,
-    var diarys: MutableList<Diary> = mutableListOf()
+    var diaries: MutableList<Diary> = mutableListOf()
 ) : Parcelable
