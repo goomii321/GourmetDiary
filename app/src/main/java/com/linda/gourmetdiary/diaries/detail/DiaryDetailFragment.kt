@@ -27,6 +27,7 @@ import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.DetailDiaryFragmentBinding
 import com.linda.gourmetdiary.ext.getVmFactory
+import com.linda.gourmetdiary.util.NONE
 import kotlinx.android.synthetic.main.detail_diary_fragment.*
 
 class DiaryDetailFragment : Fragment() {
@@ -34,8 +35,8 @@ class DiaryDetailFragment : Fragment() {
     val viewModel by viewModels<DiaryDetailViewModel> { getVmFactory(DiaryDetailFragmentArgs.fromBundle(requireArguments()).diary) }
 
     companion object {
-        private val PERMISSION_REQUEST = 10
-        private val PERMISSION_CALL = 11
+        private const val PERMISSION_REQUEST = 10
+        private const val PERMISSION_CALL = 11
     }
 
     private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
@@ -88,38 +89,39 @@ class DiaryDetailFragment : Fragment() {
         //set clipboard
         binding.locationText.setOnLongClickListener {
             getClipboard(location_text.text.toString())
-            Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
 
         binding.phoneText.setOnLongClickListener {
             getClipboard(phone_text.text.toString())
-            Toast.makeText(context,"複製到剪貼簿", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
 
         //add phone call
         binding.phoneText.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED){
                 requestPermissions(permissions, PERMISSION_CALL)
             } else {
                 val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = Uri.parse("tel:" + viewModel.diary.value?.store?.storePhone)
+                callIntent.data = Uri.parse(getString(R.string.tel_uri_text) + viewModel.diary.value?.store?.storePhone)
                 startActivity(callIntent)
             }
         }
 
 
-        if (viewModel.diary.value?.store?.storeMinOrder == "無"){
+        if (viewModel.diary.value?.store?.storeMinOrder == NONE){
             binding.minOrderDollarText.visibility = View.GONE
         }
 
         return binding.root
     }
 
-    fun getClipboard(text: CharSequence){
-    var clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    var clip = ClipData.newPlainText("location", text)
+    private fun getClipboard(text: CharSequence){
+    val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText("location", text)
     clipboard.setPrimaryClip(clip)
     }
 
@@ -135,7 +137,8 @@ class DiaryDetailFragment : Fragment() {
                 for (i in permissions.indices) {
                     if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
                         allSuccess = false
-                        val requestAgain = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && shouldShowRequestPermissionRationale(permissions[i])
+                        val requestAgain = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                                shouldShowRequestPermissionRationale(permissions[i])
                         if (requestAgain) {
                             Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
                         } else {
@@ -153,7 +156,8 @@ class DiaryDetailFragment : Fragment() {
     private fun checkPermission(permissionArray: Array<String>): Boolean {
         var allSuccess = true
         for (i in permissionArray.indices) {
-            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,permissionArray[i]) == PackageManager.PERMISSION_DENIED)
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,permissionArray[i])
+                == PackageManager.PERMISSION_DENIED)
                 allSuccess = false
         }
         return allSuccess
@@ -181,10 +185,6 @@ class DiaryDetailFragment : Fragment() {
                     override fun onLocationChanged(location: Location?) {
                         if (location != null) {
                             locationGps = location
-                            Log.d(
-                                "locationGps",
-                                "locationGps = ${locationGps?.latitude} ; ${locationGps?.longitude}"
-                            )
                         }
                     }
 
@@ -192,11 +192,9 @@ class DiaryDetailFragment : Fragment() {
                     }
 
                     override fun onProviderEnabled(provider: String?) {
-
                     }
 
                     override fun onProviderDisabled(provider: String?) {
-
                     }
 
                 })
@@ -207,7 +205,7 @@ class DiaryDetailFragment : Fragment() {
             }
             startActivity(mapIntent)
         } else {
-            Toast.makeText(context, "未開啟定位或網路功能", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.no_internet_no_gps), Toast.LENGTH_LONG).show()
         }
     }
 }

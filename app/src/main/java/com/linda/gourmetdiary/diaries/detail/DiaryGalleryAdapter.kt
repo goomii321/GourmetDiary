@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.ItemDetailGalleryBinding
 
-class DiaryGalleryAdapter(private val onClickListener: OnClickListener): ListAdapter<String,DiaryGalleryAdapter.ImageViewHolder>(DiffCallback) {
+class DiaryGalleryAdapter(private val onClickListener: OnClickListener):
+    ListAdapter<String,DiaryGalleryAdapter.ImageViewHolder>(DiffCallback) {
     private lateinit var context: Context
     private lateinit var images: List<String>
 

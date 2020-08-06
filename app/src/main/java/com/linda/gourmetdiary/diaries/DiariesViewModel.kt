@@ -68,11 +68,11 @@ class DiariesViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     // current time ~ six days ago = 604740000
     //plus to 23:59 and minus to six days ago
-    fun getTodayStartTime(): Long =
+    private fun getTodayStartTime(): Long =
         TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timestampOfWeek)
 
     //get LocaleDate's 00:00 and plus into 23:59
-    fun getTodayEndTime(): Long =
+    private fun getTodayEndTime(): Long =
         TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timestampOfDay)
 
     fun getUsersResult(startTime: Long, endTime: Long) {
@@ -134,16 +134,15 @@ class DiariesViewModel(private val repository: DiaryRepository) : ViewModel() {
     fun assignData(diaries: List<Diary>) {
 
         diaries.forEach { diary ->
-            diary.eatingTime?.let {
-                var converte = TimeConverters.timestampToDate(it, Locale.TAIWAN)
-                var condition = TimeConverters.dateToTimestamp(converte, Locale.TAIWAN)
+            diary.eatingTime?.let {times ->
+                val converter = TimeConverters.timestampToDate(times, Locale.TAIWAN)
+                val condition = TimeConverters.dateToTimestamp(converter, Locale.TAIWAN)
                 val diaries4Day = Diaries4Day()
 
                 if (diaries4Days.none { it.dayTitle == condition }) { // if diarys4Days doesn't include day title of this day
                     diaries4Day.dayTitle = condition
                     diaries4Day.diaries.add(diary)
                     diaries4Days.add(diaries4Day)
-
                 } else { // if diarys4Days include day title of this day
                     diaries4Days.find { it.dayTitle == condition }?.diaries?.add(diary)
 
@@ -154,7 +153,7 @@ class DiariesViewModel(private val repository: DiaryRepository) : ViewModel() {
         _dataItems.value = diariesToDataItems(diaries4Days = diaries4Days)
     }
 
-    fun diariesToDataItems(title: String = "選擇其他日期", diaries4Days: MutableList<Diaries4Day>): List<DataItem> {
+    private fun diariesToDataItems(title: String = "選擇其他日期", diaries4Days: MutableList<Diaries4Day>): List<DataItem> {
         val dataList = mutableListOf<DataItem>()
 
         dataList.add(DataItem.Title(title))
