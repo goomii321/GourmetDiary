@@ -13,8 +13,8 @@ import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.TimeConverters
-import com.linda.gourmetdiary.util.timastampOfDay
-import com.linda.gourmetdiary.util.timastampOfWeek
+import com.linda.gourmetdiary.util.timestampOfDay
+import com.linda.gourmetdiary.util.timestampOfWeek
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -61,11 +61,11 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
     }
 
     private fun getTodayStartTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timastampOfWeek)
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timestampOfWeek)
 
     //get LocaleDate's 00:00 and plus into 23:59
     private fun getTodayEndTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timastampOfDay)
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timestampOfDay)
 
     private fun queryDiaryCount() {
         coroutineScope.launch {

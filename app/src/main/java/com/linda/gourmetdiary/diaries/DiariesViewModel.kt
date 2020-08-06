@@ -9,8 +9,8 @@ import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.util.TimeConverters
-import com.linda.gourmetdiary.util.timastampOfDay
-import com.linda.gourmetdiary.util.timastampOfWeek
+import com.linda.gourmetdiary.util.timestampOfDay
+import com.linda.gourmetdiary.util.timestampOfWeek
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -69,11 +69,11 @@ class DiariesViewModel(private val repository: DiaryRepository) : ViewModel() {
     // current time ~ six days ago = 604740000
     //plus to 23:59 and minus to six days ago
     fun getTodayStartTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timastampOfWeek)
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timestampOfWeek)
 
     //get LocaleDate's 00:00 and plus into 23:59
     fun getTodayEndTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timastampOfDay)
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timestampOfDay)
 
     fun getUsersResult(startTime: Long, endTime: Long) {
 

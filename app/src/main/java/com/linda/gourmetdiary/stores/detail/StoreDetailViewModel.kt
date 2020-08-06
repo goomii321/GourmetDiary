@@ -121,9 +121,11 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         var score = 0F
         var listSize = 1F
         var scoreAverage = 1F
-        history.value?.forEach { number ->
-            number.food?.healthyScore.let {
-                score = score.plus(it?.toFloat()!!)
+        history.value?.forEach {
+            it.food?.healthyScore.let {number ->
+                if (number != null) {
+                    score = score.plus(number.toFloat())
+                }
             }
         }
         listSize = history.value?.size?.toFloat() ?: 1F

@@ -9,8 +9,7 @@ import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.source.DiaryRepository
-import com.linda.gourmetdiary.util.TimeConverters
-import com.linda.gourmetdiary.util.UserManager
+import com.linda.gourmetdiary.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -66,46 +65,45 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
     var listStoreText = MutableLiveData<String>()
     val healthyScore = MutableLiveData<String>()
     val healthyScoreText = MutableLiveData<String>()
+    var healthyScoreStatus = MutableLiveData<Boolean>()
 
     var timeNow = LocalTime.now()
-    var timeMorning = LocalTime.parse("05:00:00.00")
-    var timeNoon = LocalTime.parse("11:00:00.00")
-    var timeAfternoon = LocalTime.parse("14:00:00.00")
-    var timeNight = LocalTime.parse("18:00:00.00")
-    var timeMidnight = LocalTime.parse("21:00:00.00")
-    var helloStatus = MutableLiveData<Int>()
+    var timeMorning = LocalTime.parse(timeMorningString)
+    var timeNoon = LocalTime.parse(timeNoonString)
+    var timeAfternoon = LocalTime.parse(timeAfternoonString)
+    var timeNight = LocalTime.parse(timeNightString)
+    var timeMidnight = LocalTime.parse(timeMidnightString)
+    var greetingStatus = MutableLiveData<Int>()
 
     var dayTime :Long = TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN)
 
     init {
-        helloWorld()
-        getUsersResult(getStartTime(),getEndTime())
+        getTime2SetGreeting()
+        getDiaries(getStartTime(),getEndTime())
         getHomeList(dayTime,getEndTime())
-//        Log.i("getHomeList","time = $dayTime ; ${getEndTime()} ")
-//        Log.i("getHomeList","human time = ${LocalDate.now()}; ${TimeConverters.timeStampToTime(getEndTime(), Locale.TAIWAN)} } ")
     }
 
-    fun helloWorld(){
+    private fun getTime2SetGreeting(){
         _status.value = LoadApiStatus.LOADING
         if (timeNow.isAfter(timeMorning) && timeNow.isBefore(timeNoon)){
-            helloStatus.value = -1
+            greetingStatus.value = -1
             _status.value = LoadApiStatus.DONE
         } else if (timeNow.isAfter(timeNoon) && timeNow.isBefore(timeAfternoon)) {
-            helloStatus.value = -2
+            greetingStatus.value = -2
             _status.value = LoadApiStatus.DONE
         } else if (timeNow.isAfter(timeAfternoon) && timeNow.isBefore(timeNight)) {
-            helloStatus.value = -3
+            greetingStatus.value = -3
             _status.value = LoadApiStatus.DONE
         } else if (timeNow.isAfter(timeNight) && timeNow.isBefore(timeMidnight)) {
-            helloStatus.value = -4
+            greetingStatus.value = -4
             _status.value = LoadApiStatus.DONE
         } else {
-            helloStatus.value = -5
+            greetingStatus.value = -5
             _status.value = LoadApiStatus.DONE
         }
     }
 
-    private fun getUsersResult(startTime: Long, endTime: Long) {
+    private fun getDiaries(startTime: Long, endTime: Long) {
 
         coroutineScope.launch {
 
@@ -176,16 +174,14 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
     }
 
-    fun getStartTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(518348572)
+    private fun getStartTime(): Long =
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timestampOfWeek)
 
     //get LocaleDate's 00:00 and plus into 23:59
-    fun getEndTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(86391428)
+    private fun getEndTime(): Long =
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timestampOfDay)
 
-    fun getSameStore(diaries: List<Diary>){
-
-        var midStore = ""
+    private fun getSameStore(diaries: List<Diary>){
 
         diaries.forEach { item ->
             item.store?.storeName.let {
@@ -197,30 +193,24 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
 
         for ( item in sameStore ){
             val test = sameStore.filter { it == item }
-            if (test.count() > count.value!!){
+            if (test.count() > count.value ?: 2){
                 count.value = test.count()
-                midStore = test.first()
-                listStore.value = midStore
+                listStore.value = test.first()
                 sameStoreStatus.value = true
             }
-            //listStore.value = midStore
-//            Log.d("getSameStore","status = ${sameStoreStatus.value} ; getSameStore = ${test}; midStore = ${midStore}")
         }
-//        Log.d("getSameStore","status = ${sameStoreStatus.value} ;listStore = ${listStore.value}")
     }
 
-    fun getHealthy(){
+    private fun getHealthy(){
         diary.value?.forEach {
-            it.food?.healthyScore.let {
-                if (it != null) {
-                    score = score + (it.toInt())
+            it.food?.healthyScore.let {number ->
+                if (number != null) {
+                    score += (number.toInt())
                 }
             }
         }
         listSize = diary.value?.size?.toFloat() ?: 1F
-        if ( listSize == 0F) {
-            null
-        } else {
+        if ( listSize != 0F) {
             scoreAverage = score/listSize
             healthyScore.value = BigDecimal(scoreAverage.toString()).setScale(1, RoundingMode.HALF_DOWN).toString()
         }

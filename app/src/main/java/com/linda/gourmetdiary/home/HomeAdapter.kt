@@ -1,17 +1,16 @@
 package com.linda.gourmetdiary.home
 
-import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.databinding.ItemHomeListBinding
-import com.linda.gourmetdiary.databinding.ItemStoresListBinding
+import com.linda.gourmetdiary.util.BREAKFAST
+import com.linda.gourmetdiary.util.DINNER
+import com.linda.gourmetdiary.util.LUNCH
 
 class HomeAdapter(private val onClickListener: OnClickListener): ListAdapter<Diary, RecyclerView.ViewHolder>(DiffCallback) {
 
@@ -26,14 +25,11 @@ class HomeAdapter(private val onClickListener: OnClickListener): ListAdapter<Dia
 
             binding.diary = diary
             binding.root.setOnClickListener { onClickListener.onClick(diary) }
-            if (diary.type == "早餐"){
-                binding.backgroundColor.setBackgroundResource(R.drawable.corners_breakfast)
-            } else if (diary.type == "午餐") {
-                binding.backgroundColor.setBackgroundResource(R.drawable.corner_lunch)
-            } else if (diary.type == "晚餐") {
-                binding.backgroundColor.setBackgroundResource(R.drawable.corner_dinner)
-            } else {
-                binding.backgroundColor.setBackgroundResource(R.drawable.corners_dessert)
+            when (diary.type) {
+                BREAKFAST -> binding.backgroundColor.setBackgroundResource(R.drawable.corners_breakfast)
+                LUNCH -> binding.backgroundColor.setBackgroundResource(R.drawable.corner_lunch)
+                DINNER -> binding.backgroundColor.setBackgroundResource(R.drawable.corner_dinner)
+                else -> binding.backgroundColor.setBackgroundResource(R.drawable.corners_dessert)
             }
 
             binding.executePendingBindings()
