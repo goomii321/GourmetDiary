@@ -156,7 +156,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         return liveData
     }
 
-    override suspend fun getStore(): Result<List<Stores>> = suspendCoroutine { continuation ->
+    override suspend fun getStore(): Result<List<Store>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
@@ -166,11 +166,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val list = mutableListOf<Stores>()
+                    val list = mutableListOf<Store>()
                     for (document in task.result!!) {
 //                        Logger.d(document.id + "=>" + document.data)
 
-                        val store = document.toObject(Stores::class.java)
+                        val store = document.toObject(Store::class.java)
                         list.add(store)
                     }
                     continuation.resume(Result.Success(list))
@@ -186,8 +186,9 @@ object DiaryRemoteDataSource : DiaryDataSource {
             }
     }
 
-    override fun getLiveStore(): MutableLiveData<List<Stores>> {
-        val liveData = MutableLiveData<List<Stores>>()
+    override fun getLiveStore(): MutableLiveData<List<Store>> {
+
+        val liveData = MutableLiveData<List<Store>>()
 
         FirebaseFirestore.getInstance()
             .collection(PATH_USERS)
@@ -202,11 +203,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
                     Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
                 }
 
-                val list = mutableListOf<Stores>()
+                val list = mutableListOf<Store>()
                 for (document in snapshot!!) {
 //                    Logger.d(document.id + " => " + document.data)
 
-                    val liveDiary = document.toObject(Stores::class.java)
+                    val liveDiary = document.toObject(Store::class.java)
                     list.add(liveDiary)
                 }
 

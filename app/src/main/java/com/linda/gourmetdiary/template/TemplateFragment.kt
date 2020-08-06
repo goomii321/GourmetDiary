@@ -36,15 +36,18 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     ): View? {
         binding = TemplateFragmentBinding.inflate(inflater,container,false)
 
-        val autoAdapter = SearchAdapter(SearchAdapter.OnClickListener{
+        val autoAdapter = SearchAdapter(SearchAdapter.OnClickListener{ chooseDiary ->
 
-            setEditText(it)
+            setEditText(chooseDiary)
 
-            viewModel.editDiary.value?.mainImage = it.mainImage
-            viewModel.editDiary.value?.images = it.images
-
-            viewModel.editDiary.observe(viewLifecycleOwner, Observer {
-                viewModel.recyclerViewStatus.value = false
+            viewModel.editDiary.observe(viewLifecycleOwner, Observer { diary ->
+                diary?.let {
+                    it.mainImage = chooseDiary.mainImage
+                    it.images = chooseDiary.images
+                    it.store?.storeLocationId = chooseDiary.store?.storeLocationId
+                    it.store?.storeLocation = chooseDiary.store?.storeLocation
+                    viewModel.recyclerViewStatus.value = false
+                }
             })
         })
 
@@ -57,13 +60,11 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             getDate()
         }
 
-        viewModel.saveMinute.observe(viewLifecycleOwner, Observer {
-            var nowTime =
-                "${viewModel.saveYear.value}/${viewModel.saveMonth.value}/${viewModel.saveDay.value} " +
-                        "${viewModel.saveHour.value}:${viewModel.saveMinute.value}"
-            binding.temEatingTimeText.setText(nowTime)
-
-            viewModel.editDiary.value?.eatingTime = TimeConverters.timeToTimestamp(nowTime, Locale.TAIWAN)
+        viewModel.nowTime.observe(viewLifecycleOwner, Observer {
+            Logger.d("viewModel.nowTime.observe, it=$it")
+            it?.let {
+                binding.temEatingTimeText.setText(it)
+            }
         })
 
         //Search EditText setting

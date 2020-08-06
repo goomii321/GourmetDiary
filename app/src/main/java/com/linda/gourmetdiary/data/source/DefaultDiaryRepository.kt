@@ -23,11 +23,11 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
         return diaryRemoteDataSource.getLiveDiary(startTime,endTime)
     }
 
-    override suspend fun getStore(): Result<List<Stores>> {
+    override suspend fun getStore(): Result<List<Store>> {
         return diaryRemoteDataSource.getStore()
     }
 
-    override fun getLiveStore(): MutableLiveData<List<Stores>> {
+    override fun getLiveStore(): MutableLiveData<List<Store>> {
         return diaryRemoteDataSource.getLiveStore()
     }
 

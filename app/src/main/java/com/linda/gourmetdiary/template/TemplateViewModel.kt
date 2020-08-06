@@ -2,6 +2,7 @@ package com.linda.gourmetdiary.template
 
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.DiaryApplication
@@ -12,10 +13,12 @@ import com.linda.gourmetdiary.data.Result
 import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
+import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
 
@@ -143,5 +146,42 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
 
     fun convertIntToString(value: Int): String {
         return value.toString()
+    }
+
+    val nowTime = MediatorLiveData<String>().apply {
+        addSource(saveYear) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveMonth) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveDay) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveHour) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveMinute) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+    }
+
+    private fun calculateNowTime(): String {
+        val time = "${saveYear.value}/${saveMonth.value}/${saveDay.value} " +
+                "${saveHour.value}:${saveMinute.value}"
+        if ( saveYear.value != null && saveMonth.value != null && saveDay.value != null && saveHour.value !=null && saveMinute.value !=null ){
+            editDiary.value?.eatingTime = TimeConverters.timeToTimestamp(time, Locale.TAIWAN)
+        }
+        return time
     }
 }

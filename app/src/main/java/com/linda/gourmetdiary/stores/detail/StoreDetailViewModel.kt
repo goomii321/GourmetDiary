@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Stores
+import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +20,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
-                           private val arguments: Stores?) : ViewModel() {
+                           private val arguments: Store?) : ViewModel() {
     private val _status = MutableLiveData<LoadApiStatus>()
     val status: LiveData<LoadApiStatus>
         get() = _status
@@ -29,13 +29,13 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     val error: LiveData<String>
         get() = _error
 
-    private val _detail = MutableLiveData<Stores>()
-    val detail: LiveData<Stores>
+    private val _detail = MutableLiveData<Store>()
+    val detail: LiveData<Store>
         get() = _detail
 
-    private val _store = MutableLiveData<Stores>().apply {
+    private val _store = MutableLiveData<Store>().apply {
         value = arguments }
-    val store: LiveData<Stores>
+    val store: LiveData<Store>
         get() = _store
 
     private val _history = MutableLiveData<List<Diary>>()

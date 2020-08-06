@@ -93,7 +93,7 @@
         android:label="StoreDetailFragment" >
         <argument
             android:name="store"
-            app:argType="com.linda.gourmetdiary.data.Stores"
+            app:argType="com.linda.gourmetdiary.data.Store"
             app:nullable="true" />
     </fragment>
     <action

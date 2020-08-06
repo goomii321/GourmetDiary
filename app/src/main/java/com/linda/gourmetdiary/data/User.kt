@@ -30,7 +30,6 @@ data class Diary(
 @Parcelize
 data class Store(
     var updateTime: Long? = -1,
-    var storeId: String? = "",
     var storeName: String? = "",
     var storePhone: String? ="無",
     var storeBooking: Boolean? = false ,
@@ -45,7 +44,6 @@ data class Store(
 
 @Parcelize
 data class Food(
-    var foodId: String? = "",
     var foodName: String? = "",
     var foodCombo: String? = "",
     var foodContent: String? = "",

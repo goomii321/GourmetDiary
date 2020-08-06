@@ -10,6 +10,8 @@ import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.util.TimeConverters
+import com.linda.gourmetdiary.util.timastampOfDay
+import com.linda.gourmetdiary.util.timastampOfWeek
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,9 +21,9 @@ import java.util.*
 
 class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
 
-    var year = 0
-    var month = 0
-    var day = 0
+    var calendarYear = 0
+    var calendarMonth = 0
+    var calendarDay = 0
 
     var saveYear = MutableLiveData<Int>()
     var saveMonth = MutableLiveData<Int>()
@@ -38,14 +40,12 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    //Diary
     var liveDiary = MutableLiveData<List<Diary>>()
 
     private var _diary = MutableLiveData<List<Diary>>()
     val diary: LiveData<List<Diary>>
         get() = _diary
 
-    // diarys4Day
     var diarys4Days = mutableListOf<Diarys4Day>()
 
     private var _dataItems = MutableLiveData<List<DataItem>>()
@@ -70,11 +70,11 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
     // current time ~ six days ago = 604740000
     //plus to 23:59 and minus to six days ago
     fun getTodayStartTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(518348572)
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timastampOfWeek)
 
     //get LocaleDate's 00:00 and plus into 23:59
     fun getTodayEndTime(): Long =
-        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(86391428)
+        TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timastampOfDay)
 
     fun getUsersResult(startTime: Long, endTime: Long) {
 
@@ -88,7 +88,7 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
                 is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-                    Log.i("diary", "Result.Success diary = ${result.data}")
+//                    Log.i("diary", "Result.Success diary = ${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
@@ -144,26 +144,14 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
                     diarys4Day.dayTitle = condition
                     diarys4Day.diarys.add(diary)
                     diarys4Days.add(diarys4Day)
-//                    Log.i(
-//                        "converter",
-//                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
-//                    )
+
                 } else { // if diarys4Days include day title of this day
                     diarys4Days.find { it.dayTitle == condition }?.diarys?.add(diary)
-//                    Log.i(
-//                        "converter2",
-//                        "condition date = $converte ;  $condition ; ${diarys4Day.dayTitle} "
-//                    )
+
                 }
             }
-//            diarys4Days.forEach {
-//                Log.i("diarys4Days", "dayTitle = ${it.dayTitle} ")
-//                it.diarys.forEach {
-//                    Log.d("diarys4Days", "diary = ${it} ")
-//                }
-//            }
         }
-//        Log.d("dataitems","_dataItems.value=${_dataItems.value}")
+
         _dataItems.value = diarysToDataItems(diarys4Days = diarys4Days)
     }
 
@@ -171,9 +159,9 @@ class DiarysViewModel(private val repository: DiaryRepository) : ViewModel() {
         val dataList = mutableListOf<DataItem>()
 
         dataList.add(DataItem.Title(title))
-        diarys4Days.forEach {
-            it.diarys.sortBy { it.eatingTime }
-            dataList.add(DataItem.Diarys(it))
+        diarys4Days.forEach { diaryList ->
+            diaryList.diarys.sortBy { it.eatingTime }
+            dataList.add(DataItem.Diarys(diaryList))
         }
 
         return dataList

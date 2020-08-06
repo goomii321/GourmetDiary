@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseReference
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.data.Store
-import com.linda.gourmetdiary.data.Stores
 import com.linda.gourmetdiary.diarys.DailyItemAdapter
 import com.linda.gourmetdiary.diarys.DataItem
 import com.linda.gourmetdiary.diarys.DiarysAdapter
@@ -47,8 +46,8 @@ fun bindRecyclerView(recyclerView: RecyclerView, diary: List<Diary>?) {
 }
 
 @BindingAdapter("store")
-fun bindStoreRecyclerView(recyclerView: RecyclerView, stores: List<Stores>?) {
-    stores?.let {
+fun bindStoreRecyclerView(recyclerView: RecyclerView, store: List<Store>?) {
+    store?.let {
         recyclerView.adapter?.apply {
             when (this) {
                 is StoresAdapter -> submitList(it)

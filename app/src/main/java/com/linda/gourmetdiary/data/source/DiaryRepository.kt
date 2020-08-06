@@ -18,9 +18,9 @@ interface DiaryRepository {
 
     fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>>
 
-    suspend fun getStore(): Result<List<Stores>>
+    suspend fun getStore(): Result<List<Store>>
 
-    fun getLiveStore(): MutableLiveData<List<Stores>>
+    fun getLiveStore(): MutableLiveData<List<Store>>
 
     suspend fun queryDiaryCount(): Result<Int>
 
