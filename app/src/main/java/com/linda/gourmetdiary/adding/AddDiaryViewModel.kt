@@ -2,6 +2,7 @@ package com.linda.gourmetdiary.adding
 
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.network.LoadApiStatus
@@ -9,10 +10,12 @@ import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryRepository
+import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
 
@@ -28,11 +31,11 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
     var saveHour = MutableLiveData<Int>()
     var saveMinute = MutableLiveData<Int>()
 
-    private val _user = MutableLiveData<Diary>().apply {
+    private val _diary = MutableLiveData<Diary>().apply {
         value = Diary( food = Food(), store = Store())
     }
-    val user: LiveData<Diary>
-        get() = _user
+    val diary: LiveData<Diary>
+        get() = _diary
 
     val images = MutableLiveData<MutableList<String>>().apply {
         value = mutableListOf()
@@ -77,10 +80,10 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
     fun addData(diaries: Diary) {
 
         when {
-            user.value?.food?.foodName.isNullOrEmpty() -> _invalidCheckout.value = -1
-            user.value?.eatingTime?.toString() == "0" -> _invalidCheckout.value = -2
-            user.value?.store?.storeName.isNullOrEmpty() -> _invalidCheckout.value = -3
-            user.value?.mainImage == "" -> _invalidCheckout.value = -4
+            diary.value?.food?.foodName.isNullOrEmpty() -> _invalidCheckout.value = -1
+            diary.value?.eatingTime?.toString() == "0" -> _invalidCheckout.value = -2
+            diary.value?.store?.storeName.isNullOrEmpty() -> _invalidCheckout.value = -3
+            diary.value?.mainImage == "" -> _invalidCheckout.value = -4
             updateImageStatus.value == false -> _invalidCheckout.value = -5
             else -> coroutineScope.launch {
 
@@ -106,6 +109,44 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    val nowTime = MediatorLiveData<String>().apply {
+        addSource(saveYear) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveMonth) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveDay) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveHour) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+        addSource(saveMinute) {
+            it?.let {
+                value = calculateNowTime()
+            }
+        }
+    }
+
+    private fun calculateNowTime(): String {
+        val time = "${saveYear.value}/${saveMonth.value}/${saveDay.value} " +
+                "${saveHour.value}:${saveMinute.value}"
+        if ( saveYear.value != null && saveMonth.value != null && saveDay.value != null &&
+            saveHour.value !=null && saveMinute.value !=null ){
+            diary.value?.eatingTime = TimeConverters.timeToTimestamp(time, Locale.TAIWAN)
+        }
+        return time
     }
 
     @InverseMethod("convertIntToString")

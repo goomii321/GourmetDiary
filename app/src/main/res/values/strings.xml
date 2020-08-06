@@ -16,7 +16,6 @@
     <string name="night_greeting">今天辛苦啦~快吃頓好吃的晚餐犒勞自己吧！</string>
     <string name="midnight_greeting">晚安Zzz…要吃宵夜也要注意健康，\n才可以一直吃一直吃~</string>
 
-
     <!-- menu item -->
     <string name="menu_diaries">每週日記</string>
     <string name="menu_stores">餐廳總覽</string>
@@ -50,6 +49,7 @@
     <string name="store_booking">可否訂位</string>
     <string name="store_time">營業時段</string>
     <string name="store_web">網站/粉專</string>
+    <string name="search_google">點擊搜尋並取得地址</string>
 
     <!-- user sign in -->
     <string name="signin_facebook">以 Facebook 帳戶登入</string>
@@ -95,6 +95,9 @@
     <string name="enter_food_time">請輸入用餐時間</string>
     <string name="enter_store_name">請輸入餐廳名稱</string>
     <string name="clipboard_text">複製到剪貼簿</string>
+    <string name="no_permission">無權限操作</string>
+    <string name="upload_img_msg">請上傳至少一張圖片</string>
+    <string name="upload_img_error">上傳照片失敗</string>
 
     <string name="tel_uri_text">tel</string>
     <string name="intent_map_navigate">google.navigation:q=</string>

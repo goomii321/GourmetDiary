@@ -14,7 +14,6 @@ class AddDiaryAdapter(): ListAdapter<String, AddDiaryAdapter.AddDiaryViewHolder>
         RecyclerView.ViewHolder(binding.root) {
         fun bind(store: String) {
             binding.viewModel = store
-            //binding.imageGallery.setImageURI(store)
             binding.executePendingBindings()
         }
     }
