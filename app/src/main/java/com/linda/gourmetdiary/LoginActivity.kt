@@ -98,32 +98,34 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun handleFacebookAccessToken(token: AccessToken?) {
-        var credential = FacebookAuthProvider.getCredential(token?.token!!)
+        var credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
 
-        auth?.signInWithCredential(credential)
-            ?.addOnCompleteListener { task ->
+        if (credential != null) {
+            auth?.signInWithCredential(credential)
+                ?.addOnCompleteListener { task ->
 
-                if (task.isSuccessful) {
-                    moveMainPage(task.result?.user)
-//                    Log.i(
-//                        "fb", "success result = ${task.result?.user}"
-//                    )
-                    var user = User(
-                        userId = task.result?.user?.uid,
-                        userPhoto = task.result?.user?.photoUrl.toString(),
-                        userName = task.result?.user?.displayName,
-                        userEmail = task.result?.user?.email
-                    )
-                    UserManager.userId = user.userId
-                    UserManager.userData = user
-                    viewModel.pushProfile(user)
-                    moveMainPage(task.result?.user)
+                    if (task.isSuccessful) {
+                        moveMainPage(task.result?.user)
+    //                    Log.i(
+    //                        "fb", "success result = ${task.result?.user}"
+    //                    )
+                        var user = User(
+                            userId = task.result?.user?.uid,
+                            userPhoto = task.result?.user?.photoUrl.toString(),
+                            userName = task.result?.user?.displayName,
+                            userEmail = task.result?.user?.email
+                        )
+                        UserManager.userId = user.userId
+                        UserManager.userData = user
+                        viewModel.pushProfile(user)
+                        moveMainPage(task.result?.user)
 
-                } else {
-                    //Show the error message
-                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+                    } else {
+                        //Show the error message
+                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

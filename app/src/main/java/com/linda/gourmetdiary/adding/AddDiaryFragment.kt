@@ -318,27 +318,29 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         val filename = UUID.randomUUID().toString()
         val image = MutableLiveData<String>()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(saveUri!!)
-            .addOnSuccessListener {
-                binding.uploadProgress.visibility = View.VISIBLE
-                ref.downloadUrl.addOnSuccessListener {
-                    image.value = it.toString()
-                    if (firstPhoto) {
-                        viewModel.diary.value?.mainImage = image.value
-                        viewModel.diary.value?.images = listOf(listOf(image.value).toString())
-                        firstPhoto = false
-                    } else {
-                        viewModel.diary.value?.images =
-                            listOf(listOf(image.value).toString())
-                    }
-//                    Logger.d("viewModel mainImage = ${viewModel.user.value?.mainImage}; images = ${viewModel.user.value?.images}")
+        saveUri?.let { uri ->
+            ref.putFile(uri)
+                .addOnSuccessListener {
+                    binding.uploadProgress.visibility = View.VISIBLE
+                    ref.downloadUrl.addOnSuccessListener {
+                        image.value = it.toString()
+                        if (firstPhoto) {
+                            viewModel.diary.value?.mainImage = image.value
+                            viewModel.diary.value?.images = listOf(listOf(image.value).toString())
+                            firstPhoto = false
+                        } else {
+                            viewModel.diary.value?.images =
+                                listOf(listOf(image.value).toString())
+                        }
+    //                    Logger.d("viewModel mainImage = ${viewModel.user.value?.mainImage}; images = ${viewModel.user.value?.images}")
 
-                    viewModel.images.value?.add(it.toString())
-                    viewModel.images.value = viewModel.images.value
-                    viewModel.diary.value?.images = viewModel.images.value
-                    binding.uploadProgress.visibility = View.GONE
+                        viewModel.images.value?.add(it.toString())
+                        viewModel.images.value = viewModel.images.value
+                        viewModel.diary.value?.images = viewModel.images.value
+                        binding.uploadProgress.visibility = View.GONE
+                    }
                 }
-            }
+        }
     }
 
     fun getPlacePhoto(placeId : String){

@@ -70,11 +70,11 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     fun setFoodVisible() {
-        foodStatus.value = !foodStatus.value!!
+        foodStatus.value = foodStatus.value?.not()
     }
 
     fun setStoreVisible() {
-        storeStatus.value = !storeStatus.value!!
+        storeStatus.value = storeStatus.value?.not()
     }
 
     fun addData(diaries: Diary) {

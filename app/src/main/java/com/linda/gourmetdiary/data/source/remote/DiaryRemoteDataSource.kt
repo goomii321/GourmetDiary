@@ -46,8 +46,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
-                    for (document in task.result!!) {
-//                        Logger.i("getUsersDiarys: " + document.data)
+                    task.result?.forEach { document ->
+//                      Logger.i("getUsersDiarys: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }
@@ -149,8 +149,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 }
 
                 val list = mutableListOf<Diary>()
-                for (document in snapshot!!) {
-//                    Logger.d(document.id + " => " + document.data)
+                snapshot?.forEach { document ->
+//                  Logger.d(document.id + " => " + document.data)
 
                     val liveDiary = document.toObject(Diary::class.java)
                     list.add(liveDiary)
@@ -172,9 +172,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Store>()
-                    for (document in task.result!!) {
-//                        Logger.d(document.id + "=>" + document.data)
-
+                    task.result?.forEach { document ->
+//                      Logger.d(document.id + "=>" + document.data)
                         val store = document.toObject(Store::class.java)
                         list.add(store)
                     }
@@ -209,9 +208,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
                 }
 
                 val list = mutableListOf<Store>()
-                for (document in snapshot!!) {
+                snapshot?.forEach { document ->
 //                    Logger.d(document.id + " => " + document.data)
-
                     val liveDiary = document.toObject(Store::class.java)
                     list.add(liveDiary)
                 }
@@ -230,10 +228,13 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     var count = 0
-                    if (task.result?.count() != 0) {
-                        count = task.result?.size()!!
+                    task.result?.let {
+                        if (it.count() != 0) {
+                            count = it.size()
 //                        Logger.d("success $count, ${task.result}")
+                        }
                     }
+
                     continuation.resume(Result.Success(count))
                 } else {
                     task.exception?.let {
@@ -254,9 +255,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     var count = 0
-                    if (task.result?.count() != 0) {
-                        count = task.result?.size()!!
+                    task.result?.let {
+                        if (it.count() != 0) {
+                            count = it.size()
 //                        Logger.d("queryStoreCount success $count, ${task.result}")
+                        }
                     }
                     continuation.resume(Result.Success(count))
                 } else {
@@ -315,7 +318,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
 //                        Logger.i("queryStoreHistory: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
@@ -339,7 +342,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Diary>()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
 //                        Logger.d(document.id + "=>" + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
@@ -365,8 +368,8 @@ object DiaryRemoteDataSource : DiaryDataSource {
             .addOnCompleteListener {task ->
                 if (task.isSuccessful){
                     val list = mutableListOf<Diary>()
-                    for (document in task.result!!) {
-//                        Logger.i("searchTemplate: " + document.data)
+                    task.result?.forEach { document ->
+//                      Logger.i("searchTemplate: " + document.data)
                         val diary = document.toObject(Diary::class.java)
                         list.add(diary)
                     }

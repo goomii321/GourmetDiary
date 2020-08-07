@@ -135,7 +135,7 @@ class HomeViewModel(private val repository: DiaryRepository) : ViewModel() {
                 }
             }
             _refreshStatus.value = false
-            getSameStore(diary.value!!)
+            diary.value?.let { getSameStore(it) }
             getHealthy()
         }
     }
