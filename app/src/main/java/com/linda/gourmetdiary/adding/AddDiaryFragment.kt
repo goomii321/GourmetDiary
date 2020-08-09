@@ -99,6 +99,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             it?.let {
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitList(it)
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).notifyDataSetChanged()
+                Logger.d("adapter images = $it")
             }
         })
 
@@ -292,7 +293,11 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             saveUri = data?.data
 //            test_image.setImageURI(data?.data)
-            uploadImage()
+//            uploadImage()
+            saveUri?.let {
+                viewModel.uploadImage(it)
+                Logger.i("saveUri = $saveUri")
+            }
         }
     }
 

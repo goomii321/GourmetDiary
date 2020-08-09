@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary.data.source
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.*
@@ -33,4 +34,6 @@ interface DiaryRepository {
     suspend fun queryReminder(): Result<List<Diary>>
 
     suspend fun searchTemplate(searchWord: String): Result<List<Diary>>
+
+    suspend fun uploadImage(uri: Uri): Result<String>
 }

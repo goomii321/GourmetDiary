@@ -1,17 +1,20 @@
 package com.linda.gourmetdiary.data.source.remote
 
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryDataSource
 import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.UserManager
+import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -374,9 +377,30 @@ object DiaryRemoteDataSource : DiaryDataSource {
                         list.add(diary)
                     }
                     continuation.resume(Result.Success(list))
-                } else {
-
                 }
             }
+    }
+
+    override suspend fun uploadImage(uri: Uri): Result<String> = suspendCoroutine { continuation ->
+        var firstPhoto = true
+        val filename = UUID.randomUUID().toString()
+        val image = MutableLiveData<String>()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        uri?.let { uri ->
+            ref.putFile(uri)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        ref.downloadUrl.addOnSuccessListener {
+                            image.value = it.toString()
+                            if (firstPhoto) {
+                                firstPhoto = false
+                            }
+                            Logger.d("Image = ${image.value}")
+                            continuation.resume(Result.Success(image.value.toString()))
+                        }
+                    }
+                    Logger.d("error = ${it.exception}")
+                }
+        }
     }
 }

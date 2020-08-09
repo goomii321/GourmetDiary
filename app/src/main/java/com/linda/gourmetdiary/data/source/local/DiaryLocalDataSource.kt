@@ -1,6 +1,7 @@
 package com.linda.gourmetdiary.data.source.local
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.*
@@ -55,6 +56,10 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     }
 
     override suspend fun searchTemplate(searchWord: String): Result<List<Diary>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun uploadImage(uri: Uri): Result<String> {
         TODO("Not yet implemented")
     }
 }

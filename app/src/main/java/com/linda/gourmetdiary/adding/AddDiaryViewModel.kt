@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary.adding
 
+import android.net.Uri
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -10,6 +11,7 @@ import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryRepository
+import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -110,6 +112,44 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
             }
         }
     }
+
+    fun uploadImage(uri: Uri) {
+
+        coroutineScope.launch {
+
+            updateImageStatus.value = false
+
+            val result = repository.uploadImage(uri)
+
+            _diary.value?.mainImage = when (result) {
+                is Result.Success -> {
+                    _error.value = null
+                    updateImageStatus.value = true
+                    images.value?.add(result.data)
+                    images.value = images.value
+                    _diary.value?.images = images.value
+                    Logger.i("diary images = ${_diary.value?.images}")
+                    result.data
+                }
+                is Result.Fail -> {
+                    _error.value = result.error
+                    updateImageStatus.value = true
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    updateImageStatus.value = true
+                    null
+                }
+                else -> {
+                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                    updateImageStatus.value = true
+                    null
+                }
+            }
+        }
+    }
+
 
     val nowTime = MediatorLiveData<String>().apply {
         addSource(saveYear) {

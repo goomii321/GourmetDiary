@@ -60,11 +60,11 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         queryStoreCount()
     }
 
-    private fun getTodayStartTime(): Long =
+    fun getTodayStartTime(): Long =
         TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).minus(timestampOfWeek)
 
     //get LocaleDate's 00:00 and plus into 23:59
-    private fun getTodayEndTime(): Long =
+    fun getTodayEndTime(): Long =
         TimeConverters.dateToTimestamp(LocalDate.now().toString(), Locale.TAIWAN).plus(timestampOfDay)
 
     private fun queryDiaryCount() {
@@ -131,7 +131,7 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
     }
 
-    private fun getDiaryResult(startTime: Long, endTime: Long) {
+    fun getDiaryResult(startTime: Long, endTime: Long) {
 
         coroutineScope.launch {
 
@@ -167,7 +167,7 @@ class ProfileViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
     }
 
-    private fun getCost(){
+    fun getCost(){
         var cost = 0
         _status.value = LoadApiStatus.LOADING
 

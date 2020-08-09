@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary.data.source
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.*
 
@@ -53,5 +54,9 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
 
     override suspend fun searchTemplate(searchWord: String): Result<List<Diary>> {
         return diaryRemoteDataSource.searchTemplate(searchWord)
+    }
+
+    override suspend fun uploadImage(uri: Uri): Result<String> {
+        return diaryRemoteDataSource.uploadImage(uri)
     }
 }
