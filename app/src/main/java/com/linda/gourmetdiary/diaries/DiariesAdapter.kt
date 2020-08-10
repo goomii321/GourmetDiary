@@ -46,7 +46,7 @@ class DiariesAdapter(val viewModel: DiariesViewModel, private val onClickListene
         fun bind(diaries4Day: Diaries4Day, viewModel: DiariesViewModel) {
             binding.diaries = diaries4Day
             binding.viewModel = viewModel
-            binding.recyclerDiary.adapter = DailyItemAdapter(DailyItemAdapter.OnClickListener{
+            binding.recyclerDiaryInner.adapter = DailyItemAdapter(DailyItemAdapter.OnClickListener{
                 viewModel.navigateToDetail(it)
             })
 

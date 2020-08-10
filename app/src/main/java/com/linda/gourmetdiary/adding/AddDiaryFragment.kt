@@ -115,7 +115,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         setSearchGoogle()
         setSpinner()
         setCheckbox()
-        setSlidebar()
+        setSlideBar()
 
         //check post
         viewModel.invalidCheckout.observe(viewLifecycleOwner, Observer {
@@ -248,7 +248,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
     }
 
-    private fun setSlidebar() {
+    private fun setSlideBar() {
         var ratingScore = viewModel.foodRating.value
         var healthyScore = viewModel.healthyScore.value
 
@@ -292,8 +292,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             saveUri = data?.data
-//            test_image.setImageURI(data?.data)
-//            uploadImage()
+
             saveUri?.let {
                 viewModel.uploadImage(it)
                 Logger.i("saveUri = $saveUri")
@@ -315,36 +314,6 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     Toast.makeText(context, getString(R.string.no_permission), Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-    }
-
-    private fun uploadImage() {
-        var firstPhoto = true
-        val filename = UUID.randomUUID().toString()
-        val image = MutableLiveData<String>()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        saveUri?.let { uri ->
-            ref.putFile(uri)
-                .addOnSuccessListener {
-                    binding.uploadProgress.visibility = View.VISIBLE
-                    ref.downloadUrl.addOnSuccessListener {
-                        image.value = it.toString()
-                        if (firstPhoto) {
-                            viewModel.diary.value?.mainImage = image.value
-                            viewModel.diary.value?.images = listOf(listOf(image.value).toString())
-                            firstPhoto = false
-                        } else {
-                            viewModel.diary.value?.images =
-                                listOf(listOf(image.value).toString())
-                        }
-    //                    Logger.d("viewModel mainImage = ${viewModel.user.value?.mainImage}; images = ${viewModel.user.value?.images}")
-
-                        viewModel.images.value?.add(it.toString())
-                        viewModel.images.value = viewModel.images.value
-                        viewModel.diary.value?.images = viewModel.images.value
-                        binding.uploadProgress.visibility = View.GONE
-                    }
-                }
         }
     }
 
