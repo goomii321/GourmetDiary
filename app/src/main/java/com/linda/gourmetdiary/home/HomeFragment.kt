@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.template.setOnClickListener {
-            checkUserStatus()
+            checkUserStatus2Temp()
         }
 
         viewModel.greetingStatus.observe(viewLifecycleOwner, Observer {
@@ -114,6 +114,16 @@ class HomeFragment : Fragment() {
         if (isOpen){
             if (viewModel.isLoggedIn){
                 findNavController().navigate(R.id.navigate_to_add)
+            } else {
+                Toast.makeText(context,getString(R.string.log_try_again),Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun checkUserStatus2Temp() {
+        if (isOpen){
+            if (viewModel.isLoggedIn){
+                findNavController().navigate(R.id.navigate_to_template)
             } else {
                 Toast.makeText(context,getString(R.string.log_try_again),Toast.LENGTH_SHORT).show()
             }
