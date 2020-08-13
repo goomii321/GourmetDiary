@@ -386,7 +386,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
         val filename = UUID.randomUUID().toString()
         val image = MutableLiveData<String>()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        uri?.let { uri ->
+        uri.let { uri ->
             ref.putFile(uri)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {

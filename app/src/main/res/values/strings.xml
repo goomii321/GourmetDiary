@@ -103,4 +103,9 @@
     <string name="intent_map_navigate">google.navigation:q=</string>
     <string name="set_map_package">com.google.android.apps.maps</string>
 
+    <string name="error_text">壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試
+        壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試
+        壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試
+        壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試</string>
+
 </resources>
