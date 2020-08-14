@@ -180,30 +180,20 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
     }
 
     private fun calculateNowTime(): String {
-        val time = "${saveYear.value}/${saveMonth.value}/${saveDay.value} " +
+        var time = "${saveYear.value}/${saveMonth.value}/${saveDay.value} " +
                 "${saveHour.value}:${saveMinute.value}"
+
         if ( saveYear.value != null && saveMonth.value != null && saveDay.value != null &&
             saveHour.value !=null && saveMinute.value !=null ){
+            saveMinute.value?.let {
+                if (it < 10) {
+                    time = "${saveYear.value}/${saveMonth.value}/${saveDay.value} " +
+                            "${saveHour.value}:0${saveMinute.value}"
+                }
+            }
             diary.value?.eatingTime = TimeConverters.timeToTimestamp(time, Locale.TAIWAN)
         }
         return time
     }
 
-    @InverseMethod("convertIntToString")
-    fun convertStringToInt(value: String): Int {
-        return try {
-            value.toInt().let {
-                when (it) {
-                    0 -> 0
-                    else -> it
-                }
-            }
-        } catch (e: NumberFormatException) {
-            1
-        }
-    }
-
-    fun convertIntToString(value: Int): String {
-        return value.toString()
-    }
 }

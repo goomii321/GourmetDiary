@@ -144,7 +144,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         viewModel.day = calendar.get(Calendar.DAY_OF_MONTH)
         viewModel.month = calendar.get(Calendar.MONTH)
         viewModel.year = calendar.get(Calendar.YEAR)
-        viewModel.hour = calendar.get(Calendar.HOUR)
+        viewModel.hour = calendar.get(Calendar.HOUR_OF_DAY)
         viewModel.minute = calendar.get(Calendar.MINUTE)
     }
 
