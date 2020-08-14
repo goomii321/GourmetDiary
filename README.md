@@ -33,13 +33,13 @@ google帳號: user2020diary@gmail.com
 * 點擊地址或電話號碼，可以開啟導航或通話的功能
 
 ## Implementaion 使用技術
-* Language: Kotlin
-* User Interface: Activities, Fragment, ConstraintLayout, RecyclerView, Dialog, DatePicker, Floating Action Button
-* Design Patterns - MVVM, Factory, Adapter, Singleton, Observer
-* Jetpack - ViewModel, Navigation, LiveData, Data Binding, Permissions, Lifecycles, Animation
-* Firebase - Firestore, Firebase Authentication, Firebase Storage, Crashlytics
-* Third Parties - Glide, MPAndroidChart, Google Place Autocomplete, Google Places API
-* Test - Mockito, Espresso
+* **Language**: Kotlin
+* **User Interface**: Activities, Fragment, ConstraintLayout, RecyclerView, Dialog, DatePicker, Floating Action Button
+* **Design Patterns**: MVVM, Factory, Adapter, Singleton, Observer
+* **Jetpack**: ViewModel, Navigation, LiveData, Data Binding, Permissions, Lifecycles, Animation
+* **Firebase**: Firestore, Firebase Authentication, Firebase Storage, Crashlytics
+* **Third Parties**: Glide, MPAndroidChart, Google Place Autocomplete, Google Places API
+* **Test**: Mockito, Espresso
 
 ## Requirement 開發環境
 * Android Studio 4.0
