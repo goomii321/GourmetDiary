@@ -30,6 +30,10 @@ google帳號: user2020diary@gmail.com
 
 <img src="https://github.com/goomii321/GourmetDiary/blob/master/resurce/Screenshot_20200812-144834807_1.jpg" width="300" height="561"></a>
 
+* 個人資訊可瀏覽紀錄的日記數、餐廳數和當週花費
+
+<img src="https://github.com/goomii321/GourmetDiary/blob/master/resurce/Screenshot_20200814-173256764_1.jpg" width="300" height="561"></a>
+
 * 點擊地址或電話號碼，可以開啟導航或通話的功能
 
 ## Implementaion 使用技術
