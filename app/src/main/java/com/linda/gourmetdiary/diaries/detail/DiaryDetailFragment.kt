@@ -34,6 +34,8 @@ class DiaryDetailFragment : Fragment() {
 
     val viewModel by viewModels<DiaryDetailViewModel> { getVmFactory(DiaryDetailFragmentArgs.fromBundle(requireArguments()).diary) }
 
+    lateinit var binding: DetailDiaryFragmentBinding
+
     companion object {
         private const val PERMISSION_REQUEST = 10
         private const val PERMISSION_CALL = 11
@@ -42,12 +44,11 @@ class DiaryDetailFragment : Fragment() {
     private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE)
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DetailDiaryFragmentBinding.inflate(inflater,container,false)
+        binding = DetailDiaryFragmentBinding.inflate(inflater,container,false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -66,6 +67,9 @@ class DiaryDetailFragment : Fragment() {
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.recyclerDetailGallery)
 
+        setBookingText()
+        setClipboard()
+
         //connect google map
         binding.locationText.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -77,26 +81,6 @@ class DiaryDetailFragment : Fragment() {
             } else {
                 getLocation()
             }
-        }
-
-        //set booking text
-        when (viewModel.diary.value?.store?.storeBooking){
-            true -> binding.bookingText.setText(R.string.can_booking)
-            false -> binding.bookingText.setText(R.string.cannot_booking)
-            else -> binding.bookingText.setText(R.string.no_data)
-        }
-
-        //set clipboard
-        binding.locationText.setOnLongClickListener {
-            getClipboard(location_text.text.toString())
-            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
-            return@setOnLongClickListener true
-        }
-
-        binding.phoneText.setOnLongClickListener {
-            getClipboard(phone_text.text.toString())
-            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
-            return@setOnLongClickListener true
         }
 
         //add phone call
@@ -111,12 +95,29 @@ class DiaryDetailFragment : Fragment() {
             }
         }
 
+        return binding.root
+    }
 
-        if (viewModel.diary.value?.store?.storeMinOrder == NONE){
-            binding.minOrderDollarText.visibility = View.GONE
+    private fun setClipboard() {
+        binding.locationText.setOnLongClickListener {
+            getClipboard(location_text.text.toString())
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
         }
 
-        return binding.root
+        binding.phoneText.setOnLongClickListener {
+            getClipboard(phone_text.text.toString())
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
+        }
+    }
+
+    private fun setBookingText() {
+        when (viewModel.diary.value?.store?.storeBooking){
+            true -> binding.bookingText.setText(R.string.can_booking)
+            false -> binding.bookingText.setText(R.string.cannot_booking)
+            else -> binding.bookingText.setText(R.string.no_data)
+        }
     }
 
     private fun getClipboard(text: CharSequence){
@@ -133,10 +134,8 @@ class DiaryDetailFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST -> {
-                var allSuccess = true
                 for (i in permissions.indices) {
                     if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        allSuccess = false
                         val requestAgain = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                                 shouldShowRequestPermissionRationale(permissions[i])
                         if (requestAgain) {

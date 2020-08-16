@@ -220,23 +220,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{viewModel.diary.food.price}"
+                    app:displayDollar="@{viewModel.diary.food.price}"
                     app:layout_constraintStart_toEndOf="@+id/colon3"
                     app:layout_constraintTop_toTopOf="@+id/colon3"
                     tools:text="180" />
-
-                <TextView
-                    android:id="@+id/price_dollar_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="元"
-                    android:visibility='@{viewModel.diary.food.price == "" ? View.GONE : View.VISIBLE}'
-                    app:layout_constraintBottom_toBottomOf="@+id/price_text"
-                    app:layout_constraintStart_toEndOf="@+id/price_text"
-                    app:layout_constraintTop_toTopOf="@+id/price_text"
-                    tools:text="元" />
 
                 <TextView
                     android:id="@+id/eating_time_img"
@@ -579,7 +566,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{viewModel.diary.store.storeMinOrder}"
+                    app:displayDollar="@{viewModel.diary.store.storeMinOrder}"
                     app:layout_constraintStart_toEndOf="@+id/colon10"
                     app:layout_constraintTop_toTopOf="@+id/colon10"
                     tools:text="180" />
@@ -602,18 +589,6 @@
                     android:text="@string/colon_text"
                     app:layout_constraintStart_toEndOf="@+id/store_booking"
                     app:layout_constraintTop_toTopOf="@+id/store_booking" />
-
-
-                <TextView
-                    android:id="@+id/min_order_dollar_text"
-                    style="@style/text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="元"
-                    app:layout_constraintStart_toEndOf="@+id/min_order_text"
-                    app:layout_constraintTop_toTopOf="@+id/min_order_text"
-                    tools:text="元" />
 
                 <TextView
                     android:id="@+id/booking_text"
