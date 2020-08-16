@@ -1,12 +1,23 @@
 <resources>
     <string name="app_name">吃貨日記</string>
-<!--    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">@string/API_KEY</string>-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="facebook_application_id">307121663756980</string>
+    <string name="facebook_app_id">307121663756980</string>
+    <string name="login_token_id">693996800991-6cup7r536d3h29256avpebd9m8j9gcb8.apps.googleusercontent.com</string>
+
+    <!-- home -->
+    <string name="add_diary">添加新日記</string>
+    <string name="add_template">添加範本日記</string>
+    <string name="morning_greeting">早安:)，睡飽就該開吃囉！</string>
+    <string name="noon_greeting">生活不是吃，就是在找吃的。</string>
+    <string name="afternoon_greeting">點心是裝在另一個胃袋裡啦;)</string>
+    <string name="night_greeting">今天辛苦啦~快吃頓好吃的晚餐犒勞自己吧！</string>
+    <string name="midnight_greeting">晚安Zzz…要吃宵夜也要注意健康，\n才可以一直吃一直吃~</string>
 
     <!-- menu item -->
-    <string name="menu_diarys">每週日記</string>
+    <string name="menu_diaries">每週日記</string>
     <string name="menu_stores">餐廳總覽</string>
     <string name="menu_profile">個人資訊</string>
     <string name="setting">設定</string>
@@ -14,7 +25,7 @@
     <string name="menu_home">主頁面</string>
     <string name="user_name">user name</string>
 
-    <!--    add diary-->
+    <!-- add diary -->
     <string name="food_name">餐點名稱</string>
     <string name="combo_name">套餐內容</string>
     <string name="food_info">餐點資訊</string>
@@ -38,20 +49,27 @@
     <string name="store_booking">可否訂位</string>
     <string name="store_time">營業時段</string>
     <string name="store_web">網站/粉專</string>
+    <string name="search_google">點擊搜尋並取得地址</string>
 
+    <!-- user sign in -->
     <string name="signin_facebook">以 Facebook 帳戶登入</string>
     <string name="signin_google">以 Google 帳戶登入</string>
-
-    <string name="facebook_application_id">307121663756980</string>
-    <string name="facebook_app_id">307121663756980</string>
-
     <string name="log_out_question">請問確定要登出嗎?</string>
+    <string name="log_try_again">請重新登入</string>
     <string name="yes">是</string>
     <string name="no">否</string>
-    <string name="adding_image">新增照片</string>
+
+    <!-- diary detail -->
     <string name="booking_ok">可以</string>
     <string name="booking_no">不可以</string>
+    <string name="can_booking">可訂位</string>
+    <string name="cannot_booking">不可訂位</string>
+    <string name="no_data">無資料</string>
+    <string name="no_internet_no_gps">未開啟定位或網路功能</string>
+    <string name="point">點擊地址或電話號碼，以開啟導航或通話功能，或是長按可複製到剪貼簿</string>
+    <string name="text_update_image">點擊圖示可開啟相簿，更新商店照片</string>
 
+    <!-- profile -->
     <string name="all_cost">累積總消費：</string>
     <string name="visiting_count">來訪總次數：</string>
     <string name="food_history">點過的餐點：</string>
@@ -59,21 +77,36 @@
     <string name="visiting_times">次</string>
     <string name="diary_count">日記數：</string>
     <string name="store_count">餐廳數：</string>
-    <string name="signup_date">註冊日期：</string>
+    <string name="sign_up_date">註冊日期：</string>
     <string name="healthy_average">平均健康度：</string>
     <string name="rating_average">平均評價分：</string>
     <string name="food_type">類型</string>
-    <string name="weekily_cost">本週花費：$</string>
-    <string name="weekily_healthy">本週健康度：</string>
+    <string name="weekly_cost">本週花費：$</string>
+    <string name="weekly_healthy">本週健康度：</string>
     <string name="search_template">尋找範本…</string>
     <string name="colon_text">：</string>
+    <string name="daily_cost">每日花費</string>
 
-    <string name="can_booking">可訂位</string>
-    <string name="cannot_booking">不可訂位</string>
-    <string name="no_data">無資料</string>
     <string name="check_day">選擇其他日期</string>
     <string name="no_diary_data">這段時間都沒有日記紀錄…</string>
-    <string name="point">點擊地址或電話號碼，以開啟導航或通話功能，或是長按可複製到剪貼簿</string>
-    <string name="privacy"><u><b><i>隱私權政策說明</i></b></u></string>
+    <string name="no_store_data">目前沒有餐廳紀錄…</string>
+
+    <!-- error msg -->
+    <string name="enter_food_name">請輸入餐點名稱</string>
+    <string name="enter_food_time">請輸入用餐時間</string>
+    <string name="enter_store_name">請輸入餐廳名稱</string>
+    <string name="clipboard_text">複製到剪貼簿</string>
+    <string name="no_permission">無權限操作</string>
+    <string name="upload_img_msg">請上傳至少一張圖片</string>
+    <string name="upload_img_error">上傳照片失敗</string>
+
+    <string name="tel_uri_text">tel:</string>
+    <string name="intent_map_navigate">google.navigation:q=</string>
+    <string name="set_map_package">com.google.android.apps.maps</string>
+
+    <string name="error_text">壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試
+        壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試
+        壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試
+        壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試壓力測試</string>
 
 </resources>

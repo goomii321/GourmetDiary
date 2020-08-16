@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary
 
+import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.view.View
@@ -15,20 +16,17 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.database.DatabaseReference
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Diarys4Day
 import com.linda.gourmetdiary.data.Store
-import com.linda.gourmetdiary.data.Stores
-import com.linda.gourmetdiary.diarys.DailyItemAdapter
-import com.linda.gourmetdiary.diarys.DataItem
-import com.linda.gourmetdiary.diarys.DiarysAdapter
-import com.linda.gourmetdiary.diarys.detail.DiaryGalleryAdapter
+import com.linda.gourmetdiary.diaries.DailyItemAdapter
+import com.linda.gourmetdiary.diaries.DataItem
+import com.linda.gourmetdiary.diaries.DiariesAdapter
+import com.linda.gourmetdiary.diaries.detail.DiaryGalleryAdapter
+import com.linda.gourmetdiary.home.HomeAdapter
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.stores.StoresAdapter
 import com.linda.gourmetdiary.stores.detail.StoreDetailAdapter
 import com.linda.gourmetdiary.template.SearchAdapter
-import java.util.*
 
 
 @BindingAdapter("diary")
@@ -39,14 +37,15 @@ fun bindRecyclerView(recyclerView: RecyclerView, diary: List<Diary>?) {
                 is DailyItemAdapter -> submitList(it)
                 is StoreDetailAdapter -> submitList(it)
                 is SearchAdapter -> submitList(it)
+                is HomeAdapter ->submitList(it)
             }
         }
     }
 }
 
 @BindingAdapter("store")
-fun bindStoreRecyclerView(recyclerView: RecyclerView, stores: List<Stores>?) {
-    stores?.let {
+fun bindStoreRecyclerView(recyclerView: RecyclerView, store: List<Store>?) {
+    store?.let {
         recyclerView.adapter?.apply {
             when (this) {
                 is StoresAdapter -> submitList(it)
@@ -56,26 +55,15 @@ fun bindStoreRecyclerView(recyclerView: RecyclerView, stores: List<Stores>?) {
 }
 
 @BindingAdapter("dataItems")
-fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, homeItems: List<DataItem>?) {
-    homeItems?.let {
+fun bindRecyclerViewWithHomeItems(recyclerView: RecyclerView, dataItems: List<DataItem>?) {
+    dataItems?.let {
         recyclerView.adapter?.apply {
             when (this) {
-                is DiarysAdapter -> submitList(it)
+                is DiariesAdapter -> submitList(it)
             }
         }
     }
 }
-
-//@BindingAdapter("diarys4Days")
-//fun bindDiarys4DaysRecyclerView(recyclerView: RecyclerView, stores: List<Diarys4Day>?) {
-//    stores?.let {
-//        recyclerView.adapter?.apply {
-//            when (this) {
-//                is DiarysAdapter -> submitList(it)
-//            }
-//        }
-//    }
-//}
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -112,6 +100,27 @@ fun bindDisplayFormatTime(textView: TextView, time: Long?) {
     textView.text = time?.toDisplayFormat()
 }
 
+@SuppressLint("SetTextI18n")
+@RequiresApi(Build.VERSION_CODES.N)
+@BindingAdapter("displayPrice")
+fun bindDisplayPrice(textView: TextView, price: String?) {
+    textView.text = "$ $price"
+}
+
+@SuppressLint("SetTextI18n")
+@RequiresApi(Build.VERSION_CODES.N)
+@BindingAdapter("displayDollar")
+fun bindDisplayDollar(textView: TextView, price: String?) {
+    textView.text = "$price 元"
+}
+
+@SuppressLint("SetTextI18n")
+@RequiresApi(Build.VERSION_CODES.N)
+@BindingAdapter("displayCount")
+fun bindDisplayCount(textView: TextView, count: String?) {
+    textView.text = "$count 次"
+}
+
 @RequiresApi(Build.VERSION_CODES.N)
 fun Long.toDisplayFormat(): String {
     return SimpleDateFormat("yyyy.MM.dd HH:mm").format(this)
@@ -128,10 +137,6 @@ fun Long.toDisplayDateFormat(): String {
     return SimpleDateFormat("yyyy.MM.dd").format(this)
 }
 
-
-/**
- * According to [LoadApiStatus] to decide the visibility of [ProgressBar]
- */
 @BindingAdapter("setupApiStatus")
 fun bindApiStatus(view: ProgressBar, status: LoadApiStatus?) {
     when (status) {
@@ -140,9 +145,6 @@ fun bindApiStatus(view: ProgressBar, status: LoadApiStatus?) {
     }
 }
 
-/**
- * According to [message] to decide the visibility of [ProgressBar]
- */
 @BindingAdapter("setupApiErrorMessage")
 fun bindApiErrorMessage(view: TextView, message: String?) {
     when (message) {

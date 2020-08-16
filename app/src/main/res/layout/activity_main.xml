@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.linda.gourmetdiary.MainViewModel" />
-        <import type="com.linda.gourmetdiary.util.CurrentFragmentType"/>
-        <import type="android.view.View"/>
+
+        <import type="com.linda.gourmetdiary.util.CurrentFragmentType" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -19,29 +22,29 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".MainActivity">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/colorPrimary"
-                android:theme="@style/toolbar_style"
                 android:elevation="4dp"
-                app:navigationIcon="@drawable/ic_reorder_white_24dp"
+                android:theme="@style/toolbar_style"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_reorder_white_24dp">
 
                 <TextView
                     android:id="@+id/toolbar_title"
-                    android:textSize="24sp"
-                    android:text="@{viewModel.currentFragmentType.value}"
-                    android:letterSpacing="0.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="吃貨日記"/>
+                    android:letterSpacing="0.1"
+                    android:layout_gravity="center"
+                    android:text="@{viewModel.currentFragmentType.value}"
+                    android:textSize="24sp"
+                    tools:text="吃貨日記" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -68,5 +71,4 @@
             android:theme="@style/menu_style"
             app:menu="@menu/menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
-</layout>
-<!--app:headerLayout="@layout/nav_header_main"-->
+</layout><!--app:headerLayout="@layout/nav_header_main"-->

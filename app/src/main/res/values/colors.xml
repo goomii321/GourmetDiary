@@ -36,4 +36,8 @@
     <color name="oldcolorPrimaryDark">#022332</color>
     <color name="oldcolorAccent">#718792</color>
 
+    <color name="breakfast">#B5CAA0</color>
+    <color name="lunch">#FAD689</color>
+    <color name="dinner">#2E5C6E</color>
+    <color name="dessert">#B5495B</color>
 </resources>

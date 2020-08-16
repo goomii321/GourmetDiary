@@ -28,31 +28,20 @@ android {
         applicationId "com.linda.gourmetdiary"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    signingConfigs {
-        release {
-            keyAlias 'key0'
-            keyPassword 'linda119'
-            storeFile file('C:/Users/tom/Desktop/mock/linda.jks')
-            storePassword 'linda119'
-        }
     }
 
     buildTypes {
         release {
             buildConfigField("Boolean", "LOGGER_VISIABLE", "false")
-            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField("Boolean", "LOGGER_VISIABLE", "false")
-            signingConfig signingConfigs.release
+            buildConfigField("Boolean", "LOGGER_VISIABLE", "true")
         }
     }
     kotlinOptions {
@@ -114,4 +103,14 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true;
     }
+
+    // Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.13'
+    // Optional -- Robolectric environment
+    testImplementation 'androidx.test:core:1.2.0'
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:3.1.0'
+    testImplementation 'androidx.arch.core:core-testing:2.0.0'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
+
 }

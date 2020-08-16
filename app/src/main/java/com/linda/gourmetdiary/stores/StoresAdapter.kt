@@ -6,23 +6,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.linda.gourmetdiary.data.Stores
+import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.databinding.ItemStoresListBinding
+import com.linda.gourmetdiary.util.NONE
 
-class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<Stores, RecyclerView.ViewHolder>(DiffCallback) {
+class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<Store, RecyclerView.ViewHolder>(DiffCallback) {
 
-    class OnClickListener(val clickListener: (store: Stores) -> Unit) {
-        fun onClick(store: Stores) = clickListener(store)
+    class OnClickListener(val clickListener: (store: Store) -> Unit) {
+        fun onClick(store: Store) = clickListener(store)
     }
 
     class StoresViewHolder(private var binding: ItemStoresListBinding):
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(store: Stores, onClickListener: OnClickListener) {
+        fun bind(store: Store, onClickListener: OnClickListener) {
 
             binding.store = store
             binding.root.setOnClickListener { onClickListener.onClick(store) }
-            if (store.storeBranch == "無"){
+            if (store.storeBranch == NONE){
                 binding.storeItemBranch.visibility = View.GONE
             }
 
@@ -30,11 +31,11 @@ class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<S
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Stores>() {
-        override fun areItemsTheSame(oldItem: Stores, newItem: Stores): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Store>() {
+        override fun areItemsTheSame(oldItem: Store, newItem: Store): Boolean {
             return oldItem === newItem
         }
-        override fun areContentsTheSame(oldItem: Stores, newItem: Stores): Boolean {
+        override fun areContentsTheSame(oldItem: Store, newItem: Store): Boolean {
             return oldItem == newItem
         }
 
@@ -53,7 +54,7 @@ class StoresAdapter(private val onClickListener: OnClickListener): ListAdapter<S
 
         when (holder) {
             is StoresViewHolder -> {
-                holder.bind((getItem(position) as Stores),onClickListener)
+                holder.bind((getItem(position) as Store),onClickListener)
             }
         }
     }

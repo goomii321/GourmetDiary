@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.databinding.ItemSearchBinding
 
-class SearchAdapter(private val onClickListener: OnClickListener): ListAdapter<Diary,SearchAdapter.SearchListViewHolder>(DiffCallback) {
+class SearchAdapter(private val onClickListener: OnClickListener): ListAdapter<Diary,
+        SearchAdapter.SearchListViewHolder>(DiffCallback) {
 
     class OnClickListener(val clickListener: (temDiary: Diary) -> Unit) {
         fun onClick(temDiary: Diary) = clickListener(temDiary)
     }
 
-    class SearchListViewHolder(private var binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root){
+    class SearchListViewHolder(private var binding: ItemSearchBinding) :
+        RecyclerView.ViewHolder(binding.root){
+
         fun bind(list: Diary, onClickListener: OnClickListener) {
             binding.data = list
             binding.root.setOnClickListener {
@@ -38,7 +41,7 @@ class SearchAdapter(private val onClickListener: OnClickListener): ListAdapter<D
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchAdapter.SearchListViewHolder {
+    ): SearchListViewHolder {
         return SearchListViewHolder(ItemSearchBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 

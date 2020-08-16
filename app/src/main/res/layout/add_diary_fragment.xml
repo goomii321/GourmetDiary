@@ -24,6 +24,7 @@
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toTopOf="@+id/confirm_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,6 +32,17 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/upload_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/add_diary_recycler"
+                    app:layout_constraintEnd_toEndOf="@+id/test_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/add_diary_recycler"
@@ -106,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/food_name"
                         android:inputType="text"
-                        android:text="@={viewModel.user.food.foodName}"
+                        android:text="@={viewModel.diary.food.foodName}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,7 +141,7 @@
                         android:gravity="top|start"
                         android:hint="@string/add_price"
                         android:inputType="number"
-                        android:text="@={viewModel.user.food.price}"
+                        android:text="@={viewModel.diary.food.price}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,7 +165,7 @@
                         android:hint="@string/combo_name"
                         android:inputType="textMultiLine"
                         android:lines="3"
-                        android:text="@={viewModel.user.food.foodCombo}"
+                        android:text="@={viewModel.diary.food.foodCombo}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -336,7 +348,7 @@
                         android:gravity="start"
                         android:hint="@string/store_name"
                         android:inputType="text"
-                        android:text="@={viewModel.user.store.storeName}"
+                        android:text="@={viewModel.diary.store.storeName}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -359,7 +371,30 @@
                         android:gravity="start"
                         android:hint="@string/store_branch"
                         android:inputType="text"
-                        android:text="@={viewModel.user.store.storeBranch}"
+                        android:text="@={viewModel.diary.store.storeBranch}"
+                        android:textSize="16dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/store_location_title"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColorHint="@color/aonibi"
+                    android:visibility="@{viewModel.storeStatus == false ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/store_branch"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/store_location_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="@string/store_location"
+                        android:inputType="text"
+                        android:text="@={viewModel.diary.store.storeLocation}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -372,7 +407,7 @@
                     android:textColorHint="@color/aonibi"
                     android:visibility="@{viewModel.storeStatus == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/store_branch"
+                    app:layout_constraintTop_toBottomOf="@id/store_location_title"
                     tools:visibility="visible">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -382,7 +417,7 @@
                         android:gravity="start"
                         android:hint="@string/store_phone"
                         android:inputType="number"
-                        android:text="@={viewModel.user.store.storePhone}"
+                        android:text="@={viewModel.diary.store.storePhone}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -436,7 +471,7 @@
                         android:gravity="start"
                         android:hint="@string/store_min_order"
                         android:inputType="number"
-                        android:text="@={viewModel.user.store.storeMinOrder}"
+                        android:text="@={viewModel.diary.store.storeMinOrder}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -459,7 +494,7 @@
                         android:gravity="start"
                         android:hint="@string/store_time"
                         android:inputType="text"
-                        android:text="@={viewModel.user.store.storeOpenTime}"
+                        android:text="@={viewModel.diary.store.storeOpenTime}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -483,7 +518,7 @@
                         android:hint="@string/experience_title"
                         android:inputType="textMultiLine"
                         android:lines="3"
-                        android:text="@={viewModel.user.food.foodContent}"
+                        android:text="@={viewModel.diary.food.foodContent}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -508,7 +543,7 @@
                         android:hint="@string/next_time_text"
                         android:inputType="textMultiLine"
                         android:lines="3"
-                        android:text="@={viewModel.user.food.nextTimeRemind}"
+                        android:text="@={viewModel.diary.food.nextTimeRemind}"
                         android:textSize="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -524,7 +559,7 @@
             android:background="@color/oldcolorPrimaryDark"
             android:clickable="@{viewModel.status == LoadApiStatus.LOADING ? false : true}"
             android:gravity="center"
-            android:onClick="@{() -> viewModel.addData(viewModel.user)}"
+            android:onClick="@{() -> viewModel.addData(viewModel.diary)}"
             android:text='@{viewModel.status != LoadApiStatus.LOADING ? "Post" : "LOADING"}'
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,7 @@
 package com.linda.gourmetdiary.data.source.local
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.*
@@ -14,11 +15,15 @@ import kotlinx.coroutines.withContext
  * Concrete implementation of a Stylish source as a db.
  */
 class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
-    override suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>> {
+    override suspend fun getDiaries(startTime:Long, endTime: Long): Result<List<Diary>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun postDiary(diarys: Diary): Result<Boolean> {
+    override suspend fun postDiary(diaries: Diary): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateStoreImage(store: Store): Result<Boolean> {
         TODO("Not yet implemented")
     }
 
@@ -26,11 +31,11 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getStore(): Result<List<Stores>> {
+    override suspend fun getStore(): Result<List<Store>> {
         TODO("Not yet implemented")
     }
 
-    override fun getLiveStore(): MutableLiveData<List<Stores>> {
+    override fun getLiveStore(): MutableLiveData<List<Store>> {
         TODO("Not yet implemented")
     }
 
@@ -55,6 +60,10 @@ class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     }
 
     override suspend fun searchTemplate(searchWord: String): Result<List<Diary>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun uploadImage(uri: Uri): Result<String> {
         TODO("Not yet implemented")
     }
 }

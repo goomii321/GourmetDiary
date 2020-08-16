@@ -7,11 +7,15 @@
 
         <variable
             name="viewModel"
-            type="com.linda.gourmetdiary.diarys.detail.DiaryDetailViewModel" />
+            type="com.linda.gourmetdiary.diaries.detail.DiaryDetailViewModel" />
 
         <variable
             name="diary"
             type="com.linda.gourmetdiary.data.Diary" />
+
+        <variable
+            name="image"
+            type="String" />
 
         <import type="android.view.View" />
     </data>
@@ -22,8 +26,10 @@
         android:background="@drawable/corners_detail_background">
 
         <ScrollView
+            android:id="@+id/diary_detail_scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +43,6 @@
                     android:id="@+id/recycler_detail_gallery"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/corners_detail_background"
                     android:orientation="horizontal"
@@ -141,8 +146,8 @@
                     android:id="@+id/food_name_img"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/drawkit_breakfast"
                     app:layout_constraintEnd_toEndOf="@id/store_rate_img"
                     app:layout_constraintStart_toStartOf="parent"
@@ -187,39 +192,107 @@
                         app:layout_constraintStart_toStartOf="@+id/food_eating_time"
                         app:layout_constraintTop_toBottomOf="@id/food_eating_time" />
 
-                    <TextView
-                        android:id="@+id/price_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/add_price"
-                        app:layout_constraintEnd_toEndOf="@+id/food_combo_img"
-                        app:layout_constraintStart_toStartOf="@+id/food_combo_img"
-                        app:layout_constraintTop_toBottomOf="@id/food_combo_img" />
-
-                    <TextView
-                        android:id="@+id/eating_time_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/experience_title"
-                        app:layout_constraintStart_toStartOf="@+id/price_img"
-                        app:layout_constraintTop_toBottomOf="@id/price_img" />
-
-                    <TextView
-                        android:id="@+id/content_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/memo_title"
-                        app:layout_constraintEnd_toEndOf="@+id/eating_time_img"
-                        app:layout_constraintStart_toStartOf="@+id/eating_time_img"
-                        app:layout_constraintTop_toBottomOf="@id/eating_time_img" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/price_img"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/add_price"
+                    app:layout_constraintStart_toStartOf="@+id/title_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/data_layout" />
+
+                <TextView
+                    android:id="@+id/colon3"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/price_img"
+                    app:layout_constraintTop_toTopOf="@+id/price_img" />
+
+                <TextView
+                    android:id="@+id/price_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:displayDollar="@{viewModel.diary.food.price}"
+                    app:layout_constraintStart_toEndOf="@+id/colon3"
+                    app:layout_constraintTop_toTopOf="@+id/colon3"
+                    tools:text="180" />
+
+                <TextView
+                    android:id="@+id/eating_time_img"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/experience_title"
+                    app:layout_constraintStart_toStartOf="@+id/price_img"
+                    app:layout_constraintTop_toBottomOf="@+id/price_img" />
+
+                <TextView
+                    android:id="@+id/content_img"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/memo_title"
+                    app:layout_constraintEnd_toEndOf="@+id/eating_time_img"
+                    app:layout_constraintStart_toStartOf="@+id/eating_time_img"
+                    app:layout_constraintTop_toBottomOf="@id/food_content_text" />
+
+                <TextView
+                    android:id="@+id/colon4"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/eating_time_img"
+                    app:layout_constraintTop_toTopOf="@+id/eating_time_img" />
+
+                <TextView
+                    android:id="@+id/colon5"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/colon_text"
+                    app:layout_constraintEnd_toEndOf="@+id/colon4"
+                    app:layout_constraintStart_toStartOf="@+id/colon4"
+                    app:layout_constraintTop_toBottomOf="@+id/food_content_text" />
+
+                <TextView
+                    android:id="@+id/food_content_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:singleLine="false"
+                    android:text="@{viewModel.diary.food.foodContent}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/colon4"
+                    app:layout_constraintTop_toTopOf="@+id/colon4"
+                    tools:text="@string/error_text" />
+
+                <TextView
+                    android:id="@+id/remind_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:singleLine="false"
+                    android:text="@{viewModel.diary.food.nextTimeRemind}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/colon5"
+                    app:layout_constraintTop_toTopOf="@+id/colon5"
+                    tools:text="@string/error_text" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/colon_layout"
@@ -249,39 +322,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/colon1" />
 
-                    <TextView
-                        android:id="@+id/colon3"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon2" />
-
-                    <TextView
-                        android:id="@+id/colon4"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon3" />
-
-                    <TextView
-                        android:id="@+id/colon5"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon4" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -310,63 +350,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:maxLines="2"
                         android:singleLine="false"
                         android:text="@{viewModel.diary.food.foodCombo}"
                         app:layout_constraintStart_toStartOf="@+id/eating_time_text"
                         app:layout_constraintTop_toBottomOf="@+id/eating_time_text"
-                        tools:text="湯和紅茶" />
-
-
-                    <TextView
-                        android:id="@+id/price_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@{viewModel.diary.food.price}"
-                        app:layout_constraintStart_toStartOf="@+id/food_combo_text"
-                        app:layout_constraintTop_toBottomOf="@+id/food_combo_text"
-                        tools:text="180" />
-
-                    <TextView
-                        android:id="@+id/price_dollar_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="元"
-                        android:visibility='@{viewModel.diary.food.price == "" ? View.GONE : View.VISIBLE}'
-                        app:layout_constraintBottom_toBottomOf="@+id/price_text"
-                        app:layout_constraintStart_toEndOf="@+id/price_text"
-                        app:layout_constraintTop_toTopOf="@+id/price_text"
-                        tools:text="元" />
-
-                    <TextView
-                        android:id="@+id/food_content_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:maxLines="2"
-                        android:singleLine="false"
-                        android:text="@{viewModel.diary.food.foodContent}"
-                        app:layout_constraintStart_toStartOf="@+id/price_text"
-                        app:layout_constraintTop_toBottomOf="@+id/price_text"
-                        tools:text="好吃" />
-
-                    <TextView
-                        android:id="@+id/remind_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:maxLines="2"
-                        android:singleLine="false"
-                        android:text="@{viewModel.diary.food.nextTimeRemind}"
-                        app:layout_constraintStart_toStartOf="@+id/food_content_text"
-                        app:layout_constraintTop_toBottomOf="@+id/food_content_text"
-                        tools:text="出餐很快很方便" />
+                        tools:text="@string/error_text" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -380,7 +368,7 @@
                     android:background="@color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/data_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/remind_text"
                     tools:layout_editor_absoluteX="6dp" />
 
                 <ImageView
@@ -405,133 +393,105 @@
                     app:layout_constraintStart_toEndOf="@+id/store_name_img"
                     tools:text="池上便當店" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/store_layout"
+                <TextView
+                    android:id="@+id/store_branch_img"
+                    style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:text="@string/store_branch"
                     app:layout_constraintStart_toStartOf="@+id/store_text"
-                    app:layout_constraintTop_toBottomOf="@+id/store_text">
+                    app:layout_constraintTop_toBottomOf="@+id/store_text" />
 
-                    <TextView
-                        android:id="@+id/store_branch_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/store_branch"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/phone_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/store_phone"
-                        app:layout_constraintStart_toStartOf="@+id/store_branch_img"
-                        app:layout_constraintTop_toBottomOf="@+id/store_branch_img" />
-
-                    <TextView
-                        android:id="@+id/store_location_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/store_location"
-                        app:layout_constraintStart_toStartOf="@+id/phone_img"
-                        app:layout_constraintTop_toBottomOf="@id/phone_img" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/colon_store_layout"
+                <TextView
+                    android:id="@+id/phone_img"
+                    style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@+id/colon_store_layout2"
-                    app:layout_constraintTop_toTopOf="@+id/store_layout">
+                    android:layout_marginTop="8dp"
+                    android:text="@string/store_phone"
+                    app:layout_constraintStart_toStartOf="@+id/store_branch_img"
+                    app:layout_constraintTop_toBottomOf="@+id/branch_text" />
 
-                    <TextView
-                        android:id="@+id/colon6"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/colon7"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/phone_img"
+                    app:layout_constraintTop_toTopOf="@+id/phone_img" />
 
-                    <TextView
-                        android:id="@+id/colon7"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon6" />
+                <TextView
+                    android:id="@+id/store_location_img"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/store_location"
+                    app:layout_constraintStart_toStartOf="@+id/phone_img"
+                    app:layout_constraintTop_toBottomOf="@id/phone_img" />
 
-                    <TextView
-                        android:id="@+id/colon8"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon7" />
+                <TextView
+                    android:id="@+id/colon8"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/store_location_img"
+                    app:layout_constraintTop_toBottomOf="@+id/colon7" />
+
+                <TextView
+                    android:id="@+id/colon6"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/store_branch_img"
+                    app:layout_constraintTop_toTopOf="@+id/store_branch_img" />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/info_store_layout"
+                <TextView
+                    android:id="@+id/branch_text"
+                    style="@style/text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:layout_marginEnd="16dp"
+                    android:maxLines="2"
+                    android:singleLine="false"
+                    android:text="@{viewModel.diary.store.storeBranch}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/colon_store_layout"
-                    app:layout_constraintTop_toTopOf="@+id/store_layout">
+                    app:layout_constraintStart_toEndOf="@+id/colon6"
+                    app:layout_constraintTop_toTopOf="@+id/store_branch_img"
+                    tools:text="市政府店市政府店市政府店市政府店市政府店市政府店市政府店市政府店市政府店市政府店" />
 
-                    <TextView
-                        android:id="@+id/branch_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.diary.store.storeBranch}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="市政府店" />
+                <TextView
+                    android:id="@+id/phone_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:lines="1"
+                    android:text="@{viewModel.diary.store.storePhone}"
+                    app:layout_constraintStart_toEndOf="@+id/colon7"
+                    app:layout_constraintTop_toBottomOf="@id/branch_text"
+                    tools:text="09123456" />
 
-                    <TextView
-                        android:id="@+id/phone_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@{viewModel.diary.store.storePhone}"
-                        app:layout_constraintStart_toStartOf="@+id/branch_text"
-                        app:layout_constraintTop_toBottomOf="@id/branch_text"
-                        tools:text="09123456" />
-
-                    <TextView
-                        android:id="@+id/location_text"
-                        style="@style/text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:maxLines="2"
-                        android:singleLine="false"
-                        android:text="@{viewModel.diary.store.storeLocation}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/phone_text"
-                        app:layout_constraintTop_toBottomOf="@id/phone_text"
-                        tools:text="台北市市政府忠孝東路2222號" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/location_text"
+                    style="@style/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:singleLine="false"
+                    android:text="@{viewModel.diary.store.storeLocation}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/colon7"
+                    app:layout_constraintTop_toBottomOf="@id/phone_text"
+                    tools:text="@string/error_text" />
 
                 <TextView
                     android:id="@+id/point"
@@ -541,154 +501,130 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
                     android:alpha="0.6"
-                    android:singleLine="false"
                     android:maxLines="2"
+                    android:singleLine="false"
                     android:text="@string/point"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/info_store_layout2"
-                    app:layout_constraintStart_toStartOf="@+id/info_store_layout2"
-                    app:layout_constraintTop_toBottomOf="@+id/info_store_layout2" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/booking_text"
+                    app:layout_constraintTop_toBottomOf="@+id/booking_text" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/store_layout2"
+                <TextView
+                    android:id="@+id/store_time_img"
+                    style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@+id/store_layout"
-                    app:layout_constraintTop_toBottomOf="@+id/info_store_layout">
+                    android:layout_marginTop="8dp"
+                    android:text="@string/store_time"
+                    app:layout_constraintStart_toStartOf="@+id/store_location_img"
+                    app:layout_constraintTop_toBottomOf="@+id/location_text" />
 
-                    <TextView
-                        android:id="@+id/store_time_img"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/store_time"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/store_min_order"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/store_min_order"
-                        app:layout_constraintStart_toStartOf="@+id/store_time_img"
-                        app:layout_constraintTop_toBottomOf="@id/store_time_img" />
-
-                    <TextView
-                        android:id="@+id/store_booking"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="8dp"
-                        android:text="@string/store_booking"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/store_min_order"
-                        app:layout_constraintTop_toBottomOf="@id/store_min_order" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/colon_store_layout2"
+                <TextView
+                    android:id="@+id/colon9"
+                    style="@style/text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/store_layout2"
-                    app:layout_constraintTop_toTopOf="@id/store_layout2">
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/store_time_img"
+                    app:layout_constraintTop_toTopOf="@+id/store_time_img" />
 
-                    <TextView
-                        android:id="@+id/colon9"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/colon10"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon9" />
-
-                    <TextView
-                        android:id="@+id/colon11"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/colon_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/colon10" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/info_store_layout2"
+                <TextView
+                    android:id="@+id/open_time_text"
+                    style="@style/text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.diary.store.storeOpenTime}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/colon_store_layout2"
-                    app:layout_constraintTop_toTopOf="@id/colon_store_layout2">
+                    app:layout_constraintStart_toEndOf="@id/colon9"
+                    app:layout_constraintTop_toTopOf="@id/colon9"
+                    tools:text="@string/error_text" />
 
-                    <TextView
-                        android:id="@+id/open_time_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@{viewModel.diary.store.storeOpenTime}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="禮拜日休息" />
+                <TextView
+                    android:id="@+id/store_min_order"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/store_min_order"
+                    app:layout_constraintStart_toStartOf="@+id/store_time_img"
+                    app:layout_constraintTop_toBottomOf="@+id/open_time_text" />
 
-                    <TextView
-                        android:id="@+id/min_order_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@{viewModel.diary.store.storeMinOrder}"
-                        app:layout_constraintStart_toStartOf="@+id/open_time_text"
-                        app:layout_constraintTop_toBottomOf="@id/open_time_text"
-                        tools:text="180" />
+                <TextView
+                    android:id="@+id/colon10"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/store_min_order"
+                    app:layout_constraintTop_toTopOf="@+id/store_min_order" />
 
-                    <TextView
-                        android:id="@+id/min_order_dollar_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="元"
-                        app:layout_constraintStart_toEndOf="@+id/min_order_text"
-                        app:layout_constraintTop_toTopOf="@+id/min_order_text"
-                        tools:text="元" />
+                <TextView
+                    android:id="@+id/min_order_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:displayDollar="@{viewModel.diary.store.storeMinOrder}"
+                    app:layout_constraintStart_toEndOf="@+id/colon10"
+                    app:layout_constraintTop_toTopOf="@+id/colon10"
+                    tools:text="180" />
 
-                    <TextView
-                        android:id="@+id/booking_text"
-                        style="@style/text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/min_order_text"
-                        app:layout_constraintTop_toBottomOf="@id/min_order_text"
-                        tools:text="可訂位" />
+                <TextView
+                    android:id="@+id/store_booking"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:text="@string/store_booking"
+                    app:layout_constraintStart_toStartOf="@+id/store_min_order"
+                    app:layout_constraintTop_toBottomOf="@id/store_min_order" />
 
+                <TextView
+                    android:id="@+id/colon11"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon_text"
+                    app:layout_constraintStart_toEndOf="@+id/store_booking"
+                    app:layout_constraintTop_toTopOf="@+id/store_booking" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/booking_text"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{viewModel.diary.store.storeBooking == true ? @string/can_booking : viewModel.diary.store.storeBooking == false ? @string/cannot_booking : @string/no_data}"
+                    app:layout_constraintStart_toEndOf="@+id/colon11"
+                    app:layout_constraintTop_toBottomOf="@id/min_order_text"
+                    tools:text="可訂位" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <View
+            android:id="@+id/enlarge_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.6"
+            android:background="@color/kachi"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/enlarge_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:imageUrl="@{viewModel.enlargeImage}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

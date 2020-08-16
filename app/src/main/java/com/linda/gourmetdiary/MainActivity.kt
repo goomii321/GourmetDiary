@@ -1,11 +1,6 @@
 package com.linda.gourmetdiary
 
-
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -43,8 +38,8 @@ class MainActivity : AppCompatActivity() {
                     findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_home)
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.diarysFragment -> {
-                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_diarys)
+                R.id.diariesFragment -> {
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.navigate_to_diaries)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.storesFragment -> {
@@ -70,29 +65,30 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
-
         val navigationView = findViewById<View>(R.id.drawerNavView) as NavigationView
         val headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main)
         var ivHeaderPhoto: ImageView = headerLayout.findViewById(R.id.user_image)
         var userName: TextView = headerLayout.findViewById(R.id.user_name)
+
+        binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         UserManager.userData.userName = FirebaseAuth.getInstance().currentUser?.displayName
         UserManager.userData.userPhoto = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
 
         userName.text = UserManager.userData.userName
         Glide.with(navigationView).load(UserManager.userData.userPhoto).into(ivHeaderPhoto)
-        Log.d("checkDrawer","name = ${userName.text}")
+//        Log.d("checkDrawer","name = ${userName.text}")
 
         setupDrawer()
         setupNavController()
     }
 
     private fun setupNavController() {
-        findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener { navController: NavController, _: NavDestination, _: Bundle? ->
+        findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener {
+                navController: NavController, _: NavDestination, _: Bundle? ->
             viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
                 R.id.homeFragment -> CurrentFragmentType.HOME
-                R.id.diarysFragment -> CurrentFragmentType.DIARY
+                R.id.diariesFragment -> CurrentFragmentType.DIARY
                 R.id.storesFragment -> CurrentFragmentType.STORES
                 R.id.profileFragment -> CurrentFragmentType.PROFILE
                 R.id.addDiaryFragment -> CurrentFragmentType.ADD

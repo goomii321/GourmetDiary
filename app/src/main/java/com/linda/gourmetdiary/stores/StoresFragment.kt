@@ -60,6 +60,9 @@ class StoresFragment : Fragment() {
         viewModel.liveStore.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.viewModel = viewModel
+                if (it.isEmpty()){
+                    binding.noStoreText.visibility = View.VISIBLE
+                }
             }
         })
 

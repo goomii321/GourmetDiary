@@ -6,7 +6,7 @@
     <data>
         <variable
             name="store"
-            type="com.linda.gourmetdiary.data.Stores" />
+            type="com.linda.gourmetdiary.data.Store" />
         <import type="android.view.View" />
     </data>
 
@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/corners_bg"
+        android:background="@drawable/corner_shape"
+        android:backgroundTint="@color/store_item"
         android:elevation="4dp">
 
         <ImageView

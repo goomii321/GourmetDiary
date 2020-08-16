@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.linda.gourmetdiary.MainViewModel
 import com.linda.gourmetdiary.adding.AddDiaryViewModel
 import com.linda.gourmetdiary.data.source.DiaryRepository
-import com.linda.gourmetdiary.diarys.DiarysViewModel
+import com.linda.gourmetdiary.diaries.DiariesViewModel
 import com.linda.gourmetdiary.home.HomeViewModel
 import com.linda.gourmetdiary.profile.ProfileViewModel
 import com.linda.gourmetdiary.stores.StoresViewModel
@@ -26,8 +26,8 @@ class ViewModelFactory constructor(
                 isAssignableFrom(HomeViewModel::class.java) ->
                     HomeViewModel(diaryRepository)
 
-                isAssignableFrom(DiarysViewModel::class.java) ->
-                    DiarysViewModel(diaryRepository)
+                isAssignableFrom(DiariesViewModel::class.java) ->
+                    DiariesViewModel(diaryRepository)
 
                 isAssignableFrom(StoresViewModel::class.java) ->
                     StoresViewModel(diaryRepository)

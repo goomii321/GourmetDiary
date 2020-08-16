@@ -38,19 +38,13 @@ class MainViewModel(private val repository: DiaryRepository): ViewModel() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun refresh() {
-        if (!DiaryApplication.instance.isLiveDataDesign()) {
-            _refresh.value = true
-        }
-    }
-
     fun onRefreshed() {
         if (!DiaryApplication.instance.isLiveDataDesign()) {
             _refresh.value = null
         }
     }
 
-    fun getProfile(user: User) {
+    fun pushProfile(user: User) {
         _user.value = _user.value
         coroutineScope.launch {
 

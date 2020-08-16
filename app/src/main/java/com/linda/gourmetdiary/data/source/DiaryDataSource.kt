@@ -1,5 +1,6 @@
 package com.linda.gourmetdiary.data.source
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.*
@@ -11,15 +12,17 @@ import com.linda.gourmetdiary.data.*
  */
 interface DiaryDataSource {
 
-    suspend fun getUsersDiarys(startTime:Long , endTime: Long): Result<List<Diary>>
+    suspend fun getDiaries(startTime:Long, endTime: Long): Result<List<Diary>>
 
-    suspend fun postDiary(diarys:Diary): Result<Boolean>
+    suspend fun postDiary(diaries:Diary): Result<Boolean>
+
+    suspend fun updateStoreImage(store: Store): Result<Boolean>
 
     fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>>
 
-    suspend fun getStore(): Result<List<Stores>>
+    suspend fun getStore(): Result<List<Store>>
 
-    fun getLiveStore(): MutableLiveData<List<Stores>>
+    fun getLiveStore(): MutableLiveData<List<Store>>
 
     suspend fun queryDiaryCount(): Result<Int>
 
@@ -32,4 +35,6 @@ interface DiaryDataSource {
     suspend fun queryReminder(): Result<List<Diary>>
 
     suspend fun searchTemplate(searchWord: String): Result<List<Diary>>
+
+    suspend fun uploadImage(uri: Uri): Result<String>
 }

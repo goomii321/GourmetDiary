@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
-import com.linda.gourmetdiary.data.Stores
+import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
 import kotlinx.coroutines.CoroutineScope
@@ -24,18 +24,18 @@ class StoresViewModel(private val repository: DiaryRepository) : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    var liveStore = MutableLiveData<List<Stores>>()
+    var liveStore = MutableLiveData<List<Store>>()
 
-    private var _store = MutableLiveData<List<Stores>>()
-    val store: LiveData<List<Stores>>
+    private var _store = MutableLiveData<List<Store>>()
+    val store: LiveData<List<Store>>
         get() = _store
 
     private val _refreshStatus = MutableLiveData<Boolean>()
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-    private val _navigateToDetail = MutableLiveData<Stores>()
-    val navigateToDetail: LiveData<Stores>
+    private val _navigateToDetail = MutableLiveData<Store>()
+    val navigateToDetail: LiveData<Store>
         get() = _navigateToDetail
 
     private var viewModelJob = Job()
@@ -81,7 +81,8 @@ class StoresViewModel(private val repository: DiaryRepository) : ViewModel() {
             _refreshStatus.value = false
         }
     }
-    fun getLiveStoreResult() {
+
+    private fun getLiveStoreResult() {
         liveStore = repository.getLiveStore()
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
@@ -97,8 +98,8 @@ class StoresViewModel(private val repository: DiaryRepository) : ViewModel() {
             }
         }
     }
-    fun navigateToDetail(stores: Stores) {
-        _navigateToDetail.value = stores
+    fun navigateToDetail(store: Store) {
+        _navigateToDetail.value = store
     }
 
     fun onDetailNavigated() {

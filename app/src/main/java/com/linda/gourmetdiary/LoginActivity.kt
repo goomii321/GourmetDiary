@@ -48,50 +48,29 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
-//        email_login_button.setOnClickListener {
-//            signinAndSignup()
-//        }
+
         google_sign_in_button.setOnClickListener {
             googleLogin()
         }
         facebook_login_button.setOnClickListener {
             facebookLogin()
         }
+
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("693996800991-6cup7r536d3h29256avpebd9m8j9gcb8.apps.googleusercontent.com")
-            .requestEmail()
+            .requestIdToken(getString(R.string.login_token_id))
+            .requestId()
             .build()
+
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         //printHashKey()
         callbackManager = CallbackManager.Factory.create()
 
-//        privacy.setOnClickListener {
-////            Crashlytics.getInstance().crash()
-////            val url = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.evernote.com/shard/s559/sh/19d93d02-748b-313f-5d08-755e73455c03/66621d22f0ff43db65ce51b5db54c0ac"))
-////            startActivity(url)
-//        }
     }
 
     override fun onStart() {
         super.onStart()
         moveMainPage(auth?.currentUser)
-    }
-
-    fun printHashKey() {
-        try {
-            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            for (signature in info.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val hashKey = String(Base64.encode(md.digest(), 0))
-                Log.i("TAG", "printHashKey() Hash Key: $hashKey")
-            }
-        } catch (e: NoSuchAlgorithmException) {
-            Log.e("TAG", "printHashKey()", e)
-        } catch (e: Exception) {
-            Log.e("TAG", "printHashKey()", e)
-        }
-
     }
 
     fun googleLogin() {
@@ -101,54 +80,52 @@ class LoginActivity : AppCompatActivity() {
 
     fun facebookLogin() {
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
+            .logInWithReadPermissions(this, listOf("public_profile", "email"))
 
         LoginManager.getInstance()
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult?) {
-                    //Second step
                     handleFacebookAccessToken(result?.accessToken)
                 }
 
                 override fun onCancel() {
-
                 }
 
                 override fun onError(error: FacebookException?) {
-
                 }
 
             })
     }
 
     fun handleFacebookAccessToken(token: AccessToken?) {
-        var credential = FacebookAuthProvider.getCredential(token?.token!!)
+        var credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
 
-        auth?.signInWithCredential(credential)
-            ?.addOnCompleteListener { task ->
+        if (credential != null) {
+            auth?.signInWithCredential(credential)
+                ?.addOnCompleteListener { task ->
 
-                if (task.isSuccessful) {
-                    moveMainPage(task.result?.user)
-                    Log.i(
-                        "fb", "success result = ${task.result?.user}"
-                    )
-                    var user = User(
-                        userId = task.result?.user?.uid,
-                        userPhoto = task.result?.user?.photoUrl.toString(),
-                        userName = task.result?.user?.displayName,
-                        userEmail = task.result?.user?.email
-                    )
-                    UserManager.userId = user.userId
-                    UserManager.userData = user
-                    viewModel.getProfile(user)
-                    moveMainPage(task.result?.user)
-                    Log.i("firebaseAuthWithGoogle","firebaseAuthWithGoogle = ${UserManager.userData}")
+                    if (task.isSuccessful) {
+                        moveMainPage(task.result?.user)
+    //                    Log.i(
+    //                        "fb", "success result = ${task.result?.user}"
+    //                    )
+                        var user = User(
+                            userId = task.result?.user?.uid,
+                            userPhoto = task.result?.user?.photoUrl.toString(),
+                            userName = task.result?.user?.displayName,
+                            userEmail = task.result?.user?.email
+                        )
+                        UserManager.userId = user.userId
+                        UserManager.userData = user
+                        viewModel.pushProfile(user)
+                        moveMainPage(task.result?.user)
 
-                } else {
-                    //Show the error message
-                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+                    } else {
+                        //Show the error message
+                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -170,8 +147,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                     UserManager.userId = user.userId
                     UserManager.userData = user
-                    viewModel.getProfile(user)
-                    Log.i("UserManager","UserManager = ${UserManager.userData}")
+                    viewModel.pushProfile(user)
                     firebaseAuthWithGoogle(account)
                 }
             }
@@ -192,9 +168,8 @@ class LoginActivity : AppCompatActivity() {
                     )
                     UserManager.userId = user.userId
                     UserManager.userData= user
-                    viewModel.getProfile(user)
+                    viewModel.pushProfile(user)
                     moveMainPage(task.result?.user)
-                    Log.i("firebaseAuthWithGoogle","firebaseAuthWithGoogle = ${UserManager.userData}")
                 } else {
                     //Show the error message
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
@@ -202,35 +177,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    //    fun signinAndSignup(){
-//        auth?.createUserWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
-//            ?.addOnCompleteListener {
-//                    task ->
-//                if(task.isSuccessful){
-//                    //Creating a user account
-//                    moveMainPage(task.result?.user)
-//                }else if(task.exception?.message.isNullOrEmpty()){
-//                    //Show the error message
-//                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
-//                }else{
-//                    //Login if you have account
-//                    signinEmail()
-//                }
-//            }
-//    }
-//    fun signinEmail(){
-//        auth?.signInWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
-//            ?.addOnCompleteListener {
-//                    task ->
-//                if(task.isSuccessful){
-//                    //Login
-//                    moveMainPage(task.result?.user)
-//                }else{
-//                    //Show the error message
-//                    Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
-//                }
-//            }
-//    }
     fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
             startActivity(Intent(this, MainActivity::class.java))

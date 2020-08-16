@@ -18,13 +18,13 @@
         app:exitAnim="@anim/fragment_fade_out"
         app:popEnterAnim="@anim/fragment_fade_in" />
     <fragment
-        android:id="@+id/diarysFragment"
-        android:name="com.linda.gourmetdiary.diarys.DiarysFragment"
-        android:label="diarys_fragment"
-        tools:layout="@layout/diarys_fragment" >
+        android:id="@+id/diariesFragment"
+        android:name="com.linda.gourmetdiary.diaries.DiariesFragment"
+        android:label="diaries_fragment"
+        tools:layout="@layout/diaries_fragment" >
     </fragment>
     <action
-        android:id="@+id/navigate_to_diarys" app:destination="@+id/diarysFragment"
+        android:id="@+id/navigate_to_diaries" app:destination="@+id/diariesFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"
         app:enterAnim="@anim/fragment_fade_in"
         app:exitAnim="@anim/fragment_fade_out"
@@ -74,7 +74,7 @@
         app:popExitAnim="@anim/fragment_slide_out" />
     <fragment
         android:id="@+id/diaryDetailFragment"
-        android:name="com.linda.gourmetdiary.diarys.detail.DiaryDetailFragment"
+        android:name="com.linda.gourmetdiary.diaries.detail.DiaryDetailFragment"
         android:label="DiaryDetailFragment" >
         <argument
             android:name="diary"
@@ -83,7 +83,7 @@
     </fragment>
     <action
         android:id="@+id/navigate_to_diary_detail" app:destination="@+id/diaryDetailFragment"
-        app:popUpTo="@id/diarysFragment" app:popUpToInclusive="false"
+        app:popUpTo="@id/diariesFragment" app:popUpToInclusive="false"
         app:enterAnim="@anim/fragment_slide_in"
         app:exitAnim="@anim/fragment_fade_out"
         app:popExitAnim="@anim/fragment_slide_out"/>
@@ -93,7 +93,7 @@
         android:label="StoreDetailFragment" >
         <argument
             android:name="store"
-            app:argType="com.linda.gourmetdiary.data.Stores"
+            app:argType="com.linda.gourmetdiary.data.Store"
             app:nullable="true" />
     </fragment>
     <action

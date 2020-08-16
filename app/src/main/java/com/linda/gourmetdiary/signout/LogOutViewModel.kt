@@ -19,7 +19,6 @@ class LogOutViewModel :ViewModel() {
         get() = _status
 
     private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     fun leave(needRefresh: Boolean = false) {
         _leave.value = needRefresh

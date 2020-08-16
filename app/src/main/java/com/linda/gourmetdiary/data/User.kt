@@ -25,21 +25,18 @@ data class Diary(
     val store: Store? = null,
     var food: Food? = null,
     var eatingTime: Long? = 0
-) : Parcelable {
-
-}
+) : Parcelable
 
 @Parcelize
 data class Store(
     var updateTime: Long? = -1,
-    var storeId: String? = "",
     var storeName: String? = "",
     var storePhone: String? ="無",
     var storeBooking: Boolean? = false ,
     var storeBranch: String? = "無",
     var storeHtml: String? = "無",
     var storeLocation: String? = "無",
-    var storeMinOrder: String? = "無",
+    var storeMinOrder: String? = "0",
     var storeOpenTime: String? = "無",
     var storeLocationId: String? = "",
     var storeImage: String? = ""
@@ -47,7 +44,6 @@ data class Store(
 
 @Parcelize
 data class Food(
-    var foodId: String? = "",
     var foodName: String? = "",
     var foodCombo: String? = "",
     var foodContent: String? = "",

@@ -3,9 +3,6 @@ package com.linda.gourmetdiary.util
 import android.util.Log
 import com.linda.gourmetdiary.BuildConfig
 
-/**
- * Created by Wayne Chen on 2020-01-15.
- */
 object Logger {
 
     private const val TAG = "Linda-GourmetDiary"

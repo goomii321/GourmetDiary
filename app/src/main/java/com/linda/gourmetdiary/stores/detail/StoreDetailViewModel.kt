@@ -1,14 +1,13 @@
 package com.linda.gourmetdiary.stores.detail
 
-import android.util.Log
-import androidx.databinding.InverseMethod
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
-import com.linda.gourmetdiary.data.Stores
+import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.data.source.DiaryRepository
 import com.linda.gourmetdiary.network.LoadApiStatus
 import kotlinx.coroutines.CoroutineScope
@@ -16,11 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import com.linda.gourmetdiary.data.Result
+import com.linda.gourmetdiary.util.Logger
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
-                           private val arguments: Stores?) : ViewModel() {
+                           private val arguments: Store?) : ViewModel() {
     private val _status = MutableLiveData<LoadApiStatus>()
     val status: LiveData<LoadApiStatus>
         get() = _status
@@ -29,14 +29,12 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     val error: LiveData<String>
         get() = _error
 
-    private val _detail = MutableLiveData<Stores>()
-    val detail: LiveData<Stores>
-        get() = _detail
-
-    private val _store = MutableLiveData<Stores>().apply {
+    private val _store = MutableLiveData<Store>().apply {
         value = arguments }
-    val store: LiveData<Stores>
+    val store: LiveData<Store>
         get() = _store
+
+    val storeImage = MutableLiveData<String>()
 
     private val _history = MutableLiveData<List<Diary>>()
     val history: LiveData<List<Diary>>
@@ -46,7 +44,7 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     val navigateToDiary: LiveData<Diary>
         get() = _navigateToDiary
 
-    var vistitTimes = MutableLiveData<String>()
+    var visitTimes = MutableLiveData<String>()
     var allCost = MutableLiveData<String>()
     var healthyText = MutableLiveData<String>()
     var rateText = MutableLiveData<String>()
@@ -55,7 +53,6 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     
     init {
-        Log.d("checkBranch","store branch is ${_store.value?.storeBranch}")
         queryHistory("${_store.value?.storeName}","${_store.value?.storeBranch}")
     }
 
@@ -96,8 +93,64 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         }
     }
 
+    fun uploadImage(uri: Uri) {
+
+        coroutineScope.launch {
+
+            val result = diaryRepository.uploadImage(uri)
+
+            _store.value?.storeImage = when (result) {
+                is Result.Success -> {
+                    _error.value = null
+                    Logger.i("diary images = ${_store.value?.storeImage}")
+                    storeImage.value = result.data
+                    result.data
+                }
+                is Result.Fail -> {
+                    _error.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                    null
+                }
+            }
+        }
+    }
+
+    fun updateImage(store: Store) {
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = diaryRepository.updateStoreImage(store)) {
+                is Result.Success -> {
+                    _error.value = null
+                    Logger.d("updateImage Success")
+                    _status.value = LoadApiStatus.DONE
+                }
+                is Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
     private fun visitTimes(){
-        vistitTimes.value = history.value?.size.toString()
+        visitTimes.value = history.value?.size.toString()
     }
 
     private fun getCost(){
@@ -118,13 +171,15 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         _navigateToDiary.value = null
     }
 
-    fun calculateHealthy() {
+    private fun calculateHealthy() {
         var score = 0F
         var listSize = 1F
         var scoreAverage = 1F
-        history.value?.forEach { number ->
-            number.food?.healthyScore.let {
-                score = score.plus(it?.toFloat()!!)
+        history.value?.forEach {
+            it.food?.healthyScore.let {number ->
+                if (number != null) {
+                    score = score.plus(number.toFloat())
+                }
             }
         }
         listSize = history.value?.size?.toFloat() ?: 1F
@@ -133,13 +188,15 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         healthyText.value = BigDecimal(scoreAverage.toString()).setScale(1,RoundingMode.HALF_DOWN).toString()
     }
 
-    fun calculateRate()  {
+    private fun calculateRate()  {
         var score = 0F
         var listSize = 1F
         var scoreAverage = 1F
         history.value?.forEach { number ->
-            number.food?.foodRate.let {
-                score = score.plus(it?.toFloat()!!)
+            number.food?.foodRate.let { rateValue ->
+                rateValue?.let {
+                    score = score.plus(rateValue.toFloat())
+                }
             }
         }
         listSize = history.value?.size?.toFloat() ?: 1F

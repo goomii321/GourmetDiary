@@ -20,6 +20,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:scrollbars="none"
             android:layout_marginHorizontal="16dp"
             app:layout_constraintBottom_toTopOf="@+id/confirm_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +32,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/search_diary"
+                    android:id="@+id/search_diary_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/search_template"
@@ -44,11 +45,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:diary="@{viewModel.diary}"
-                    android:visibility="@{viewModel.recyclerViewStarus == true ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.recyclerViewStatus == true ? View.VISIBLE : View.GONE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/search_diary" />
+                    app:layout_constraintTop_toBottomOf="@+id/search_diary_edit" />
 
                 <TextView
                     android:id="@+id/tem_food_name"
@@ -325,6 +326,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:inputType="number"
                     android:gravity="center_horizontal"
                     android:text="@={viewModel.editDiary.store.storeMinOrder}"
                     app:layout_constraintBottom_toBottomOf="@+id/tem_store_min_order"
