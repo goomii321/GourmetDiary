@@ -596,6 +596,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:text="@{viewModel.diary.store.storeBooking == true ? @string/can_booking : viewModel.diary.store.storeBooking == false ? @string/cannot_booking : @string/no_data}"
                     app:layout_constraintStart_toEndOf="@+id/colon11"
                     app:layout_constraintTop_toBottomOf="@id/min_order_text"
                     tools:text="可訂位" />
@@ -617,8 +618,8 @@
 
         <ImageView
             android:id="@+id/enlarge_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:visibility="gone"
             app:imageUrl="@{viewModel.enlargeImage}"
             app:layout_constraintBottom_toBottomOf="parent"

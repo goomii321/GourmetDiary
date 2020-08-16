@@ -67,7 +67,6 @@ class DiaryDetailFragment : Fragment() {
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.recyclerDetailGallery)
 
-        setBookingText()
         setClipboard()
 
         //connect google map
@@ -109,14 +108,6 @@ class DiaryDetailFragment : Fragment() {
             getClipboard(phone_text.text.toString())
             Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
-        }
-    }
-
-    private fun setBookingText() {
-        when (viewModel.diary.value?.store?.storeBooking){
-            true -> binding.bookingText.setText(R.string.can_booking)
-            false -> binding.bookingText.setText(R.string.cannot_booking)
-            else -> binding.bookingText.setText(R.string.no_data)
         }
     }
 
