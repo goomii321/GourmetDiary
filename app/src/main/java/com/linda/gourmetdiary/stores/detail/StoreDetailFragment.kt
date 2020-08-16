@@ -2,6 +2,7 @@ package com.linda.gourmetdiary.stores.detail
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -25,8 +26,11 @@ import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.R
+import com.linda.gourmetdiary.adding.AddDiaryFragment
 import com.linda.gourmetdiary.databinding.DetailStoreFragmentBinding
+import com.linda.gourmetdiary.diaries.detail.DiaryDetailFragment
 import com.linda.gourmetdiary.ext.getVmFactory
+import com.linda.gourmetdiary.util.Logger
 
 import kotlinx.android.synthetic.main.detail_store_fragment.*
 
@@ -35,12 +39,15 @@ class StoreDetailFragment : Fragment() {
     val viewModel by viewModels<StoreDetailViewModel> { getVmFactory(StoreDetailFragmentArgs.fromBundle(requireArguments()).store) }
 
     companion object {
+        private const val PERMISSION_GALLERY = 12
         private const val PERMISSION_REQUEST = 10
         private const val PERMISSION_CALL = 11
     }
 
     private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE)
+        Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+    private var saveUri: Uri? = null
 
     private lateinit var binding: DetailStoreFragmentBinding
 
@@ -70,7 +77,7 @@ class StoreDetailFragment : Fragment() {
                 getLocation()
             }
         }
-        
+
         //intent phone call
         binding.phoneText.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE)
@@ -83,6 +90,28 @@ class StoreDetailFragment : Fragment() {
             }
         }
 
+        binding.storeAnimator.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) == PackageManager.PERMISSION_DENIED
+                ) {
+                    val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permission, PERMISSION_GALLERY)
+                } else {
+                    openGallery()
+                }
+            } else {
+                openGallery()
+            }
+        }
+
+        viewModel.storeImage.observe(viewLifecycleOwner, Observer {
+            viewModel.store.value?.let {
+                viewModel.updateImage(it)
+            }
+        })
+
         viewModel.navigateToDiary.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(NavigationDirections.navigateToDiaryDetail(it))
@@ -93,6 +122,24 @@ class StoreDetailFragment : Fragment() {
         setClipboard()
 
         return binding.root
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PERMISSION_GALLERY)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == PERMISSION_GALLERY) {
+            saveUri = data?.data
+            saveUri?.let {
+                viewModel.uploadImage(it)
+                Logger.i("saveUri = $saveUri")
+            }
+        }
     }
 
     private fun setClipboard() {

@@ -292,8 +292,6 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             saveUri = data?.data
-//            test_image.setImageURI(data?.data)
-//            uploadImage()
             saveUri?.let {
                 viewModel.uploadImage(it)
                 Logger.i("saveUri = $saveUri")

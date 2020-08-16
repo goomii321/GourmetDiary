@@ -20,6 +20,10 @@ class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
         return diaryRemoteDataSource.postDiary(diaries)
     }
 
+    override suspend fun updateStoreImage(store: Store): Result<Boolean> {
+        return diaryRemoteDataSource.updateStoreImage(store)
+    }
+
     override fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>> {
         return diaryRemoteDataSource.getLiveDiary(startTime,endTime)
     }

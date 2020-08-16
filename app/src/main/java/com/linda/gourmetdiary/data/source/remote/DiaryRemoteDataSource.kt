@@ -82,9 +82,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
             val stores = FirebaseFirestore.getInstance().collection(PATH_USERS)
                 .document(UserManager.userId ?: "").collection(PATH_STORES)
 
-            val document = diary.document()
-
-            diaries.diaryId = document.id
+            diaries.diaryId = diary.document().id
             diaries.createdTime = Calendar.getInstance().timeInMillis
             diaries.store?.updateTime = Calendar.getInstance().timeInMillis
 //            Logger.d("update time is ${diarys.store?.updateTime}")
@@ -100,7 +98,7 @@ object DiaryRemoteDataSource : DiaryDataSource {
                                 .addOnCompleteListener {task ->
                                 if (task.isSuccessful) {
 //                                    Logger.i("store task : ${task.result}")
-//                                    continuation.resume(Result.Success(true))
+                                    continuation.resume(Result.Success(true))
                                 } else {
                                     task.exception?.let {
                                         Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
@@ -112,11 +110,11 @@ object DiaryRemoteDataSource : DiaryDataSource {
                             }
 
                         } else {
-                            document.update(UPDATE_TIME,it.updateTime, STORE_IMAGE,it.storeImage, STORE_LOCATION_ID,it.storeLocationId)
+                            stores.document("${it.storeName}").update(UPDATE_TIME,it.updateTime)
                         }
                     }
             }
-            document.set(diaries)
+            diary.document().set(diaries)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 //                        Logger.i("diary: $diarys")
@@ -132,6 +130,27 @@ object DiaryRemoteDataSource : DiaryDataSource {
                     }
                 }
         }
+
+    override suspend fun updateStoreImage(store: Store): Result<Boolean> = suspendCoroutine { continuation ->
+        val stores = FirebaseFirestore.getInstance().collection(PATH_USERS)
+            .document(UserManager.userId ?: "").collection(PATH_STORES)
+
+        store.let {
+            stores.whereEqualTo(KEY_STORES_NAME,"${it.storeName}").whereEqualTo(KEY_STORE_BRANCH,"${it.storeBranch}")
+                .get()
+                .addOnSuccessListener { task ->
+                    Logger.d("updateStoreImage storeTask whereEqualTo = ${task.documents}; ${it.storeName}")
+                    if (task.isEmpty) {
+                        Logger.d("Store Not Found")
+
+                    } else {
+                        stores.document("${it.storeName}").update(STORE_IMAGE,it.storeImage)
+                        Logger.d("updateStoreImage image = ${it.storeImage}")
+                        continuation.resume(Result.Success(true))
+                    }
+                }
+        }
+    }
 
     override fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>> {
         val liveData = MutableLiveData<List<Diary>>()

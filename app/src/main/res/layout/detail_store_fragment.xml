@@ -32,7 +32,7 @@
                 tools:context=".stores.detail.StoreDetailFragment">
 
                 <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/log_in_animator"
+                    android:id="@+id/store_animator"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_marginVertical="8dp"
@@ -42,6 +42,19 @@
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
                     app:lottie_rawRes="@raw/stores_icon" />
+
+                <TextView
+                    android:id="@+id/text_update_image"
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:alpha="0.6"
+                    android:text="@string/text_update_image"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/store_animator"
+                    app:layout_constraintStart_toStartOf="@+id/store_animator"
+                    app:layout_constraintTop_toBottomOf="@+id/store_animator" />
 
                 <ImageView
                     android:id="@+id/store_title"
@@ -347,7 +360,7 @@
                     android:background="@color/sunezumi"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/log_in_animator"
+                    app:layout_constraintTop_toBottomOf="@+id/text_update_image"
                     tools:layout_editor_absoluteX="6dp" />
 
                 <View
@@ -410,7 +423,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    app:displayCount="@{viewModel.vistitTimes}"
+                    app:displayCount="@{viewModel.visitTimes}"
                     app:layout_constraintBottom_toBottomOf="@+id/visiting_count"
                     app:layout_constraintStart_toEndOf="@+id/visiting_count"
                     app:layout_constraintTop_toTopOf="@id/visiting_count"

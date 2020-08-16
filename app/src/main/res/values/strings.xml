@@ -67,6 +67,7 @@
     <string name="no_data">無資料</string>
     <string name="no_internet_no_gps">未開啟定位或網路功能</string>
     <string name="point">點擊地址或電話號碼，以開啟導航或通話功能，或是長按可複製到剪貼簿</string>
+    <string name="text_update_image">點擊圖示可開啟相簿，更新商店照片</string>
 
     <!-- profile -->
     <string name="all_cost">累積總消費：</string>

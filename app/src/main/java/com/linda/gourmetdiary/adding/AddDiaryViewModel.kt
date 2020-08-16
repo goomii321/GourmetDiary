@@ -150,7 +150,6 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
     }
 
-
     val nowTime = MediatorLiveData<String>().apply {
         addSource(saveYear) {
             it?.let {

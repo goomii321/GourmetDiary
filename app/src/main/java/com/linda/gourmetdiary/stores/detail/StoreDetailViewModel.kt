@@ -1,7 +1,6 @@
 package com.linda.gourmetdiary.stores.detail
 
-import android.util.Log
-import androidx.databinding.InverseMethod
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import com.linda.gourmetdiary.data.Result
+import com.linda.gourmetdiary.util.Logger
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -29,14 +29,12 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     val error: LiveData<String>
         get() = _error
 
-    private val _detail = MutableLiveData<Store>()
-    val detail: LiveData<Store>
-        get() = _detail
-
     private val _store = MutableLiveData<Store>().apply {
         value = arguments }
     val store: LiveData<Store>
         get() = _store
+
+    val storeImage = MutableLiveData<String>()
 
     private val _history = MutableLiveData<List<Diary>>()
     val history: LiveData<List<Diary>>
@@ -46,7 +44,7 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
     val navigateToDiary: LiveData<Diary>
         get() = _navigateToDiary
 
-    var vistitTimes = MutableLiveData<String>()
+    var visitTimes = MutableLiveData<String>()
     var allCost = MutableLiveData<String>()
     var healthyText = MutableLiveData<String>()
     var rateText = MutableLiveData<String>()
@@ -95,8 +93,64 @@ class StoreDetailViewModel(private val diaryRepository: DiaryRepository,
         }
     }
 
+    fun uploadImage(uri: Uri) {
+
+        coroutineScope.launch {
+
+            val result = diaryRepository.uploadImage(uri)
+
+            _store.value?.storeImage = when (result) {
+                is Result.Success -> {
+                    _error.value = null
+                    Logger.i("diary images = ${_store.value?.storeImage}")
+                    storeImage.value = result.data
+                    result.data
+                }
+                is Result.Fail -> {
+                    _error.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                    null
+                }
+            }
+        }
+    }
+
+    fun updateImage(store: Store) {
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = diaryRepository.updateStoreImage(store)) {
+                is Result.Success -> {
+                    _error.value = null
+                    Logger.d("updateImage Success")
+                    _status.value = LoadApiStatus.DONE
+                }
+                is Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = DiaryApplication.instance.getString(R.string.ng_msg)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
     private fun visitTimes(){
-        vistitTimes.value = history.value?.size.toString()
+        visitTimes.value = history.value?.size.toString()
     }
 
     private fun getCost(){

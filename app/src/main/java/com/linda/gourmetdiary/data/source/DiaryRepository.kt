@@ -17,6 +17,8 @@ interface DiaryRepository {
 
     suspend fun postDiary(diaries: Diary): Result<Boolean>
 
+    suspend fun updateStoreImage(store: Store): Result<Boolean>
+
     fun getLiveDiary(startTime:Long , endTime: Long): MutableLiveData<List<Diary>>
 
     suspend fun getStore(): Result<List<Store>>
