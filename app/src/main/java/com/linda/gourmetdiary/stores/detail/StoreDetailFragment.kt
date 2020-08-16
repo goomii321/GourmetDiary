@@ -70,19 +70,7 @@ class StoreDetailFragment : Fragment() {
                 getLocation()
             }
         }
-
-        binding.locationText.setOnLongClickListener {
-            getClipboard(location_text.text.toString())
-            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
-            return@setOnLongClickListener true
-        }
-
-        binding.phoneText.setOnLongClickListener {
-            getClipboard(phone_text.text.toString())
-            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
-            return@setOnLongClickListener true
-        }
-
+        
         //intent phone call
         binding.phoneText.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(DiaryApplication.instance,Manifest.permission.CALL_PHONE)
@@ -102,9 +90,23 @@ class StoreDetailFragment : Fragment() {
             }
         })
 
-        setBookingText()
+        setClipboard()
 
         return binding.root
+    }
+
+    private fun setClipboard() {
+        binding.locationText.setOnLongClickListener {
+            getClipboard(location_text.text.toString())
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
+        }
+
+        binding.phoneText.setOnLongClickListener {
+            getClipboard(phone_text.text.toString())
+            Toast.makeText(context,getString(R.string.clipboard_text), Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
+        }
     }
 
     private fun checkPermission(permissionArray: Array<String>): Boolean {
@@ -168,14 +170,6 @@ class StoreDetailFragment : Fragment() {
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("location", text)
         clipboard.setPrimaryClip(clip)
-    }
-
-    private fun setBookingText() {
-        when (viewModel.store.value?.storeBooking){
-            true -> binding.bookingText.text = getString(R.string.can_booking)
-            false -> binding.bookingText.text = getString(R.string.cannot_booking)
-            else -> binding.bookingText.text = getString(R.string.no_data)
-        }
     }
 
 }

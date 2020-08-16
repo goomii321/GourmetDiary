@@ -330,6 +330,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:text="@{viewModel.store.storeBooking == true ? @string/can_booking : viewModel.store.storeBooking == false ? @string/cannot_booking : @string/no_data}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/min_order_text"
                         tools:text="可外送" />
