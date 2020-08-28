@@ -1,16 +1,11 @@
 package com.linda.gourmetdiary
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import app.appworks.school.stylish.ext.getVmFactory
-import com.crashlytics.android.Crashlytics
+import com.linda.gourmetdiary.ext.getVmFactory
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -22,16 +17,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.linda.gourmetdiary.data.User
 import kotlinx.android.synthetic.main.activity_login.*
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import java.util.*
 import com.linda.gourmetdiary.util.UserManager
 
 @Suppress("DEPRECATION")

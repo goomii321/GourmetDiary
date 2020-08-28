@@ -9,11 +9,7 @@ import com.linda.gourmetdiary.data.source.DiaryDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/**
- * Created by Wayne Chen in Jul. 2019.
- *
- * Concrete implementation of a Stylish source as a db.
- */
+
 class DiaryLocalDataSource(val context: Context) : DiaryDataSource {
     override suspend fun getDiaries(startTime:Long, endTime: Long): Result<List<Diary>> {
         TODO("Not yet implemented")

@@ -4,11 +4,6 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.*
 
-/**
- * Created by Wayne Chen in Jul. 2019.
- *
- * Concrete implementation to load Stylish sources.
- */
 class DefaultDiaryRepository(private val diaryRemoteDataSource: DiaryDataSource,
                              private val localDataSource: DiaryDataSource
 ) : DiaryRepository {
