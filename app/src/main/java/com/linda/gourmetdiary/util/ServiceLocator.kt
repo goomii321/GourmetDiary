@@ -9,18 +9,18 @@ import com.linda.gourmetdiary.data.source.local.DiaryLocalDataSource
 import com.linda.gourmetdiary.data.source.remote.DiaryRemoteDataSource
 
 /**
- * A Service Locator for the [StylishRepository].
+ * A Service Locator for the [Repository].
  */
 object ServiceLocator {
 
     @Volatile
-    var stylishRepository: DiaryRepository? = null
+    var diaryRepository: DiaryRepository? = null
         @VisibleForTesting set
 
     fun provideTasksRepository(context: Context): DiaryRepository {
         synchronized(this) {
-            return stylishRepository
-                ?: stylishRepository
+            return diaryRepository
+                ?: diaryRepository
                 ?: createStylishRepository(context)
         }
     }
