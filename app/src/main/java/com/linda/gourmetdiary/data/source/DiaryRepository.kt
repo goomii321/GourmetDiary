@@ -6,11 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.linda.gourmetdiary.data.*
 
 
-/**
- * Created by Wayne Chen in Jul. 2019.
- *
- * Interface to the Stylish layers.
- */
+
 interface DiaryRepository {
 
     suspend fun getDiaries(startTime:Long, endTime: Long): Result<List<Diary>>
