@@ -134,7 +134,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tem_eating_time" />
 
-                <EditText
+                <TextView
                     android:id="@+id/tem_eating_time_text"
                     style="@style/text_style"
                     android:layout_width="0dp"

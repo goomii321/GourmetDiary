@@ -120,4 +120,14 @@
         app:enterAnim="@anim/fragment_slide_in"
         app:exitAnim="@anim/fragment_slide_out"
         app:popExitAnim="@anim/fragment_slide_out" />
+    <dialog
+        android:id="@+id/messageDialog"
+        android:name="com.linda.gourmetdiary.dialog.MessageDialog"
+        android:label="MessageDialog" >
+        <argument
+            android:name="messageTypeKey"
+            app:argType="com.linda.gourmetdiary.dialog.MessageDialog$MessageType"
+            app:nullable="false"/>
+    </dialog>
+    <action android:id="@+id/navigate_to_message_dialog" app:destination="@+id/messageDialog" />
 </navigation>

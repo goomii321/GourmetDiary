@@ -185,4 +185,8 @@ class TemplateViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
         return time
     }
+
+    fun onAddedSuccessNavigated() {
+        navigate2Home.value = null
+    }
 }

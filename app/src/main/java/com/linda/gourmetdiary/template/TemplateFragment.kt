@@ -2,6 +2,7 @@ package com.linda.gourmetdiary.template
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -11,14 +12,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.linda.gourmetdiary.DiaryApplication
+import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.databinding.TemplateFragmentBinding
+import com.linda.gourmetdiary.dialog.MessageDialog
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.*
@@ -63,7 +67,7 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         viewModel.nowTime.observe(viewLifecycleOwner, Observer {
             Logger.d("viewModel.nowTime.observe, it=$it")
             it?.let {
-                binding.temEatingTimeText.setText(it)
+                binding.temEatingTimeText.text = it
             }
         })
 
@@ -79,6 +83,8 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 val searchText: String = binding.searchDiaryEdit.text.toString()
                 if (searchText != ""){
                     viewModel.searchTemplate(searchText)
+                } else {
+                    viewModel.recyclerViewStatus.value = false
                 }
             }
         })
@@ -127,10 +133,12 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         viewModel.navigate2Home.observe(viewLifecycleOwner, Observer {navigateValue ->
             navigateValue?.let {
                 if (it) {
-                    Handler().postDelayed({
-                        findNavController().navigate(R.id.navigate_to_home)
-                    }, 1000)
+                    hideKeyboard()
+                    findNavController().navigate(
+                        NavigationDirections.navigateToMessageDialog(
+                            MessageDialog.MessageType.ADDED_SUCCESS))
                 }
+                viewModel.onAddedSuccessNavigated()
             }
         })
 
@@ -201,5 +209,10 @@ class TemplateFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 else -> binding.foodType.setSelection(3)
             }
         }
+    }
+
+    private fun hideKeyboard(){
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow( activity?.currentFocus?.windowToken,0)
     }
 }

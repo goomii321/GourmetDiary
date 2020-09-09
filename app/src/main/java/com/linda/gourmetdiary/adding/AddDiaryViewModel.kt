@@ -194,5 +194,4 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
         return time
     }
-
 }

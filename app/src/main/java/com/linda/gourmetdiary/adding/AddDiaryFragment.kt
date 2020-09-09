@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,6 +17,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -32,8 +34,10 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.storage.FirebaseStorage
 import com.linda.gourmetdiary.DiaryApplication
+import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
+import com.linda.gourmetdiary.dialog.MessageDialog
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.*
@@ -106,9 +110,8 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         //navigate to home after post
         viewModel.status.observe(viewLifecycleOwner, Observer {
             if (it == LoadApiStatus.DONE) {
-                Handler().postDelayed({
-                    findNavController().navigate(R.id.navigate_to_home)
-                }, 1000)
+                hideKeyboard()
+                findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.ADDED_SUCCESS))
             }
         })
 
@@ -388,6 +391,11 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 //                Log.d("convert2Uri","convert2Uri ${it.message}")
                 viewModel.updateImageStatus.value = false
             }
+    }
+
+    private fun hideKeyboard(){
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow( activity?.currentFocus?.windowToken,0)
     }
 
 }
