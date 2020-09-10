@@ -37,12 +37,13 @@
                     android:id="@+id/upload_progress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="100"
-                    android:visibility="gone"
+                    android:indeterminateTint="@color/black"
+                    android:visibility="@{viewModel.updateImageStatus == false ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="@+id/add_diary_recycler"
-                    app:layout_constraintEnd_toEndOf="@+id/test_image"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="@+id/add_diary_recycler"
+                    app:layout_constraintStart_toStartOf="@+id/add_diary_recycler"
+                    app:layout_constraintTop_toTopOf="@+id/add_diary_recycler"
+                    tools:visibility="visible"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/add_diary_recycler"
@@ -51,7 +52,7 @@
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="@+id/test_image"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

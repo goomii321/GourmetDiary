@@ -52,7 +52,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
     val status: LiveData<LoadApiStatus>
         get() = _status
 
-    val updateImageStatus = MutableLiveData<Boolean>()
+    val updateImageStatus = MutableLiveData<Boolean>().apply { value = true }
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>

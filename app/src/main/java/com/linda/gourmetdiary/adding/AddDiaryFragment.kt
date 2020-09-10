@@ -25,6 +25,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
@@ -85,14 +87,20 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
         })
 
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.addDiaryRecycler)
+
         //set images
         viewModel.images.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitData(it)
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).notifyDataSetChanged()
-                Logger.d("adapter images = $it")
+                Handler().postDelayed({ if (it.size > 0) {binding.addDiaryRecycler.smoothScrollToPosition(it.size -1) }}, 200)
+
+                Logger.d("adapter images = $it, size is ${it.size}")
             }
         })
+
 
         //navigate to home after post
         viewModel.status.observe(viewLifecycleOwner, Observer {

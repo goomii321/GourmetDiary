@@ -8,13 +8,23 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/corner_image_border_with_rectangle">
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:background="@color/white_normal"
+            android:alpha="0.2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="200dp"
             android:src="@drawable/ic_insert_photo_black_24dp"
+            android:alpha="0.8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

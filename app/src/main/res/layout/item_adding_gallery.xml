@@ -11,10 +11,20 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/diary_detail_gallery"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/corners_detail_background"
         android:paddingHorizontal="4dp">
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@color/white_normal"
+            android:alpha="0.2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/image_gallery"
