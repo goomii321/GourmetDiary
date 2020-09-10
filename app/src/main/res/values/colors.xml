@@ -40,4 +40,6 @@
     <color name="lunch">#FAD689</color>
     <color name="dinner">#2E5C6E</color>
     <color name="dessert">#B5495B</color>
+
+    <color name="translucent_80">#80000000</color>
 </resources>

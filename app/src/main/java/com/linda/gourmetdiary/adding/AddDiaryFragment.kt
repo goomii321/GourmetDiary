@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,6 +17,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -23,6 +25,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
@@ -32,8 +36,10 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.storage.FirebaseStorage
 import com.linda.gourmetdiary.DiaryApplication
+import com.linda.gourmetdiary.NavigationDirections
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.databinding.AddDiaryFragmentBinding
+import com.linda.gourmetdiary.dialog.MessageDialog
 import com.linda.gourmetdiary.ext.getVmFactory
 import com.linda.gourmetdiary.network.LoadApiStatus
 import com.linda.gourmetdiary.util.*
@@ -64,23 +70,10 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         binding = AddDiaryFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.addDiaryRecycler.adapter = AddDiaryAdapter()
 
-        binding.testImage.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_DENIED
-                ) {
-                    val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    requestPermissions(permission, PERMISSION_CODE)
-                } else {
-                    openGallery()
-                }
-            } else {
-                openGallery()
-            }
-        }
+        binding.addDiaryRecycler.adapter = AddDiaryAdapter( AddDiaryAdapter.OnClickListener{
+            checkGallery()
+        })
 
         //choose date and time
         binding.eatingTime.setOnClickListener {
@@ -94,21 +87,26 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
         })
 
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.addDiaryRecycler)
+
         //set images
         viewModel.images.observe(viewLifecycleOwner, Observer {
             it?.let {
-                (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitList(it)
+                (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitData(it)
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).notifyDataSetChanged()
-                Logger.d("adapter images = $it")
+                Handler().postDelayed({ if (it.size > 0) {binding.addDiaryRecycler.smoothScrollToPosition(it.size -1) }}, 200)
+
+                Logger.d("adapter images = $it, size is ${it.size}")
             }
         })
+
 
         //navigate to home after post
         viewModel.status.observe(viewLifecycleOwner, Observer {
             if (it == LoadApiStatus.DONE) {
-                Handler().postDelayed({
-                    findNavController().navigate(R.id.navigate_to_home)
-                }, 1000)
+                hideKeyboard()
+                findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.ADDED_SUCCESS))
             }
         })
 
@@ -206,6 +204,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 binding.storeNameInput.setText(place.name)
                 binding.storeLocationInput.setText(place.address)
                 getPlacePhoto("${place.id}")
+                hideKeyboard()
             }
 
             override fun onError(status: Status) {
@@ -279,6 +278,22 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 viewModel.diary.value?.food?.healthyScore = healthyScore
             }
         })
+    }
+
+    private fun checkGallery() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+                val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(permission, PERMISSION_CODE)
+            } else {
+                openGallery()
+            }
+        } else {
+            openGallery()
+        }
     }
 
     private fun openGallery() {
@@ -388,6 +403,11 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 //                Log.d("convert2Uri","convert2Uri ${it.message}")
                 viewModel.updateImageStatus.value = false
             }
+    }
+
+    private fun hideKeyboard(){
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow( activity?.currentFocus?.windowToken,0)
     }
 
 }

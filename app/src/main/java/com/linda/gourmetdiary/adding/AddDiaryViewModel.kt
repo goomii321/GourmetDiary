@@ -11,6 +11,7 @@ import com.linda.gourmetdiary.DiaryApplication
 import com.linda.gourmetdiary.R
 import com.linda.gourmetdiary.data.*
 import com.linda.gourmetdiary.data.source.DiaryRepository
+import com.linda.gourmetdiary.diaries.DataItem
 import com.linda.gourmetdiary.util.Logger
 import com.linda.gourmetdiary.util.TimeConverters
 import kotlinx.coroutines.CoroutineScope
@@ -43,11 +44,15 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
         value = mutableListOf()
     }
 
+    private var _addDataItems = MutableLiveData<List<AddDataItem>>()
+    val addDataItems: LiveData<List<AddDataItem>>
+        get() = _addDataItems
+
     private val _status = MutableLiveData<LoadApiStatus>()
     val status: LiveData<LoadApiStatus>
         get() = _status
 
-    val updateImageStatus = MutableLiveData<Boolean>()
+    val updateImageStatus = MutableLiveData<Boolean>().apply { value = true }
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -128,6 +133,7 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
                     images.value?.add(result.data)
                     images.value = images.value
                     _diary.value?.images = images.value
+                    _addDataItems.value = imagesToDataItems(image = result.data)
                     Logger.i("diary images = ${_diary.value?.images}")
                     result.data
                 }
@@ -148,6 +154,14 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun imagesToDataItems(image: String): List<AddDataItem> {
+        val dataList = mutableListOf<AddDataItem>()
+
+        dataList.add(AddDataItem.Images(image))
+
+        return dataList
     }
 
     val nowTime = MediatorLiveData<String>().apply {
@@ -194,5 +208,4 @@ class AddDiaryViewModel(private val repository: DiaryRepository) : ViewModel() {
         }
         return time
     }
-
 }
