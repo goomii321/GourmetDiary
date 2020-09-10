@@ -50,7 +50,7 @@ data class Food(
     var foodRate: Int? = 0,
     var healthyScore: Int? = 0,
     var nextTimeRemind: String? = "",
-    var price: String? = "",
+    var price: String? = "0",
     var tag: String? = ""
 ) : Parcelable
 

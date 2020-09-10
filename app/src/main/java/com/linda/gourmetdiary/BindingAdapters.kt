@@ -16,6 +16,8 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.linda.gourmetdiary.adding.AddDataItem
+import com.linda.gourmetdiary.adding.AddDiaryAdapter
 import com.linda.gourmetdiary.data.Diary
 import com.linda.gourmetdiary.data.Store
 import com.linda.gourmetdiary.diaries.DailyItemAdapter

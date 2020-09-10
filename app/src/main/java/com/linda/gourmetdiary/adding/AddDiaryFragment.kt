@@ -68,23 +68,10 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         binding = AddDiaryFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.addDiaryRecycler.adapter = AddDiaryAdapter()
 
-        binding.testImage.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_DENIED
-                ) {
-                    val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    requestPermissions(permission, PERMISSION_CODE)
-                } else {
-                    openGallery()
-                }
-            } else {
-                openGallery()
-            }
-        }
+        binding.addDiaryRecycler.adapter = AddDiaryAdapter( AddDiaryAdapter.OnClickListener{
+            checkGallery()
+        })
 
         //choose date and time
         binding.eatingTime.setOnClickListener {
@@ -101,7 +88,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         //set images
         viewModel.images.observe(viewLifecycleOwner, Observer {
             it?.let {
-                (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitList(it)
+                (binding.addDiaryRecycler.adapter as AddDiaryAdapter).submitData(it)
                 (binding.addDiaryRecycler.adapter as AddDiaryAdapter).notifyDataSetChanged()
                 Logger.d("adapter images = $it")
             }
@@ -209,6 +196,7 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 binding.storeNameInput.setText(place.name)
                 binding.storeLocationInput.setText(place.address)
                 getPlacePhoto("${place.id}")
+                hideKeyboard()
             }
 
             override fun onError(status: Status) {
@@ -282,6 +270,22 @@ class AddDiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 viewModel.diary.value?.food?.healthyScore = healthyScore
             }
         })
+    }
+
+    private fun checkGallery() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(DiaryApplication.instance.applicationContext,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+                val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(permission, PERMISSION_CODE)
+            } else {
+                openGallery()
+            }
+        } else {
+            openGallery()
+        }
     }
 
     private fun openGallery() {
